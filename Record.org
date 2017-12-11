@@ -1,4 +1,4 @@
 #+OPTIONS: toc:nil
 #+DESCRIPTION: This file is for recording what I do every day during the project.
 * <2017-12-11 Mon>
-+ Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPUP%E3%80%8B1-300.pdf][《自己动手写CPU》 Chapter1]]
++ Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter1]]
