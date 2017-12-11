@@ -1,3 +1,5 @@
 #+TITLE: Computer Architecture Task 2
 * Authority
-+ This is the second homework of Computer Architecture, and the author is Lmxyy.
+This is the second homework of Computer Architecture, and the author is Lmxyy.
+* Reference
+[[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
