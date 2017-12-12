@@ -1,0 +1,95 @@
+C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/if_id.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/if_id.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module if_id
+
+Top level modules:
+	if_id
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/inst_rom.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/inst_rom.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module inst_rom
+
+Top level modules:
+	inst_rom
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/regfile.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/regfile.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module regfile
+
+Top level modules:
+	regfile
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/defines.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/defines.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module mem
+
+Top level modules:
+	mem
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem_wb.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem_wb.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module mem_wb
+
+Top level modules:
+	mem_wb
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/pc_reg.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/pc_reg.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module pc_reg
+
+Top level modules:
+	pc_reg
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex_mem.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex_mem.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ex_mem
+
+Top level modules:
+	ex_mem
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module openmips
+
+Top level modules:
+	openmips
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ex
+
+Top level modules:
+	ex
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module id
+
+Top level modules:
+	id
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc_tb.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc_tb.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module openmips_min_sopc_tb
+
+Top level modules:
+	openmips_min_sopc_tb
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id_ex.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id_ex.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module id_ex
+
+Top level modules:
+	id_ex
+
+} {} {}} C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc.v {1 {vlog -work teacher -stats=none C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module openmips_min_sopc
+
+Top level modules:
+	openmips_min_sopc
+
+} {} {}}

@@ -1,0 +1,283 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/Prinny/Desktop/OpenMIPS/my_cpu
+vex
+Z0 !s110 1485758995
+!i10b 1
+!s100 60mk>_D>6Qa0mzd=9`lg<0
+IYJW2j^;^RSkSmZB1m85b=3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dC:/Users/Prinny/Desktop/OpenMIPS/Chapter4
+w1392896488
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex.v
+Z3 L0 35
+Z4 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z5 !s108 1485758995.000000
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex.v|
+!s101 -O0
+!i113 1
+Z6 o-work teacher -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+vex_mem
+R0
+!i10b 1
+!s100 BkSADUPLSl9cR8Q8SSj`71
+I[bBTQG75lBjn4L;aeE7zI3
+R1
+R2
+w1392891310
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex_mem.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex_mem.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex_mem.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/ex_mem.v|
+!s101 -O0
+!i113 1
+R6
+vid
+R0
+!i10b 1
+!s100 _cFiYTJH9AU]QnKi7BBkK0
+IYLeXnW?kb0c]@6B65n2]g1
+R1
+R2
+w1392891092
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id.v|
+!s101 -O0
+!i113 1
+R6
+vid_ex
+R0
+!i10b 1
+!s100 hhb[BXk`HX5XGFcm]UElf3
+I7_e=46LW0HdkIUkMoOM[?0
+R1
+R2
+w1392895330
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id_ex.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id_ex.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id_ex.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/id_ex.v|
+!s101 -O0
+!i113 1
+R6
+vif_id
+R0
+!i10b 1
+!s100 >W3QG;Y7lkI5dUR23Am?C1
+Ia^<eZ7jnTz]i?3mLdJWcd0
+R1
+R2
+w1392891094
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/if_id.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/if_id.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/if_id.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/if_id.v|
+!s101 -O0
+!i113 1
+R6
+vinst_rom
+Z7 !s110 1485758996
+!i10b 1
+!s100 B61BV1PoH1U4hb[eIacoJ1
+IlU?AFLFKGU=5Zj8lMO5gD3
+R1
+R2
+w1396145520
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/inst_rom.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/inst_rom.v
+R3
+R4
+r1
+!s85 0
+31
+Z8 !s108 1485758996.000000
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/inst_rom.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/inst_rom.v|
+!s101 -O0
+!i113 1
+R6
+vmem
+R7
+!i10b 1
+!s100 dKIEgC3]56a5Q^7[b9K7`1
+IB@hZHYmNTAQYH6TeG<ThA2
+R1
+R2
+w1392891392
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem.v|
+!s101 -O0
+!i113 1
+R6
+vmem_wb
+R7
+!i10b 1
+!s100 K>NV]WiWM_j?U9dl5]KVi1
+IgFK<kf=f8Sk;P7dL=IN2A3
+R1
+R2
+w1392896566
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem_wb.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem_wb.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem_wb.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/mem_wb.v|
+!s101 -O0
+!i113 1
+R6
+vopenmips
+R7
+!i10b 1
+!s100 j9cVZi?UAa`mn<bidD@;m2
+IIXaXM0R89kf@PzIGjgYEa3
+R1
+R2
+w1396145314
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips.v|
+!s101 -O0
+!i113 1
+R6
+vopenmips_min_sopc
+R7
+!i10b 1
+!s100 a=Dg`CKz<0<I[ng:XO;=@1
+IkClFCgF9KcKKjENiJ`UNz1
+R1
+R2
+w1396146218
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc.v
+L0 40
+R4
+r1
+!s85 0
+31
+R8
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc.v|
+!s101 -O0
+!i113 1
+R6
+vopenmips_min_sopc_tb
+R7
+!i10b 1
+!s100 BLj^i[S4LQiWZW>gToWQU0
+IcU>e16EI`Sh>^;?VP[J2@2
+R1
+R2
+w1393082256
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc_tb.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc_tb.v
+L0 36
+R4
+r1
+!s85 0
+31
+R8
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc_tb.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/openmips_min_sopc_tb.v|
+!s101 -O0
+!i113 1
+R6
+vpc_reg
+!s110 1485758997
+!i10b 1
+!s100 WXjmNNI4=HbG<_SjMELX`0
+IzScclPjl`?I3dX]UQ@jcX3
+R1
+R2
+w1396144420
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/pc_reg.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/pc_reg.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/pc_reg.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/pc_reg.v|
+!s101 -O0
+!i113 1
+R6
+vregfile
+!s110 1485758994
+!i10b 1
+!s100 1EhAjhmmdzi<zQL05>l@Y2
+I=9V32Hce6X<CjO59@bgnW1
+R1
+R2
+w1391781824
+8C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/regfile.v
+FC:/Users/Prinny/Desktop/OpenMIPS/Chapter4/regfile.v
+R3
+R4
+r1
+!s85 0
+31
+!s108 1485758994.000000
+!s107 defines.v|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/regfile.v|
+!s90 -reportprogress|300|-work|teacher|-stats=none|C:/Users/Prinny/Desktop/OpenMIPS/Chapter4/regfile.v|
+!s101 -O0
+!i113 1
+R6
