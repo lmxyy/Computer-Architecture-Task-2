@@ -1,5 +1,11 @@
 #+TITLE: Computer Architecture Task 2
 * Authority
 This is the second homework of Computer Architecture, and the author is Lmxyy.
+* Aim
+Implement a *Risk-v* CPU using hardware description language(HDL).
+* Feature
++ The instruction set arthitecture(ISA) is RV32I Base Integer Instruction Set, Version 2.0.
++ The implementation technology is FPGA.
++ The HDL is Verilog HDL.
 * Reference
 [[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
