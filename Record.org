@@ -9,7 +9,7 @@ Knew some important conceptions.
 *** Question: Why does rom[1] have to be 32'h01010101?
 It's just an input which represents an instruction, and you can input whatever you want as long as it is a 32-bit hexadecimal.
 ** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter3]]
-*** Finally I began to know the outline of what I needed to do. Especially [[docview:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf::68][Figure 3-5 on Page 54]].
+*** Finally I began to know the outline of what I needed to do. Especially [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf::68][Figure 3-5 on Page 54]].
 *** Question: What does the time signal "clk" do?
 Kaiyi Zhang told me that I could regard it as a tool to out put the time signal to debug.
 *** Question: What does the reset signal "rst" do?
