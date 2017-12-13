@@ -34,7 +34,7 @@ module id(
    reg [`RegBus] 		    imm;
    reg 				    instvalid;
 
-   always @(*) begin
+   always @ (*) begin
       if (rst == `RstEnable)
 	begin
 	   aluop_o <= `EXE_NOP_OP;
@@ -78,7 +78,7 @@ module id(
    end // always @ (*)
 
  `define GET_OPRAND(reg_o,reg_read_o,reg_data_i) \ 
-   always @(*) \  
+   always @ (*) \  
      begin \ 
 	if(rst == `RstEnable) reg_o <= `ZeroWord; \ 
 	  else if(reg_read_o == 1'b1) reg_o <= reg_data_i; \ 
