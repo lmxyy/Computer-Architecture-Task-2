@@ -22,7 +22,8 @@ First, I thought I could use a big module with many "if", and a spceific instruc
 * <2017-12-13 Wed>
 ** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]]
 *** Implemented the instruction ORI.
-I could try to implement the ori code myself referring to the standard codes on [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]], which is simplest, and after that, what I need to do is to supplement some codes. 
+I could try to implement the ori code myself referring to the standard codes on [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]], which is simplest, and after that, what I need to do is to supplement some codes.
+**** I learnt how to use macros like fuctions in verilog. 
 **** Problems in my codes:
 + Codes passed compilation, but took about 10 minutes.
 + Codes couldn't run normally. [[file:Picture/2017-12-14%2001-19-40%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png][
