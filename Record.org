@@ -17,7 +17,7 @@ Kaiyi Zhang told me that I could use the signal to reset the module for stopping
 ** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]]
 *** Question: After I implement the ori module, how could I combine the module with the other to make the CPU complete?
 First, I thought I could use a big module with many "if", and a spceific instruction corresponds with a specific module. But Kaiyi Zhang told me it was too complex. I should just combine all similar fuctions in a single module. An example for this is ALU, which can deal with all operations.
-*** An problem from Kaiyi Zhang(On [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf::111][数据前推处理load指令]]): When you read or write a memory or address, you have 2 stages' latency, which requires you to keep the read/write signal streamming.
+*** An problem from Kaiyi Zhang(On [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf::111][Use data forwarding to deal with load instructions]]): When you read or write a memory or address, you have 2 stages' latency, which requires you to keep the read/write signal streamming.
 *** The standard codes didn't pass compilation on my computer. 
 * <2017-12-13 Wed>
 ** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]]
