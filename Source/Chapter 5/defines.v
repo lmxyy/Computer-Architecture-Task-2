@@ -27,7 +27,7 @@
 
 
 //ЦёБо
-`define EXE_ORI  6'b001101
+`define EXE_ORI  10'b1100010011
 
 
 `define EXE_NOP 6'b000000

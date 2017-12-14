@@ -29,11 +29,13 @@ module regfile(
 
    always @ (posedge clk) 
      begin
+	
+	// $display("* %d %d %d %d",we,wdata,rst,waddr);
 	if (rst == `RstDisable) 
 	  if((we == `WriteEnable) && (waddr != `RegNumLog2'h0)) 
 	    begin
 	       regs[waddr] <= wdata;
-	       $display(wdata);
+	       $display("# %d",wdata);
 	    end
      end
 

@@ -37,12 +37,8 @@ module id(
 	  output reg 		    wreg_o
 	  );
 
-   wire [5:0] 			    op = inst_i[31:26];
-   wire [4:0] 			    op2 = inst_i[10:6];
-   wire [5:0] 			    op3 = inst_i[5:0];
-   wire [4:0] 			    op4 = inst_i[20:16];
+   wire [9:0] 			    op = {inst_i[14:12],inst_i[6:0]};
    reg [`RegBus] 		    imm;
-   reg 				    instvalid;
 
    always @ (*) begin
       if (rst == `RstEnable)
@@ -51,7 +47,6 @@ module id(
 	   alusel_o <= `EXE_RES_NOP;
 	   wd_o <= `NOPRegAddr;
 	   wreg_o <= `WriteDisable;
-	   instvalid <= `InstValid;
 	   reg1_read_o <= 1'b0;
 	   reg2_read_o <= 1'b0;
 	   reg1_addr_o <= `NOPRegAddr;
@@ -62,13 +57,12 @@ module id(
 	begin
 	   aluop_o <= `EXE_NOP_OP;
 	   alusel_o <= `EXE_RES_NOP;
-	   wd_o <= inst_i[15:11];
+	   wd_o <= inst_i[20:16];
 	   wreg_o <= `WriteDisable;
-	   instvalid <= `InstInvalid;	   
 	   reg1_read_o <= 1'b0;
 	   reg2_read_o <= 1'b0;
-	   reg1_addr_o <= inst_i[25:21];
-	   reg2_addr_o <= inst_i[20:16];		
+	   reg1_addr_o <= inst_i[19:15];
+	   reg2_addr_o <= inst_i[24:20];		
 	   imm <= `ZeroWord;
 	   case (op)
 	     `EXE_ORI:
@@ -78,9 +72,8 @@ module id(
 		  alusel_o <= `EXE_RES_LOGIC; 
 		  reg1_read_o <= 1'b1;	
 		  reg2_read_o <= 1'b0;	  	
-		  imm <= {16'h0, inst_i[15:0]};		
-		  wd_o <= inst_i[20:16];
-		  instvalid <= `InstValid;
+		  imm <= {16'h0,inst_i[31:20]};		
+		  wd_o <= inst_i[11:7];
 	       end // case: `EXE_ORI
 	     default: begin end
 	   endcase // case (op)
