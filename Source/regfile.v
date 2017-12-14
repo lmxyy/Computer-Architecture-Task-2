@@ -31,7 +31,10 @@ module regfile(
      begin
 	if (rst == `RstDisable) 
 	  if((we == `WriteEnable) && (waddr != `RegNumLog2'h0)) 
-	    regs[waddr] <= wdata;
+	    begin
+	       regs[waddr] <= wdata;
+	       $display(wdata);
+	    end
      end
 
    // always @ (*)
