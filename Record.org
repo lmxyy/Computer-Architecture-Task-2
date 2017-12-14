@@ -30,3 +30,14 @@ I could try to implement the ori code myself referring to the standard codes on 
  [[file:Picture/2017-12-14%2001-19-40%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png][Screenshot while Running]]
 ** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter5]]
 *** Knew what kind of problems I would meet in the future.
+* <2017-12-14 Thu>
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]]
+*** Made my codes run normally with Kaiyi Zhang's help.
+[[file:Picture/2017-12-14%2020-46-57%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png][Screenshot]]
+****  Modified the depth of "inst_mem" in [[file:Source/Chapter%204/inst_rom.v::13][inst_rom.v]] from `InstMemNum-1 to 3. 
+Not only I didn't had the warning "Not enough words in the file" as the fuction "$readmemh" would read the depth of "inst_mem" hexadecimal numbers in [[file:Source/Chapter%204/inst_rom.data][inst_rom.data]], but also the time for compilation was much shortened.
+**** Changed the function "$stop" in [[file:Source/Chapter%204/openmips_min_sopc_tb.v][openmips_min_sopc_tb.v]] to "$finish" so that VVP could be dismissed and also added the timescale in  [[file:Source/Chapter%204/openmips_min_sopc_tb.v:5][openmips_min_sopc_tb.v]].
+*** Question: Why did my data flush so slowly?
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter5]]
+*** Added data forwarding.
+*** Transformed my instruction sets from mips to risc-v.
