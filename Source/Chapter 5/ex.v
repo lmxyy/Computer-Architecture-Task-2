@@ -23,6 +23,7 @@ module ex(
 	  );
    
    reg [`RegBus] 		   logicout;
+   reg [`RegBus] 		   shiftres;
 
    always @ (*)
      begin
@@ -30,18 +31,36 @@ module ex(
 	else
 	  begin
 	     case (aluop_i)
+	       `EXE_AND_OP: logicout <= reg1_i & reg2_i;
 	       `EXE_OR_OP: logicout <= reg1_i | reg2_i;
+	       `EXE_XOR_OP: logicout <= reg1_i ^ reg2_i;
 	       default: logicout <= `ZeroWord;
 	     endcase // case (aluop_i)
 	  end // else: !if(rst == `RstEnable)
      end // always @ (*)
+
+   always @ (*) begin
+      if(rst == `RstEnable) shiftres <= `ZeroWord;
+      else 
+	begin
+	   case (aluop_i)
+	     `EXE_SLL_OP: shiftres <= reg2_i << reg1_i[4:0];
+	     `EXE_SRL_OP: shiftres <= reg2_i >> reg1_i[4:0];
+	     `EXE_SRA_OP:
+	       shiftres <= ({32{reg2_i[31]}} << (6'd32-{1'b0, reg1_i[4:0]}))| reg2_i >> reg1_i[4:0];
+	     default: shiftres <= `ZeroWord;	     
+	   endcase // case (aluop_i)
+	end // else: !if(rst == `RstEnable)
+   end // always @ (*)
    
+			    
    always @ (*) 
      begin
 	wd_o <= wd_i;
 	wreg_o <= wreg_i;
 	case (alusel_i) 
-	  `EXE_RES_LOGIC:	wdata_o <= logicout;
+	  `EXE_RES_LOGIC: wdata_o <= logicout;
+	  `EXE_RES_SHIFT: wdata_o <= shiftres;
 	  default: wdata_o <= `ZeroWord;
 	endcase // case (alusel_i)
      end // always @ (*)
