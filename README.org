@@ -3,6 +3,54 @@
 This is the second homework of Computer Architecture, and the author is Lmxyy.
 * Aim
 Implement a *Risk-v* CPU using hardware description language(HDL).
+** TODO Instructions [29%]
+- [X] LUI
+- [ ] AUIPC
+- [ ] JAL
+- [ ] JALR
+- [ ] BEQ
+- [ ] BNE
+- [ ] BLT
+- [ ] BGE
+- [ ] BLTU
+- [ ] BGEU
+- [ ] LB
+- [ ] LH
+- [ ] LW
+- [ ] LBU
+- [ ] LHU
+- [ ] SB
+- [ ] SH
+- [ ] SW
+- [X] ADDI
+- [ ] SLTI
+- [ ] SLTIU
+- [X] XORI
+- [X] ORI
+- [X] ANDI
+- [X] SLLI
+- [X] SRLI
+- [X] SRAI
+- [ ] ADD
+- [ ] SUB
+- [X] SLL
+- [ ] SLT
+- [ ] SLTU
+- [X] XOR
+- [X] SRL
+- [X] SRA
+- [X] OR
+- [X] AND
+- [ ] FENCE
+- [ ] FENCE.I
+- [ ] ECALL
+- [ ] EBREAK
+- [ ] CSRRW
+- [ ] CSRRS
+- [ ] CSRRC
+- [ ] CSRRWI
+- [ ] CSRRSI
+- [ ] CSRRCI
 * Feature
 + The instruction set arthitecture(ISA) is RV32I Base Integer Instruction Set, Version 2.0.
 + The implementation technology is FPGA.
