@@ -3,7 +3,7 @@
 This is the second homework of Computer Architecture, and the author is Lmxyy.
 * Aim
 Implement a *Risk-v* CPU using hardware description language(HDL).
-** TODO Instructions [29%]
+** Instructions [39%]
 - [X] LUI
 - [ ] AUIPC
 - [ ] JAL
@@ -14,15 +14,7 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 - [ ] BGE
 - [ ] BLTU
 - [ ] BGEU
-- [ ] LB
-- [ ] LH
-- [ ] LW
-- [ ] LBU
-- [ ] LHU
-- [ ] SB
-- [ ] SH
-- [ ] SW
-- [X] ADDI
+- [ ] ADDI
 - [ ] SLTI
 - [ ] SLTIU
 - [X] XORI
@@ -41,19 +33,14 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 - [X] SRA
 - [X] OR
 - [X] AND
+- [ ] LOAD
+- [ ] STORE
 - [ ] FENCE
 - [ ] FENCE.I
-- [ ] ECALL
-- [ ] EBREAK
-- [ ] CSRRW
-- [ ] CSRRS
-- [ ] CSRRC
-- [ ] CSRRWI
-- [ ] CSRRSI
-- [ ] CSRRCI
 * Feature
 + The instruction set arthitecture(ISA) is RV32I Base Integer Instruction Set, Version 2.0.
 + The implementation technology is FPGA.
 + The HDL is Verilog HDL.
 * Reference
-[[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
++ [[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
++ [[https://github.com/riscv/riscv-gnu-toolchain][GNU toolchain for RISC-V, including GCC(Newlib)]]
