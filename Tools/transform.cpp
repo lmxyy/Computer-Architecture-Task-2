@@ -22,6 +22,7 @@ inline ll tfm_and(ll inst)
 {
 	ll rs1 = (inst>>21)&((1<<5)-1),rs2 = (inst>>16)&((1<<5)-1),rt = (inst>>11)&((1<<5)-1),ret = 0;
 	ret += (rs2<<20); ret += (rs1<<15); ret += (rt<<7); ret += (7<<12); ret += 51;
+	cerr << "AND:" << endl << "rs1: "<< rs1 << " rs2: "  << rs2 << " rt: " << rt << endl;
 	return ret;
 }
 
@@ -29,6 +30,7 @@ inline ll tfm_or(ll inst)
 {
 	ll rs1 = (inst>>21)&((1<<5)-1),rs2 = (inst>>16)&((1<<5)-1),rt = (inst>>11)&((1<<5)-1),ret = 0;
 	ret += (rs2<<20); ret += (rs1<<15); ret += (rt<<7); ret += (6<<12); ret += 51;
+	cerr << "OR:" << endl << "rs1: "<< rs1 << " rs2: "  << rs2 << " rt: " << rt << endl;
 	return ret;
 }
 
@@ -36,6 +38,7 @@ inline ll tfm_xor(ll inst)
 {
 	ll rs1 = (inst>>21)&((1<<5)-1),rs2 = (inst>>16)&((1<<5)-1),rt = (inst>>11)&((1<<5)-1),ret = 0;
 	ret += (rs2<<20); ret += (rs1<<15); ret += (rt<<7); ret += (4<<12); ret += 51;
+	cerr << "XOR:" << endl << "rs1: "<< rs1 << " rs2: "  << rs2 << " rt: " << rt << endl;
 	return ret;
 }
 
@@ -44,6 +47,7 @@ inline ll tfm_andi(ll inst)
 	ll rs = (inst>>21)&((1<<5)-1),rt = (inst>>16)&((1<<5)-1);
 	ll imm = (inst&((1<<12)-1)),ret = imm<<20;
 	ret += (rs<<15); ret += (7<<12); ret += (rt<<7); ret += 19;
+	cerr << "ANDI:" << endl << "rs: "<< rs << " imm: "  << (ret>>20) << " rt: " << rt << endl;
 	return ret;
 }
 
@@ -52,6 +56,7 @@ inline ll tfm_ori(ll inst)
 	ll rs = (inst>>21)&((1<<5)-1),rt = (inst>>16)&((1<<5)-1);
 	ll imm = (inst&((1<<12)-1)),ret = imm<<20;
 	ret += (rs<<15); ret += (6<<12); ret += (rt<<7); ret += 19;
+	cerr << "ORI:" << endl << "rs: "<< rs << " imm: "  << (ret>>20) << " rt: " << rt << endl;
 	return ret;
 }
 
@@ -60,6 +65,7 @@ inline ll tfm_xori(ll inst)
 	ll rs = (inst>>21)&((1<<5)-1),rt = (inst>>16)&((1<<5)-1);
 	ll imm = (inst&((1<<12)-1)),ret = imm<<20;
 	ret += (rs<<15); ret += (4<<12); ret += (rt<<7); ret += 19;
+	cerr << "XORI:" << endl << "rs: "<< rs << " imm: "  << (ret>>20) << " rt: " << rt << endl;
 	return ret;
 }
 
@@ -67,6 +73,7 @@ inline ll tfm_lui(ll inst)
 {
 	ll rt = (inst>>16)&((1<<5)-1),imm = inst&((1<<16)-1),ret = 0;
 	ret += imm<<12; ret += rt<<7; ret += 55;
+	cerr << "LUI:" << endl << "imm: " << (ret>>12) << " rt: " << rt << endl;
 	return ret;
 }
 
@@ -77,7 +84,7 @@ int main()
 	ll inst;
 	while (cin >> hex >> inst)
 	{
-		cerr << inst << endl;
+		// cerr << inst << endl;
 		ll res;
 		switch (inst>>26)
 		{
@@ -85,9 +92,9 @@ int main()
 		case SPECIAL_OP:
 			switch (inst&((1<<6)-1))
 			{
-			case AND_OP: tfm_and(inst); break;
-			case OR_OP: tfm_or(inst); break;
-			case XOR_OP: tfm_xor(inst); break;
+			case AND_OP: res = tfm_and(inst); break;
+			case OR_OP: res = tfm_or(inst); break;
+			case XOR_OP: res = tfm_xor(inst); break;
 			default: res = 0;
 			}
 			break;
@@ -101,6 +108,7 @@ int main()
 		}
 		cout.width(8); cout.fill('0');
 		cout << hex << res << endl;
+		// cerr << hex << res << endl;
 	}
 	return 0;
 }
