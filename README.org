@@ -3,7 +3,7 @@
 This is the second homework of Computer Architecture, and the author is Lmxyy.
 * Aim
 Implement a *Risk-v* CPU using hardware description language(HDL).
-** Instructions [39%]
+** Instructions [33%]
 - [X] LUI
 - [ ] AUIPC
 - [ ] JAL
@@ -33,8 +33,14 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 - [X] SRA
 - [X] OR
 - [X] AND
-- [ ] LOAD
-- [ ] STORE
+- [ ] LB
+- [ ] LH
+- [ ] LW
+- [ ] LBU
+- [ ] LHU
+- [ ] SB
+- [ ] SH
+- [ ] SW
 - [ ] FENCE
 - [ ] FENCE.I
 * Feature
