@@ -35,7 +35,7 @@ module regfile(
 	  if((we == `WriteEnable) && (waddr != `RegNumLog2'h0)) 
 	    begin
 	       regs[waddr] <= wdata;
-	       $display("# %d",wdata);
+	       $display("writeback %d %d",waddr,wdata);
 	    end
      end
 
@@ -78,8 +78,8 @@ module regfile(
    				   else if((raddr == waddr) && (we == `WriteEnable) \ 
    	  				   && (re == `ReadEnable)) \ 
    						   rdata <= wdata; \ 
-   						     else if(re == `ReadEnable) \ 
-   								 rdata <= regs[raddr]; \ 
+   						     else if(re == `ReadEnable) \
+   								 rdata <= regs[raddr]; \
    								   else \ 
    								     rdata <= `ZeroWord; \ 
 									      end

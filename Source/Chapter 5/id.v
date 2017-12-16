@@ -181,6 +181,7 @@ module id(
 				alusel_o <= `EXE_RES_SHIFT;
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
+				wd_o <= inst_i[11:7];
 				instvalid <= `InstValid;
 			     end
 
@@ -220,6 +221,7 @@ module id(
 				alusel_o <= `EXE_RES_SHIFT;
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
+				wd_o <= inst_i[11:7];
 				instvalid <= `InstValid;
 			     end
 			   
@@ -230,6 +232,7 @@ module id(
 				alusel_o <= `EXE_RES_SHIFT;
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
+				wd_o <= inst_i[11:7];
 				instvalid <= `InstValid;
 			     end
 
@@ -249,7 +252,7 @@ module id(
 				alusel_o <= `EXE_RES_LOGIC; 
 				reg1_read_o <= 1'b1;	
 				reg2_read_o <= 1'b1;	  	
-				wd_o <= inst_i[11:7];	 
+				wd_o <= inst_i[11:7];
 				instvalid <= `InstValid;
 			     end
 
@@ -287,6 +290,8 @@ module id(
 		  reg1_read_o <= 1'b1;
 		  reg2_read_o <= 1'b0;
 		  imm <= {inst_i[31:12],12'h000};
+		  wd_o <= inst_i[11:7];
+		  instvalid <= `InstValid;
 	       end
 	     
 	     default: begin end
