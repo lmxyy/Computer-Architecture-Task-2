@@ -45,3 +45,6 @@ Not only I didn't had the warning "Not enough words in the file" as the fuction 
 ** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter5]]
 *** Added instructions: AND ANDI OR XOR XORI LUI SLL SLLI SRA SRAI SRL SRLI. But all were to be tested.
 *** Question: How did ~shiftres <= ({32{reg2_i[31]}} << (6'd32-{1'b0, reg1_i[4:0]}))| reg2_i >> reg1_i[4:0];~ implemented arithmetic left shift?
+* <2017-12-16 Sat>
+** Tested all the logic instructions.
+** Downloaded the [[https://github.com/riscv/riscv-gnu-toolchain][GNU toolchain for RISC-V, including GCC(Newlib)]](this could helpe you generate test instructions) but failed.
