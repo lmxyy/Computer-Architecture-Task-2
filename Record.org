@@ -84,6 +84,7 @@ Then add
 #+BEGIN_SRC sh
   export PATH="$PATH:/opt/riscv/bin"
 #+END_SRC
+Next, reboot or logout.
 *** Tranform the assembly to riscv instructions.
 Use the following command
 #+BEGIN_SRC sh
