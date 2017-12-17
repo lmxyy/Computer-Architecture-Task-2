@@ -1,4 +1,0 @@
-.org 0x0
-	.global _start
-_start:
-	xori a1, a0, 0x000
