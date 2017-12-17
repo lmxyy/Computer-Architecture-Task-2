@@ -48,3 +48,55 @@ Not only I didn't had the warning "Not enough words in the file" as the fuction 
 * <2017-12-16 Sat>
 ** Tested all the logic instructions.
 ** Downloaded the [[https://github.com/riscv/riscv-gnu-toolchain][GNU toolchain for RISC-V, including GCC(Newlib)]](this could helpe you generate test instructions) but failed.
+* <2017-12-17 Sun>
+** Installed the gun risc toolchain for almost all day.
+*** Clone the toolchain locally.
+**** If you could climb over the wall:
+Run the following codes:
+#+BEGIN_SRC sh
+  $ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
+#+END_SRC
+or alternatively:
+#+BEGIN_SRC sh
+  $ git clone https://github.com/riscv/riscv-gnu-toolchain
+  $ cd riscv-gnu-toolchain
+  $ git submodule update --init --recursive
+#+END_SRC
+The source codes are somewhat large, please wait patient.
+**** If you couldn't climb over the wall:
+Download the package at [[https://jbox.sjtu.edu.cn/link/view/8971e3226df74d35b2dcbe588397958f]]. Remember to depackage with the command:
+#+BEGIN_SRC sh
+  tar -zxvf riscv-gnu-toolchain.tar.gz
+#+END_SRC
+If you use git directly, maybe you couldn't clone all source codes which may cause that your toolchain cannot work normally.
+*** Make the source code.
+Run the following command to get riscv32.
+#+BEGIN_SRC sh
+  ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d
+  make
+#+END_SRC
+*** Modify your path variable.
+First run the command
+#+BEGIN_SRC sh
+  sudo gedit /etc/profile
+#+END_SRC
+Then add
+#+BEGIN_SRC sh
+  export PATH="$PATH:/opt/riscv/bin"
+#+END_SRC
+*** Tranform the assembly to riscv instructions.
+Use the following command
+#+BEGIN_SRC sh
+  riscv32-unknown-elf-as -o $1.o -march=rv32i $1.s 
+  riscv32-unknown-elf-ld $1.o -o $1.om
+  riscv32-unknown-elf-objcopy -O binary $1.om $1.bin
+  ../../Tools/Bin_to_Text $1.bin > instr.data
+  rm $1.o $1.om $1.bin
+#+END_SRC
+which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembly source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.
+** Tried to transform a binary file to a text file.
+The source code was [[Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
+** Question: How to write riscv assembly correctly?
+
+
+
