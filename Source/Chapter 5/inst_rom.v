@@ -10,9 +10,9 @@ module inst_rom(
 		output reg [`InstBus] 	  inst
 	      );
 
-   reg[`InstBus]  inst_mem[0:7];
+   reg[`InstBus]  inst_mem[0:1];
    
-   initial $readmemh ("inst_rom.data",inst_mem);
+   initial $readmemb ("instr.data",inst_mem);
    // initial
    //   begin
    // 	inst_mem[0] = 32'b00010000000000000110000010010011;

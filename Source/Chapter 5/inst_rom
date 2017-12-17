@@ -1,0 +1,50 @@
+#! /usr/bin/vvp
+:ivl_version "10.1 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x5567758d82b0 .scope module, "inst_rom" "inst_rom" 2 7;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "ce"
+    .port_info 1 /INPUT 32 "addr"
+    .port_info 2 /OUTPUT 32 "inst"
+o0x7f2dc09d3018 .functor BUFZ 32, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; HiZ drive
+v0x5567758d8430_0 .net "addr", 31 0, o0x7f2dc09d3018;  0 drivers
+o0x7f2dc09d3048 .functor BUFZ 1, C4<z>; HiZ drive
+v0x5567758f84d0_0 .net "ce", 0 0, o0x7f2dc09d3048;  0 drivers
+v0x5567758f8590_0 .var "inst", 31 0;
+v0x5567758f8650 .array "inst_mem", 1 0, 31 0;
+v0x5567758f8650_0 .array/port v0x5567758f8650, 0;
+v0x5567758f8650_1 .array/port v0x5567758f8650, 1;
+E_0x5567758d59a0 .event edge, v0x5567758f84d0_0, v0x5567758d8430_0, v0x5567758f8650_0, v0x5567758f8650_1;
+    .scope S_0x5567758d82b0;
+T_0 ;
+    %vpi_call 2 15 "$readmem", "memory.bin", v0x5567758f8650 {0 0 0};
+    %end;
+    .thread T_0;
+    .scope S_0x5567758d82b0;
+T_1 ;
+    %wait E_0x5567758d59a0;
+    %load/vec4 v0x5567758f84d0_0;
+    %cmpi/e 0, 0, 1;
+    %jmp/0xz  T_1.0, 4;
+    %pushi/vec4 0, 0, 32;
+    %assign/vec4 v0x5567758f8590_0, 0;
+    %jmp T_1.1;
+T_1.0 ;
+    %load/vec4 v0x5567758d8430_0;
+    %parti/s 17, 2, 3;
+    %ix/vec4 4;
+    %load/vec4a v0x5567758f8650, 4;
+    %assign/vec4 v0x5567758f8590_0, 0;
+T_1.1 ;
+    %jmp T_1;
+    .thread T_1, $push;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "inst_rom.v";
