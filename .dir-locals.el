@@ -1,0 +1,1 @@
+((asm-mode . ((comment-start . "#"))))
