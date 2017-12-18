@@ -50,3 +50,5 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 * Reference
 + [[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
 + [[https://github.com/riscv/riscv-gnu-toolchain][GNU toolchain for RISC-V, including GCC(Newlib)]]
++ [[https://github.com/sxtyzhangzk/cpu-judge][cpu-judge]]
+
