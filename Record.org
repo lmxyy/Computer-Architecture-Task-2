@@ -72,8 +72,8 @@ If you use git directly, maybe you couldn't clone all source codes which may cau
 *** Make the source code.
 Run the following command to get riscv32.
 #+BEGIN_SRC sh
-  ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d
-  make
+  sudo ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d
+  sudo make
 #+END_SRC
 *** Modify your path variable.
 First run the command
@@ -155,3 +155,6 @@ The source code was [[Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
 ** Question: How to write riscv assembler correctly?
 * <2017-12-18 Mon>
 ** Tested all the shift instructions.
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter7]]
+Implemented the arithmetic instructions, but still had some bugs.
+** Listed the format of all instructions that I had implemented in [[file:README.org::Format%20of%20Riscv32%20Assembler][README.org]].

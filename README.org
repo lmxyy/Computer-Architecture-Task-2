@@ -45,21 +45,21 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 - [ ] FENCE.I
 * Format of Riscv32 Assembler
 |-------------+-----------------------------|
-| Instruction | format                      |
+| Instruction | Format                      |
 |-------------+-----------------------------|
 | LUI         |  ~lui rd, imm(20bits)~      |
 |-------------+-----------------------------|
-| ADDI        | ~addi rd, rs, imm(12bits)~  |
+| ADDI        | ~addi rd, rs, imm(11bits)~  |
 |-------------+-----------------------------|
-| SLTI        | ~slti rd, rs, imm(12bits)~  |
+| SLTI        | ~slti rd, rs, imm(11bits)~  |
 |-------------+-----------------------------|
-| SLTIU       | ~sltiu rd, rs, imm(12bits)~ |
+| SLTIU       | ~sltiu rd, rs, imm(11bits)~ |
 |-------------+-----------------------------|
-| XORI        | ~xori rd, rs, imm(12bits)~  |
+| XORI        | ~xori rd, rs, imm(11bits)~  |
 |-------------+-----------------------------|
-| ORI         | ~ori rd, rs, imm(12bits)~   |
+| ORI         | ~ori rd, rs, imm(11bits)~   |
 |-------------+-----------------------------|
-| ANDI        | ~andi rd, rs, imm(12bits)~  |
+| ANDI        | ~andi rd, rs, imm(11bits)~  |
 |-------------+-----------------------------|
 | SLLI        | ~slli rd, rs, imm(5bits)~   |
 |-------------+-----------------------------|
