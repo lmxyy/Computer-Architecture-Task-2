@@ -111,6 +111,16 @@ The source code was [[Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
   typedef long long ll;
   const int NSIZE = 8;
 
+  inline ll convert(ll num)
+  {
+      ll a[4] = {0,0,0,0},ret = 0;
+      for (int i = 0;i < 4;++i,num >>= 8)
+          a[i] = num&((1<<8)-1);
+      for (int i = 0;i < 4;++i)
+          ret = (ret<<8)|a[i];
+      return ret;
+  }
+
   int main(int argc,char *argv[])
   {
       if (argc == 1||argc > 2)
@@ -137,7 +147,7 @@ The source code was [[Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
                   num |= ((c&(1<<i))>0)<<(now++);
           }
           cout.width(8); cout.fill('0');
-          cout << hex << num << endl;
+          cout << hex << convert(num) << endl;
       }
       return 0;
   }
