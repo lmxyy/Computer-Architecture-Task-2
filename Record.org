@@ -62,9 +62,9 @@ or alternatively:
   $ cd riscv-gnu-toolchain
   $ git submodule update --init --recursive
 #+END_SRC
-The source codes are somewhat large, please wait patient.
+The source codes are somewhat large, please wait patiently.
 **** If you couldn't climb over the wall:
-Download the package at [[https://jbox.sjtu.edu.cn/link/view/8971e3226df74d35b2dcbe588397958f]]. Remember to depackage with the command:
+Download the package at [[https://jbox.sjtu.edu.cn/link/view/8971e3226df74d35b2dcbe588397958f]](Provided by Zhanghao Wu). Remember to depackage with the command:
 #+BEGIN_SRC sh
   tar -zxvf riscv-gnu-toolchain.tar.gz
 #+END_SRC
@@ -85,7 +85,7 @@ Then add
   export PATH="$PATH:/opt/riscv/bin"
 #+END_SRC
 Next, reboot or logout.
-*** Tranform the assembly to riscv instructions.
+*** Tranform the assembler to riscv instructions.
 Use the following command
 #+BEGIN_SRC sh
   riscv32-unknown-elf-as -o $1.o -march=rv32i $1.s 
@@ -94,10 +94,52 @@ Use the following command
   ../../Tools/Bin_to_Text $1.bin > instr.data
   rm $1.o $1.om $1.bin
 #+END_SRC
-which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembly source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.
+which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembler source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.
 ** Tried to transform a binary file to a text file.
 The source code was [[Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
-** Question: How to write riscv assembly correctly?
+#+BEGIN_SRC C++
+  #include<cstring>
+  #include<iomanip>
+  #include<cstdio>
+  #include<cstdlib>
+  #include<algorithm>
+  #include<iostream>
+  #include<fstream>
+  using namespace std;
 
+  typedef long long ll;
+  const int NSIZE = 8;
 
+  int main(int argc,char *argv[])
+  {
+      if (argc == 1||argc > 2)
+      {
+          cerr << "Please input an binary file." << endl;
+          return 0;
+      }
+      ifstream ifile(argv[1],ios::in|ios::binary);
+      if (!ifile)
+      {
+          cerr << "Cannot open file." << endl;
+          return 0;
+      }
+      int head = ifile.tellg(),tail = (ifile.seekg(0,ios::end)).tellg();
+      ifile.seekg(0,ios::beg);
+      int N = (tail-head)/4;
+      while (N--)
+      {
+          ll num = 0; int now = 0;
+          for (int k = 0;k < 4;++k)
+          {
+              unsigned char c; ifile >> c;
+              for (int i = 0;i < NSIZE;++i)
+                  num |= ((c&(1<<i))>0)<<(now++);
+          }
+          cout.width(8); cout.fill('0');
+          cout << hex << num << endl;
+      }
+      return 0;
+  }
 
+#+END_SRC
+** Question: How to write riscv assembler correctly?
