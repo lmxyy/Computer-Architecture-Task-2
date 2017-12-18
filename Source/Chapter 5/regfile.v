@@ -30,12 +30,11 @@ module regfile(
    always @ (posedge clk) 
      begin
 	
-	// $display("* %d %d %d %d",we,wdata,rst,waddr);
 	if (rst == `RstDisable) 
 	  if((we == `WriteEnable) && (waddr != `RegNumLog2'h0)) 
 	    begin
 	       regs[waddr] <= wdata;
-	       $display("writeback %d %d",waddr,wdata);
+	       $display("writeback %d %h",waddr,wdata);
 	    end
      end
 

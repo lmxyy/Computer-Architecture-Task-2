@@ -25,6 +25,7 @@ module ex(
    reg [`RegBus] 		   logicout;
    reg [`RegBus] 		   shiftres;
 
+   // Logic
    always @ (*)
      begin
 	if (rst == `RstEnable) logicout <= `ZeroWord;
@@ -39,15 +40,16 @@ module ex(
 	  end // else: !if(rst == `RstEnable)
      end // always @ (*)
 
+   // Shift
    always @ (*) begin
       if(rst == `RstEnable) shiftres <= `ZeroWord;
       else 
 	begin
 	   case (aluop_i)
-	     `EXE_SLL_OP: shiftres <= reg2_i << reg1_i[4:0];
-	     `EXE_SRL_OP: shiftres <= reg2_i >> reg1_i[4:0];
+	     `EXE_SLL_OP: shiftres <= reg1_i << reg2_i[4:0];
+	     `EXE_SRL_OP: shiftres <= reg1_i >> reg2_i[4:0];
 	     `EXE_SRA_OP:
-	       shiftres <= ({32{reg2_i[31]}} << (6'd32-{1'b0, reg1_i[4:0]}))| reg2_i >> reg1_i[4:0];
+	       shiftres <= ({32{reg1_i[31]}} << (6'd32-{1'b0, reg2_i[4:0]}))| reg1_i >> reg2_i[4:0];
 	     default: shiftres <= `ZeroWord;	     
 	   endcase // case (aluop_i)
 	end // else: !if(rst == `RstEnable)

@@ -81,9 +81,9 @@ module id(
 			     wreg_o <= `WriteEnable;
 			     aluop_o <= `EXE_SLL_OP;
 			     alusel_o <= `EXE_RES_SHIFT;
-			     reg1_read_o <= 1'b0;
-			     reg2_read_o <= 1'b1;
-			     imm <= {27'h0,inst_i[4:0]};
+			     reg1_read_o <= 1'b1;
+			     reg2_read_o <= 1'b0;
+			     imm <= {27'h0,inst_i[24:20]};
 			     wd_o <= inst_i[11:7];
 			     instvalid = `InstValid;
 			  end // case: 7'b0000000
@@ -114,9 +114,9 @@ module id(
 				wreg_o <= `WriteEnable;
 				aluop_o <= `EXE_SRL_OP;
 				alusel_o <= `EXE_RES_SHIFT;
-				reg1_read_o <= 1'b0;
-				reg2_read_o <= 1'b1;
-				imm <= {27'h0,inst_i[4:0]};
+				reg1_read_o <= 1'b1;
+				reg2_read_o <= 1'b0;
+				imm <= {27'h0,inst_i[24:20]};
 				wd_o <= inst_i[11:7];
 				instvalid = `InstValid;	  
 			     end // case: 7'b0000000
@@ -126,9 +126,9 @@ module id(
 				wreg_o <= `WriteEnable;
 				aluop_o <= `EXE_SRA_OP;
 				alusel_o <= `EXE_RES_SHIFT;
-				reg1_read_o <= 1'b0;
-				reg2_read_o <= 1'b1;
-				imm <= {27'h0,inst_i[4:0]};
+				reg1_read_o <= 1'b1;
+				reg2_read_o <= 1'b0;
+				imm <= {27'h0,inst_i[24:20]};
 				wd_o <= inst_i[11:7];
 				instvalid = `InstValid;			 
 			     end // case: 7'b0100000
