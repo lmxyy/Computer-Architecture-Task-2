@@ -3,7 +3,7 @@
 This is the second homework of Computer Architecture, and the author is Lmxyy.
 * Aim
 Implement a *Risk-v* CPU using hardware description language(HDL).
-** Instructions [33%]
+** Instructions [51%]
 - [X] LUI
 - [ ] AUIPC
 - [ ] JAL
@@ -14,20 +14,20 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 - [ ] BGE
 - [ ] BLTU
 - [ ] BGEU
-- [ ] ADDI
-- [ ] SLTI
-- [ ] SLTIU
+- [X] ADDI
+- [X] SLTI
+- [X] SLTIU
 - [X] XORI
 - [X] ORI
 - [X] ANDI
 - [X] SLLI
 - [X] SRLI
 - [X] SRAI
-- [ ] ADD
-- [ ] SUB
+- [X] ADD
+- [X] SUB
 - [X] SLL
-- [ ] SLT
-- [ ] SLTU
+- [X] SLT
+- [X] SLTU
 - [X] XOR
 - [X] SRL
 - [X] SRA
@@ -43,6 +43,48 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 - [ ] SW
 - [ ] FENCE
 - [ ] FENCE.I
+* Format of Riscv32 Assembler
+|-------------+-----------------------------|
+| Instruction | format                      |
+|-------------+-----------------------------|
+| LUI         |  ~lui rd, imm(20bits)~      |
+|-------------+-----------------------------|
+| ADDI        | ~addi rd, rs, imm(12bits)~  |
+|-------------+-----------------------------|
+| SLTI        | ~slti rd, rs, imm(12bits)~  |
+|-------------+-----------------------------|
+| SLTIU       | ~sltiu rd, rs, imm(12bits)~ |
+|-------------+-----------------------------|
+| XORI        | ~xori rd, rs, imm(12bits)~  |
+|-------------+-----------------------------|
+| ORI         | ~ori rd, rs, imm(12bits)~   |
+|-------------+-----------------------------|
+| ANDI        | ~andi rd, rs, imm(12bits)~  |
+|-------------+-----------------------------|
+| SLLI        | ~slli rd, rs, imm(5bits)~   |
+|-------------+-----------------------------|
+| SRAI        | ~srai rd, rs, imm(5bits)~   |
+|-------------+-----------------------------|
+| ADD         | ~add rd, rs1, rs2~          |
+|-------------+-----------------------------|
+| SUB         | ~sub rd, rs1, rs2~          |
+|-------------+-----------------------------|
+| SLL         | ~sll rd, rs1, rs2~          |
+|-------------+-----------------------------|
+| SLT         | ~slt rd, rs1, rs2~          |
+|-------------+-----------------------------|
+| SLTU        | ~sltu rd, rs1, rs2~         |
+|-------------+-----------------------------|
+| XOR         | ~xor rd, rs1, rs2~          |
+|-------------+-----------------------------|
+| SRL         | ~srl rd, rs1, rs2~          |
+|-------------+-----------------------------|
+| SRA         | ~sra rd, rs1, rs2~          |
+|-------------+-----------------------------|
+| OR          | ~or rd, rs1, rs2~           |
+|-------------+-----------------------------|
+| AND         | ~and rd, rs1, rs2~          |
+|-------------+-----------------------------|
 * Feature
 + The instruction set arthitecture(ISA) is RV32I Base Integer Instruction Set, Version 2.0.
 + The implementation technology is FPGA.
