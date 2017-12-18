@@ -16,16 +16,14 @@ module ex(
 	  input wire [`RegAddrBus] wd_i,
 	  input wire 		   wreg_i,
 
-
 	  output reg [`RegAddrBus] wd_o,
 	  output reg 		   wreg_o,
 	  output reg [`RegBus] 	   wdata_o
 	  );
    
+   // --------------------------------------------------Logic--------------------------------------------------
    reg [`RegBus] 		   logicout;
-   reg [`RegBus] 		   shiftres;
 
-   // Logic
    always @ (*)
      begin
 	if (rst == `RstEnable) logicout <= `ZeroWord;
@@ -40,7 +38,9 @@ module ex(
 	  end // else: !if(rst == `RstEnable)
      end // always @ (*)
 
-   // Shift
+   // --------------------------------------------------Shift--------------------------------------------------
+   reg [`RegBus] 		   shiftres;
+
    always @ (*) begin
       if(rst == `RstEnable) shiftres <= `ZeroWord;
       else 
@@ -55,7 +55,36 @@ module ex(
 	end // else: !if(rst == `RstEnable)
    end // always @ (*)
    
-			    
+   // --------------------------------------------------Arithmetic--------------------------------------------------
+   wire reg1_eq_reg2;
+   wire reg1_lt_reg2;
+   reg [`RegBus] arithmeticres;
+   wire [`RegBus] reg2_i_mux;
+   wire [`RegBus] reg1_i_not;
+   wire [`RegBus] result_sum;
+
+   assign reg2_i_mux = ((aluop_i == `EXE_SUB_OP)||(aluop_i == `EXE_SLT_OP))?(~reg2_i)+1:reg2_i;
+   assign result_sum = reg1_i+reg2_i_mux;
+   assign reg1_lt_reg2 = (aluop_i == `EXE_SLT_OP)?((reg1_i[31]&&!reg2_i[31])||(!reg1_i[31]&&!reg2_i[31]&&result_sum[31])
+						   ||(reg1_i[31]&&reg2_i[31]&&result_sum[31])):(reg1_i < reg2_i);
+
+   always @ (*)
+     begin
+	if (alusel_i == `EXE_RES_ARITHMETIC)
+	  $display("# %h %h",reg1_i,reg2_i);
+	
+	if (rst == `RstEnable) arithmeticres <= `ZeroWord;
+	else
+	  case (aluop_i)	
+	    `EXE_SLT_OP,`EXE_SLTU_OP: arithmeticres <= reg1_lt_reg2;
+	    `EXE_ADD_OP,`EXE_SUB_OP: arithmeticres <= result_sum;
+	    default: arithmeticres <= `ZeroWord;
+	  endcase // case (aluop_i)
+     end // always @ (*)
+      
+   // ####################################################################################################
+   // ####################################################################################################
+   
    always @ (*) 
      begin
 	wd_o <= wd_i;
@@ -63,6 +92,7 @@ module ex(
 	case (alusel_i) 
 	  `EXE_RES_LOGIC: wdata_o <= logicout;
 	  `EXE_RES_SHIFT: wdata_o <= shiftres;
+	  `EXE_RES_ARITHMETIC: wdata_o <= arithmeticres;
 	  default: wdata_o <= `ZeroWord;
 	endcase // case (alusel_i)
      end // always @ (*)

@@ -58,7 +58,7 @@ module id(
 	begin
 	   aluop_o <= `EXE_NOP_OP;
 	   alusel_o <= `EXE_RES_NOP;
-	   wd_o <= inst_i[20:16];
+	   wd_o <= inst_i[11:7];
 	   wreg_o <= `WriteDisable;
 	   reg1_read_o <= 1'b0;
 	   reg2_read_o <= 1'b0;
@@ -72,26 +72,58 @@ module id(
 	       begin
 		  case (inst_i[14:12])
 
+		    3'b000:
+		      begin	// ADDI
+			 wreg_o <= `WriteEnable;
+			 aluop_o <= `EXE_ADD_OP;
+			 alusel_o <= `EXE_RES_ARITHMETIC;
+			 reg1_read_o <= 1'b1;
+			 reg2_read_o <= 1'b0;
+			 imm <= {20'h0,inst_i[31:20]};
+			 instvalid <= `InstValid;
+		      end // case: 3'b000
+		    
 		    3'b001:
 		      begin
-		      case (inst_i[31:25])
+			 case (inst_i[31:25])
 		    
-			7'b0000000:
-			  begin	// SLLI
-			     wreg_o <= `WriteEnable;
-			     aluop_o <= `EXE_SLL_OP;
-			     alusel_o <= `EXE_RES_SHIFT;
-			     reg1_read_o <= 1'b1;
-			     reg2_read_o <= 1'b0;
-			     imm <= {27'h0,inst_i[24:20]};
-			     wd_o <= inst_i[11:7];
-			     instvalid = `InstValid;
-			  end // case: 7'b0000000
-			
-			default: begin end
+			   7'b0000000:
+			     begin	// SLLI
+				wreg_o <= `WriteEnable;
+				aluop_o <= `EXE_SLL_OP;
+				alusel_o <= `EXE_RES_SHIFT;
+				reg1_read_o <= 1'b1;
+				reg2_read_o <= 1'b0;
+				imm <= {27'h0,inst_i[24:20]};
+				instvalid = `InstValid;
+			     end // case: 7'b0000000
+			   
+			   default: begin end
 
-		      endcase // case (inst_i[31:26])
+			 endcase // case (inst_i[31:26])
 		      end // case: 3'b001
+
+		    3'b010:
+		      begin	// SLTI
+			 wreg_o <= `WriteEnable;
+			 aluop_o <= `EXE_SLT_OP;
+			 alusel_o <= `EXE_RES_ARITHMETIC;
+			 reg1_read_o <= 1'b1;
+			 reg2_read_o <= 1'b0;
+			 imm <= {20'h0,inst_i[31:20]};
+			 instvalid <= `InstValid;
+		      end // case: 3'b010
+
+		    3'b011:
+		      begin	// SLTIU
+			 wreg_o <= `WriteEnable;
+			 aluop_o <= `EXE_SLTU_OP;
+			 alusel_o <= `EXE_RES_ARITHMETIC;
+			 reg1_read_o <= 1'b1;
+			 reg2_read_o <= 1'b0;
+			 imm <= {20'h0,inst_i[31:20]};
+			 instvalid <= `InstValid;
+		      end // case: 3'b011
 		    
 		    3'b100:
 		      begin	// XORI
@@ -100,8 +132,7 @@ module id(
 			 alusel_o <= `EXE_RES_LOGIC; 
 			 reg1_read_o <= 1'b1;	
 			 reg2_read_o <= 1'b0;	  	
-			 imm <= {16'h0,inst_i[31:20]};		
-			 wd_o <= inst_i[11:7];
+			 imm <= {20'h0,inst_i[31:20]};		
 			 instvalid <= `InstValid;
 		      end // case: 3'b100
 		    
@@ -117,7 +148,6 @@ module id(
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b0;
 				imm <= {27'h0,inst_i[24:20]};
-				wd_o <= inst_i[11:7];
 				instvalid = `InstValid;	  
 			     end // case: 7'b0000000
 			   
@@ -129,7 +159,6 @@ module id(
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b0;
 				imm <= {27'h0,inst_i[24:20]};
-				wd_o <= inst_i[11:7];
 				instvalid = `InstValid;			 
 			     end // case: 7'b0100000
 			   
@@ -145,9 +174,9 @@ module id(
 			 alusel_o <= `EXE_RES_LOGIC; 
 			 reg1_read_o <= 1'b1;	
 			 reg2_read_o <= 1'b0;	  	
-			 imm <= {16'h0,inst_i[31:20]};		
-			 wd_o <= inst_i[11:7];
+			 imm <= {20'h0,inst_i[31:20]};		
 			 instvalid <= `InstValid;
+			 $display("ORI");
 		      end // case: 3'b110
 
 		    3'b111:
@@ -157,9 +186,9 @@ module id(
 			 alusel_o <= `EXE_RES_LOGIC; 
 			 reg1_read_o <= 1'b1;	
 			 reg2_read_o <= 1'b0;	  	
-			 imm <= {16'h0,inst_i[31:20]};		
-			 wd_o <= inst_i[11:7];
+			 imm <= {20'h0,inst_i[31:20]};		
 			 instvalid <= `InstValid;
+			 $display("ANDI");
 		      end // case: 3'b111
 		    
 		    default: begin end
@@ -170,6 +199,37 @@ module id(
 	       begin
 		  case (inst_i[14:12])
 
+		    3'b000:
+		      begin
+			 case (inst_i[31:25])
+
+			   7'b0000000:
+			     begin // ADD
+				wreg_o <= `WriteEnable;
+				aluop_o <= `EXE_ADD_OP;
+				alusel_o <= `EXE_RES_ARITHMETIC;
+				reg1_read_o <= 1'b1;
+				reg2_read_o <= 1'b1;
+				instvalid <= `InstValid;
+				$display("ADD");
+			     end
+
+			   7'b0100000:
+			     begin // SUB
+				wreg_o <= `WriteEnable;
+				aluop_o <= `EXE_SUB_OP;
+				alusel_o <= `EXE_RES_ARITHMETIC;
+				reg1_read_o <= 1'b1;
+				reg2_read_o <= 1'b1;
+				instvalid <= `InstValid;
+				$display("SUB");
+			     end
+			   
+			   default: begin end
+
+			 endcase // case (inst_i[31:25])
+		      end // case: 3'b000
+		    
 		    3'b001:
 		      begin
 			 case (inst_i[31:25])
@@ -181,14 +241,54 @@ module id(
 				alusel_o <= `EXE_RES_SHIFT;
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
-				wd_o <= inst_i[11:7];
 				instvalid <= `InstValid;
+				$display("SLL");
 			     end
 
 			   default: begin end
 			   
 			 endcase // case (inst_i[31:25])
 		      end // case: 3'b001
+
+		    3'b010:
+		      begin
+		    	 case (inst_i[31:25])
+
+		    	   7'b0000000:
+		    	     begin // SLT
+		    		wreg_o <= `WriteEnable;
+		    		aluop_o <= `EXE_SLT_OP;
+		    		alusel_o <= `EXE_RES_ARITHMETIC;
+		    		reg1_read_o <= 1'b1;
+		    		reg2_read_o <= 1'b1;
+		    		instvalid <= `InstValid;
+				$display("SLT");
+		    	     end
+
+		    	   default: begin end
+		
+		    	 endcase // case (inst_i[31:25])
+		      end // case: 3'b010
+
+		    3'b011:
+		      begin
+		    	 case (inst_i[31:25])
+
+		    	   7'b0000000:
+		    	     begin // SLTU
+		    		wreg_o <= `WriteEnable;
+		    		aluop_o <= `EXE_SLTU_OP;
+		    		alusel_o <= `EXE_RES_ARITHMETIC;
+		    		reg1_read_o <= 1'b1;
+		    		reg2_read_o <= 1'b1;
+		    		instvalid <= `InstValid;
+				$display("SLTU");
+		    	     end
+
+		    	   default: begin end
+
+		    	 endcase // case (inst_i[31:25])
+		      end // case: 3'b011
 		    
 		    3'b100:
 		      begin
@@ -201,8 +301,8 @@ module id(
 				alusel_o <= `EXE_RES_LOGIC; 
 				reg1_read_o <= 1'b1;	
 				reg2_read_o <= 1'b1;	  	
-				wd_o <= inst_i[11:7];	 
 				instvalid <= `InstValid;
+				$display("XOR");
 			     end
 			   
 			   default: begin end
@@ -221,8 +321,8 @@ module id(
 				alusel_o <= `EXE_RES_SHIFT;
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
-				wd_o <= inst_i[11:7];
 				instvalid <= `InstValid;
+				$display("SRL");
 			     end
 			   
 			   7'b0100000:
@@ -232,8 +332,8 @@ module id(
 				alusel_o <= `EXE_RES_SHIFT;
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
-				wd_o <= inst_i[11:7];
 				instvalid <= `InstValid;
+				$display("SRA");
 			     end
 
 			   default: begin end
@@ -252,8 +352,8 @@ module id(
 				alusel_o <= `EXE_RES_LOGIC; 
 				reg1_read_o <= 1'b1;	
 				reg2_read_o <= 1'b1;	  	
-				wd_o <= inst_i[11:7];
 				instvalid <= `InstValid;
+				$display("OR");
 			     end
 
 			   default: begin end
@@ -271,8 +371,8 @@ module id(
 				alusel_o <= `EXE_RES_LOGIC; 
 				reg1_read_o <= 1'b1;	
 				reg2_read_o <= 1'b1;	  	
-				wd_o <= inst_i[11:7];	 
 				instvalid <= `InstValid;
+				$display("AND");
 			     end
 
 			   default: begin end
@@ -290,8 +390,8 @@ module id(
 		  reg1_read_o <= 1'b1;
 		  reg2_read_o <= 1'b0;
 		  imm <= {inst_i[31:12],12'h000};
-		  wd_o <= inst_i[11:7];
 		  instvalid <= `InstValid;
+		  $display("LUI");
 	       end
 	     
 	     default: begin end
@@ -312,8 +412,6 @@ module id(
  							    else if(reg_read_o == 1'b0) reg_o <= imm; \ 
  							      else reg_o <= `ZeroWord; \ 
 									    end
-
-   
    
    `GET_OPRAND(reg1_o,reg1_read_o,reg1_data_i,reg1_addr_o)
    `GET_OPRAND(reg2_o,reg2_read_o,reg2_data_i,reg2_addr_o)

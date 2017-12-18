@@ -59,24 +59,25 @@
 `define EXE_AND_OP   8'b00100100
 `define EXE_OR_OP    8'b00100101
 `define EXE_XOR_OP  8'b00100110
-`define EXE_NOR_OP  8'b00100111
-`define EXE_ANDI_OP  8'b01011001
 `define EXE_ORI_OP  8'b01011010
 `define EXE_XORI_OP  8'b01011011
 `define EXE_LUI_OP  8'b01011100   
 
 `define EXE_SLL_OP  8'b01111100
-`define EXE_SLLV_OP  8'b00000100
 `define EXE_SRL_OP  8'b00000010
-`define EXE_SRLV_OP  8'b00000110
 `define EXE_SRA_OP  8'b00000011
-`define EXE_SRAV_OP  8'b00000111
+
+`define EXE_SLT_OP 8'b00101010
+`define EXE_SLTU_OP 8'b00101011
+`define EXE_ADD_OP 8'b00100000
+`define EXE_SUB_OP 8'b00100010
 
 `define EXE_NOP_OP    8'b00000000
 
 //AluSel
 `define EXE_RES_LOGIC 3'b001
 `define EXE_RES_SHIFT 3'b010
+`define EXE_RES_ARITHMETIC 3'b100
 
 `define EXE_RES_NOP 3'b000
 
@@ -84,7 +85,7 @@
 //Ö¸Áî´æ´¢Æ÷inst_rom
 `define InstAddrBus 31:0
 `define InstBus 31:0
-`define InstMemNum 131071
+`define InstMemNum 100
 `define InstMemNumLog2 17
 
 
