@@ -176,7 +176,6 @@ module id(
 			 reg2_read_o <= 1'b0;	  	
 			 imm <= {20'h0,inst_i[31:20]};		
 			 instvalid <= `InstValid;
-			 $display("ORI");
 		      end // case: 3'b110
 
 		    3'b111:
@@ -188,7 +187,6 @@ module id(
 			 reg2_read_o <= 1'b0;	  	
 			 imm <= {20'h0,inst_i[31:20]};		
 			 instvalid <= `InstValid;
-			 $display("ANDI");
 		      end // case: 3'b111
 		    
 		    default: begin end
@@ -211,7 +209,6 @@ module id(
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
 				instvalid <= `InstValid;
-				$display("ADD %d %d",inst_i[19:15],inst_i[24:20]);
 			     end
 
 			   7'b0100000:
@@ -222,7 +219,6 @@ module id(
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
 				instvalid <= `InstValid;
-				$display("SUB");
 			     end
 			   
 			   default: begin end
@@ -242,7 +238,6 @@ module id(
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
 				instvalid <= `InstValid;
-				$display("SLL");
 			     end
 
 			   default: begin end
@@ -262,7 +257,6 @@ module id(
 		    		reg1_read_o <= 1'b1;
 		    		reg2_read_o <= 1'b1;
 		    		instvalid <= `InstValid;
-				$display("SLT");
 		    	     end
 
 		    	   default: begin end
@@ -282,7 +276,6 @@ module id(
 		    		reg1_read_o <= 1'b1;
 		    		reg2_read_o <= 1'b1;
 		    		instvalid <= `InstValid;
-				$display("SLTU");
 		    	     end
 
 		    	   default: begin end
@@ -302,7 +295,6 @@ module id(
 				reg1_read_o <= 1'b1;	
 				reg2_read_o <= 1'b1;	  	
 				instvalid <= `InstValid;
-				$display("XOR");
 			     end
 			   
 			   default: begin end
@@ -322,7 +314,6 @@ module id(
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
 				instvalid <= `InstValid;
-				$display("SRL");
 			     end
 			   
 			   7'b0100000:
@@ -333,7 +324,6 @@ module id(
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
 				instvalid <= `InstValid;
-				$display("SRA");
 			     end
 
 			   default: begin end
@@ -353,7 +343,6 @@ module id(
 				reg1_read_o <= 1'b1;	
 				reg2_read_o <= 1'b1;	  	
 				instvalid <= `InstValid;
-				$display("OR");
 			     end
 
 			   default: begin end
@@ -372,7 +361,6 @@ module id(
 				reg1_read_o <= 1'b1;	
 				reg2_read_o <= 1'b1;	  	
 				instvalid <= `InstValid;
-				$display("AND");
 			     end
 
 			   default: begin end
@@ -391,7 +379,6 @@ module id(
 		  reg2_read_o <= 1'b0;
 		  imm <= {inst_i[31:12],12'h000};
 		  instvalid <= `InstValid;
-		  $display("LUI");
 	       end
 	     
 	     default: begin end

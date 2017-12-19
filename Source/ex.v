@@ -70,9 +70,6 @@ module ex(
 
    always @ (*)
      begin
-	if (alusel_i == `EXE_RES_ARITHMETIC)
-	  $display("# %h %h",reg1_i,reg2_i);
-	
 	if (rst == `RstEnable) arithmeticres <= `ZeroWord;
 	else
 	  case (aluop_i)	
