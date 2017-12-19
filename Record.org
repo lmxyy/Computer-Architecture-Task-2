@@ -1,3 +1,4 @@
+#+AUTHOR: Lmxyy
 #+OPTIONS: ^:nil
 #+DESCRIPTION: This file is for recording what I do every day during the project.
 * <2017-12-11 Mon>
@@ -87,11 +88,11 @@ Then add
 Next, reboot or logout.
 *** Tranform the assembler to riscv instructions.
 Use the following command
-#+INCLUDE: "Source/get_instr.sh" src sh
+#+INCLUDE:"Source/get_instr.sh" src sh
 which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembler source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.
 ** Tried to transform a binary file to a text file.
-The source code was [[Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
-#+INCLUDE: "Tools/Bin_to_Text.cpp" src C++
+The source code was [[file:Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
+#+INCLUDE:"Tools/Bin_to_Text.cpp" src C++
 ** Question: How to write riscv assembler correctly?
 * <2017-12-18 Mon>
 ** Tested all the shift instructions.
