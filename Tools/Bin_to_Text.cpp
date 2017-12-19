@@ -41,12 +41,14 @@ int main(int argc,char *argv[])
         ll num = 0; int now = 0;
         for (int k = 0;k < 4;++k)
         {
-            unsigned char c; ifile >> c;
-            for (int i = 0;i < NSIZE;++i)
-                num |= ((c&(1<<i))>0)<<(now++);
+            char c; ifile.read((char *)&c,sizeof(char));
+            for (int i = 0;i < NSIZE;++i,c >>= 1)
+                num |= (c&1)<<(now++);
         }
         cout.width(8); cout.fill('0');
         cout << hex << convert(num) << endl;
+		cerr << hex << num << endl;
     }
+	cerr << "Congratulations, convert successfully!." << endl;
     return 0;
 }

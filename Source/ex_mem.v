@@ -33,7 +33,7 @@ module ex_mem(
 	  begin
 	     mem_wd <= ex_wd;
 	     mem_wreg <= ex_wreg;
-	     mem_wdata <= ex_wdata;			
+	     mem_wdata <= ex_wdata;	
 	  end // else: !if(rst == `RstEnable)
      end // always @ (posedge clk)
 

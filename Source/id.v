@@ -211,7 +211,7 @@ module id(
 				reg1_read_o <= 1'b1;
 				reg2_read_o <= 1'b1;
 				instvalid <= `InstValid;
-				$display("ADD");
+				$display("ADD %d %d",inst_i[19:15],inst_i[24:20]);
 			     end
 
 			   7'b0100000:

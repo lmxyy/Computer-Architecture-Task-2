@@ -47,7 +47,6 @@ module id_ex(
 	     ex_reg2 <= id_reg2;
 	     ex_wd <= id_wd;
 	     ex_wreg <= id_wreg;
-	     // $write("%h %h\n",ex_reg1,ex_reg2);
 	  end // else: !if(rst == `RstEnable)
      end // always @ (posedge clk)
    
