@@ -88,11 +88,75 @@ Then add
 Next, reboot or logout.
 *** Tranform the assembler to riscv instructions.
 Use the following command
-#+INCLUDE:"Source/get_instr.sh" src sh
+
+#+BEGIN_SRC sh
+  riscv32-unknown-elf-as -o $1.o -march=rv32i $1.s 
+  riscv32-unknown-elf-ld $1.o -o $1.om
+  riscv32-unknown-elf-objcopy -O binary $1.om $1.bin
+  ../Tools/Bin_to_Text $1.bin > instr.data
+  cat instr.data
+  rm $1.o $1.om $1.bin
+#+END_SRC
 which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembler source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.
 ** Tried to transform a binary file to a text file.
 The source code was [[file:Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
-#+INCLUDE:"Tools/Bin_to_Text.cpp" src C++
+
+#+BEGIN_SRC C++
+  #include<cstring>
+  #include<iomanip>
+  #include<cstdio>
+  #include<cstdlib>
+  #include<algorithm>
+  #include<iostream>
+  #include<fstream>
+  using namespace std;
+
+  typedef long long ll;
+  const int NSIZE = 8;
+
+  inline ll convert(ll num)
+  {
+      ll a[4] = {0,0,0,0},ret = 0;
+      for (int i = 0;i < 4;++i,num >>= 8)
+          a[i] = num&((1<<8)-1);
+      for (int i = 0;i < 4;++i)
+          ret = (ret<<8)|a[i];
+      return ret;
+  }
+
+  int main(int argc,char *argv[])
+  {
+      if (argc == 1||argc > 2)
+      {
+          cerr << "Please input an binary file." << endl;
+          return 0;
+      }
+      ifstream ifile(argv[1],ios::in|ios::binary);
+      if (!ifile)
+      {
+          cerr << "Cannot open file." << endl;
+          return 0;
+      }
+      int head = ifile.tellg(),tail = (ifile.seekg(0,ios::end)).tellg();
+      ifile.seekg(0,ios::beg);
+      int N = (tail-head)/4;
+      while (N--)
+      {
+          ll num = 0; int now = 0;
+          for (int k = 0;k < 4;++k)
+          {
+              char c; ifile.read((char *)&c,sizeof(char));
+              for (int i = 0;i < NSIZE;++i,c >>= 1)
+                  num |= (c&1)<<(now++);
+          }
+          cout.width(8); cout.fill('0');
+          cout << hex << convert(num) << endl;
+          cerr << hex << num << endl;
+      }
+      cerr << "Congratulations, convert successfully!." << endl;
+      return 0;
+  }
+#+END_SRC
 ** Question: How to write riscv assembler correctly?
 * <2017-12-18 Mon>
 ** Tested all the shift instructions.
