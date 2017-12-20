@@ -163,3 +163,5 @@ The source code was [[file:Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
 ** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter7]]
 Implemented the arithmetic instructions, but still had some bugs.
 ** Listed the format of all instructions that I had implemented in [[file:README.org::Format%20of%20Riscv32%20Assembler][README.org]].
+* <2017-12-19 Tue>
+** Arithmetic instructions passed tests.
