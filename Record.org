@@ -2,20 +2,20 @@
 #+OPTIONS: ^:nil
 #+DESCRIPTION: This file is for recording what I do every day during the project.
 * <2017-12-11 Mon>
-** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter1]]
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 1]]
 Knew some important conceptions.
 * <2017-12-12 Tue>
-** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter2]]
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 2]]
 *** Reviewed the syntax of verilog.
 *** Question: Why does rom[1] have to be 32'h01010101?
 It's just an input which represents an instruction, and you can input whatever you want as long as it is a 32-bit hexadecimal.
-** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter3]]
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 3]]
 *** Finally I began to know the outline of what I needed to do. Especially [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf::68][Figure 3-5 on Page 54]].
 *** Question: What does the time signal "clk" do?
 Kaiyi Zhang told me that I could regard it as a tool to out put the time signal to debug, and it fuctions like a stage.
 *** Question: What does the reset signal "rst" do?
 Kaiyi Zhang told me that I could use the signal to reset the module for stopping some process.
-** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]]
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 4]]
 *** Question: After I implement the ori module, how could I combine the module with the other to make the CPU complete?
 First, I thought I could use a big module with many "if", and a spceific instruction corresponds with a specific module. But Kaiyi Zhang told me it was too complex. I should just combine all similar fuctions in a single module. An example for this is ALU, which can deal with all operations.
 *** An problem from Kaiyi Zhang(On [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf::111][Use data forwarding to deal with load instructions]]): When you read or write a memory or address, you have 2 stages' latency, which requires you to keep the read/write signal streamming.
@@ -23,27 +23,27 @@ First, I thought I could use a big module with many "if", and a spceific instruc
 * <2017-12-13 Wed>
 ** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]]
 *** Implemented the instruction ORI.
-I could try to implement the ori code myself referring to the standard codes on [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]], which is simplest, and after that, what I need to do is to supplement some codes.
+I could try to implement the ori code myself referring to the standard codes on [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 4]], which is simplest, and after that, what I need to do is to supplement some codes.
 **** I learnt how to use macros like fuctions in verilog. 
 **** Problems in my codes:
 + Codes passed compilation, but took about 10 minutes.
 + Codes couldn't run normally.
  [[file:Picture/2017-12-14%2001-19-40%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png][Screenshot while Running]]
-** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter5]]
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 5]]
 *** Knew what kind of problems I would meet in the future.
 * <2017-12-14 Thu>
-** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter4]]
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 4]]
 *** Made my codes run normally with Kaiyi Zhang's help.
 [[file:Picture/2017-12-14%2020-46-57%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png][Screenshot]]
 ****  Modified the depth of "inst_mem" in [[file:Source/Chapter%204/inst_rom.v::13][inst_rom.v]] from `InstMemNum-1 to 3. 
 Not only I didn't had the warning "Not enough words in the file" as the fuction ~$readmemh~ would read the depth of "inst_mem" hexadecimal numbers in [[file:Source/Chapter%204/inst_rom.data][inst_rom.data]], but also the time for compilation was much shortened.
 **** Changed the function ~$stop~ in [[file:Attempt/Chapter%204/openmips_min_sopc_tb.v][openmips_min_sopc_tb.v]] to ~$finish~ so that VVP could be dismissed and also added the timescale in  [[file:Source/Chapter%204/openmips_min_sopc_tb.v:5][openmips_min_sopc_tb.v]].
 *** Question: Why did my data flush so slowly?
-** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter5]]
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 5]]
 *** Added data forwarding.
 *** Transformed my instruction sets from mips to risc-v.
 * <2017-12-15 Fri>
-** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter5]]
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 5]]
 *** Added instructions: AND ANDI OR XOR XORI LUI SLL SLLI SRA SRAI SRL SRLI. But all were to be tested.
 *** Question: How did ~shiftres <= ({32{reg2_i[31]}} << (6'd32-{1'b0, reg1_i[4:0]}))| reg2_i >> reg1_i[4:0];~ implemented arithmetic left shift?
 * <2017-12-16 Sat>
@@ -160,8 +160,13 @@ The source code was [[file:Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
 ** Question: How to write riscv assembler correctly?
 * <2017-12-18 Mon>
 ** Tested all the shift instructions.
-** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter7]]
+** Read [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》 Chapter 7]]
 Implemented the arithmetic instructions, but still had some bugs.
 ** Listed the format of all instructions that I had implemented in [[file:README.org::Format%20of%20Riscv32%20Assembler][README.org]].
 * <2017-12-19 Tue>
 ** Arithmetic instructions passed tests.
+* <2017-12-20 Wed>
+** Read [[file:Document/Branch%20Prediction.pdf][Branch Prediction.pdf]] and [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写cpu》 Chapter 8 and 9]]
+*** Knew a little about jump and branch instructions and load and store instructions.
+*** Learned how to make branch prediction dynamicly.
+*** Question: Where did the alloyed branch predictor show instruction address?
