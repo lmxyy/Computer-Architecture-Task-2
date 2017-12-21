@@ -170,3 +170,9 @@ Implemented the arithmetic instructions, but still had some bugs.
 *** Knew a little about jump and branch instructions and load and store instructions.
 *** Learned how to make branch prediction dynamicly.
 *** Question: Where did the alloyed branch predictor show instruction address?
+* <2017-12-21 Thu>
+** Improved my prediction assumption.
+*** Some Questions: 
++ How could I know whether my stages take the same time to execute?
++ Where should I put the prediction?
++ It seemed that Branch Target Table was of no use in my assumption, was it?
