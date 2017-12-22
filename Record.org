@@ -176,3 +176,6 @@ Implemented the arithmetic instructions, but still had some bugs.
 + How could I know whether my stages take the same time to execute?
 + Where should I put the prediction?
 + It seemed that Branch Target Table was of no use in my assumption, was it?
+* <2017-12-22 Fri>
+** Implemented Jump Instructions(On passed complilation, to be tested)
+** Added a control centre to control and stop the pipeline.
