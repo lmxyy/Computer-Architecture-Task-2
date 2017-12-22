@@ -8,6 +8,7 @@ module ex_mem(
 	      input wire 	       clk,
 	      input wire 	       rst,
 
+	      input wire [5:0] 	       stall,
 
 	      //来自执行阶段的信息	
 	      input wire [`RegAddrBus] ex_wd,
@@ -23,18 +24,28 @@ module ex_mem(
 
    always @ (posedge clk) 
      begin
+
 	if(rst == `RstEnable) 
 	  begin
 	     mem_wd <= `NOPRegAddr;
 	     mem_wreg <= `WriteDisable;
 	     mem_wdata <= `ZeroWord;	
 	  end 
-	else 
+
+	if (stall[3] == 1'b1&&stall[4] == 1'b0)
+	  begin
+	     mem_wd <= `NOPRegAddr;
+	     mem_wreg <= `WriteDisable;
+	     mem_wdata <= `ZeroWord;	
+	  end
+	
+	else if (stall[3] == 1'b0)
 	  begin
 	     mem_wd <= ex_wd;
 	     mem_wreg <= ex_wreg;
 	     mem_wdata <= ex_wdata;	
 	  end // else: !if(rst == `RstEnable)
+
      end // always @ (posedge clk)
 
 endmodule // ex_mem

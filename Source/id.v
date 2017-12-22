@@ -34,13 +34,20 @@ module id(
 	  output reg [`RegBus] 	    reg1_o,
 	  output reg [`RegBus] 	    reg2_o,
 	  output reg [`RegAddrBus]  wd_o,
-	  output reg 		    wreg_o
+	  output reg 		    wreg_o,
+
+	  output reg 		    branch_flag_o,
+	  output reg [`RegBus] 	    branch_target_address_o,
+	  output reg [`RegBus] 	    link_addr_o,
+
+	  output reg 		    stallreq
 	  );
 
    reg [`RegBus] 		    imm;
    reg 				    instvalid;
 
    always @ (*) begin
+
       if (rst == `RstEnable)
 	begin
 	   aluop_o <= `EXE_NOP_OP;
@@ -52,10 +59,16 @@ module id(
 	   reg1_addr_o <= `NOPRegAddr;
 	   reg2_addr_o <= `NOPRegAddr;
 	   imm <= `ZeroWord;
-	   instvalid <= `InstValid;
+	   branch_flag_o <= 1'b0;
+	   branch_target_address_o <= `ZeroWord;
+	   link_addr_o <= `ZeroWord;
+	   stallreq <= 1'b0;
+	   instvalid <= `InstInvalid;
 	end // if (rst == `RstEnable)
+
       else
 	begin
+
 	   aluop_o <= `EXE_NOP_OP;
 	   alusel_o <= `EXE_RES_NOP;
 	   wd_o <= inst_i[11:7];
@@ -65,7 +78,12 @@ module id(
 	   reg1_addr_o <= inst_i[19:15];
 	   reg2_addr_o <= inst_i[24:20];		
 	   imm <= `ZeroWord;
+	   branch_flag_o <= 1'b0;
+	   branch_target_address_o <= `ZeroWord;
+	   link_addr_o <= `ZeroWord;
+	   stallreq <= 1'b0;
 	   instvalid <= `InstInvalid;
+
 	   case (inst_i[6:0])
 
 	     7'b0010011:
@@ -380,6 +398,35 @@ module id(
 		  imm <= {inst_i[31:12],12'h000};
 		  instvalid <= `InstValid;
 	       end
+
+	     7'b1100111:
+	       begin		// JALR
+		  wreg_o <= `WriteEnable;
+		  aluop_o <= `EXE_JALR_OP;
+		  alusel_o <= `EXE_RES_JUMP_BRANCH;
+		  reg1_read_o <= 1'b0;
+		  reg2_read_o <= 1'b1;
+		  branch_flag_o <= 1'b1;
+		  branch_target_address_o <= reg2_o+{20'h0,inst_i[31:20]};
+		  link_addr_o <= pc_i+4;
+		  stallreq <= 1'b1;
+		  instvalid <= `InstValid;
+	       end // case: 7'b1100111	     
+	     
+	     7'b1101111:
+	       begin		// JAL
+		  wreg_o <= `WriteEnable;
+		  aluop_o <= `EXE_JAL_OP;
+		  alusel_o <= `EXE_RES_JUMP_BRANCH;
+		  reg1_read_o <= 1'b0;
+		  reg2_read_o <= 1'b0;
+		  branch_flag_o <= 1'b1;
+		  branch_target_address_o 
+		    <= pc_i+{11'b0,inst_i[31],inst_i[19:12],inst_i[20],inst_i[30:21],1'b0};
+		  link_addr_o <= pc_i+4;
+		  stallreq <= 1'b1;
+		  instvalid <= `InstValid;
+	       end // case: 7'b1101111
 	     
 	     default: begin end
 	     

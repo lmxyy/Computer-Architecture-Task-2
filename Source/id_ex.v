@@ -9,6 +9,7 @@ module id_ex(
 	     input wire 	      clk,
 	     input wire 	      rst,
 
+	     input wire [5:0] 	      stall,
 
 	     //从译码阶段传递的信息
 	     input wire [`AluOpBus]   id_aluop,
@@ -16,7 +17,8 @@ module id_ex(
 	     input wire [`RegBus]     id_reg1,
 	     input wire [`RegBus]     id_reg2,
 	     input wire [`RegAddrBus] id_wd,
-	     input wire 	      id_wreg, 
+	     input wire 	      id_wreg,
+	     input wire [`RegBus]     id_link_address,
 
 	     //传递到执行阶段的信息
 	     output reg [`AluOpBus]   ex_aluop,
@@ -24,12 +26,13 @@ module id_ex(
 	     output reg [`RegBus]     ex_reg1,
 	     output reg [`RegBus]     ex_reg2,
 	     output reg [`RegAddrBus] ex_wd,
-	     output reg 	      ex_wreg
-
+	     output reg 	      ex_wreg,
+	     output reg [`RegBus]     ex_link_address
 	     );
 
    always @ (posedge clk) 
      begin
+
 	if (rst == `RstEnable) 
 	  begin
 	     ex_aluop <= `EXE_NOP_OP;
@@ -38,8 +41,21 @@ module id_ex(
 	     ex_reg2 <= `ZeroWord;
 	     ex_wd <= `NOPRegAddr;
 	     ex_wreg <= `WriteDisable;
-	  end 
-	else 
+	     ex_link_address <= `ZeroWord;
+	  end
+
+	else if (stall[2] == 1'b1&&stall[2] == 1'b0)
+	  begin
+	     ex_aluop <= `EXE_NOP_OP;
+	     ex_alusel <= `EXE_RES_NOP;
+	     ex_reg1 <= `ZeroWord;
+	     ex_reg2 <= `ZeroWord;
+	     ex_wd <= `NOPRegAddr;
+	     ex_wreg <= `WriteDisable;
+	     ex_link_address <= `ZeroWord;
+	  end
+
+	else if (stall[2] == 1'b0)
 	  begin		
 	     ex_aluop <= id_aluop;
 	     ex_alusel <= id_alusel;
@@ -47,7 +63,9 @@ module id_ex(
 	     ex_reg2 <= id_reg2;
 	     ex_wd <= id_wd;
 	     ex_wreg <= id_wreg;
+	     ex_link_address <= id_link_address;
 	  end // else: !if(rst == `RstEnable)
+
      end // always @ (posedge clk)
    
 endmodule // id_ex

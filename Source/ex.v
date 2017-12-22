@@ -15,7 +15,8 @@ module ex(
 	  input wire [`RegBus] 	   reg2_i,
 	  input wire [`RegAddrBus] wd_i,
 	  input wire 		   wreg_i,
-
+	  input wire [`RegBus] 	   link_address_i, 
+	  
 	  output reg [`RegAddrBus] wd_o,
 	  output reg 		   wreg_o,
 	  output reg [`RegBus] 	   wdata_o
@@ -90,6 +91,7 @@ module ex(
 	  `EXE_RES_LOGIC: wdata_o <= logicout;
 	  `EXE_RES_SHIFT: wdata_o <= shiftres;
 	  `EXE_RES_ARITHMETIC: wdata_o <= arithmeticres;
+	  `EXE_RES_JUMP_BRANCH: wdata_o <= link_address_i;
 	  default: wdata_o <= `ZeroWord;
 	endcase // case (alusel_i)
      end // always @ (*)
