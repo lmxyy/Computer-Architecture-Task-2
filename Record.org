@@ -179,3 +179,6 @@ Implemented the arithmetic instructions, but still had some bugs.
 * <2017-12-22 Fri>
 ** Implemented Jump Instructions(On passed complilation, to be tested)
 ** Added a control centre to control and stop the pipeline.
+* <2017-12-23 Sat>
+** Tried to improve my [[file:Tools/get_instr.sh][get_instr.sh]] but failed.
+** Convinced that my Jump Instructions had bugs.
