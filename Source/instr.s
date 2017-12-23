@@ -1,6 +1,11 @@
 .org 0x0
  	.global _start
 _start:
+
+	jal x0, 8
+	
+	ori x15, x0, 0x80
+	ori x16, x0, 0x90
 	ori x1, x0, 0x80      #x1 = h00000080
 	sll x1, x1, 24	      #x1 = h80000000
 	ori x1, x1, 0x10      #x1 = h80000010
