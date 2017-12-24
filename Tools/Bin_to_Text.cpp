@@ -43,9 +43,10 @@ int main(int argc,char *argv[])
         {
             char c; ifile.read((char *)&c,sizeof(char));
             for (int i = 0;i < NSIZE;++i,c >>= 1)
-                num |= (c&1)<<(now++);
+                num |= ((ll)(c&1))<<(now++);
         }
         cout.width(8); cout.fill('0');
+		cerr.width(8); cerr.fill('0');
         cout << hex << convert(num) << endl;
 		cerr << hex << num << endl;
     }
