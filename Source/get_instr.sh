@@ -4,7 +4,7 @@ if [ $# -eq 0 ]; then
     riscv32-unknown-elf-objcopy -O binary instr.om instr.bin
     ../Tools/Bin_to_Text instr.bin > instr.data
     cat instr.data
-    rm instr.o instr.om instr.bin    
+    rm instr.o instr.om instr.bin
 elif [ $# -eq 1 ]; then
     riscv32-unknown-elf-as -o $1.o -march=rv32i $1.s 
     riscv32-unknown-elf-ld $1.o -o $1.om

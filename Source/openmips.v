@@ -85,7 +85,7 @@ module openmips(
 		  .clk(clk),
 		  .rst(rst),
 		  .stall(stall),
-		  .branch_flag_i(id_flag_o),
+		  .branch_flag_i(id_branch_flag_o),
 		  .branch_target_address_i(branch_target_address),
 		  .pc(pc),
 		  .ce(rom_ce_o)	      
@@ -176,6 +176,7 @@ module openmips(
 		.id_reg2(id_reg2_o),
 		.id_wd(id_wd_o),
 		.id_wreg(id_wreg_o),
+		.id_link_address(id_link_address_o),
       
 		//传递到执行阶段EX模块的信息
 		.ex_aluop(ex_aluop_i),

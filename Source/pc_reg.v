@@ -24,9 +24,12 @@ module pc_reg(
 	if (ce == `ChipDisable) pc <= 32'h0000000;
 	else if (stall[0] == 1'b0)
 	  begin 
-	     if (branch_flag_i == 1'b1) pc <= {branch_target_address_i[31:1],1'b0};
+	     if (branch_flag_i == 1'b1) 
+		  pc <= {branch_target_address_i[31:1],1'b0};
 	     else pc <= pc+4'h4;
 	  end
+	// $display("pc: %d",pc);
+	
      end
 
    always @ (posedge clk)

@@ -432,20 +432,23 @@ module id(
 	     
 	   endcase // case (inst_i[6:0])
 	end // else: !if(rst == `RstEnable)
+
    end // always @ (*)
 
  `define GET_OPRAND(reg_o,reg_read_o,reg_data_i,reg_addr_o) \ 
    always @ (*) \ 
      begin \ 
- 	if(rst == `RstEnable) reg_o <= `ZeroWord; \ 
-	  else if ((reg_read_o == 1'b1)&&(ex_wreg_i == 1'b1)&&(ex_wd_i == reg_addr_o)) \ 
-				reg_o <= ex_wdata_i; \ 
-				  else if ((reg_read_o == 1'b1)&&(mem_wreg_i == 1'b1)&&(mem_wd_i == reg_addr_o)) \ 
-							reg_o <= mem_wdata_i; \ 
- 							  else if(reg_read_o == 1'b1) reg_o <= reg_data_i; \ 
- 							    else if(reg_read_o == 1'b0) reg_o <= imm; \ 
- 							      else reg_o <= `ZeroWord; \ 
-									    end
+	if (rst == `RstEnable) reg_o <= `ZeroWord; \ 
+	  else if (reg_read_o == 1'b1) \ 
+			       begin \ 
+				  if (reg_addr_o == 5'b0) reg_o <= `ZeroWord; \ 
+				    else if ((ex_wreg_i == 1'b1)&&(ex_wd_i == reg_addr_o)) reg_o <= ex_wdata_i; \ 
+				      else if ((mem_wreg_i == 1'b1)&&(mem_wd_i == reg_addr_o)) reg_o <= mem_wdata_i; \ 
+					else if (reg_read_o == 1'b1) reg_o <= reg_read_o; \ 
+					  else reg_o <= `ZeroWord; \ 
+							end \ 
+	  else reg_o <= imm; \ 
+			end // always @ (*)
    
    `GET_OPRAND(reg1_o,reg1_read_o,reg1_data_i,reg1_addr_o)
    `GET_OPRAND(reg2_o,reg2_read_o,reg2_data_i,reg2_addr_o)

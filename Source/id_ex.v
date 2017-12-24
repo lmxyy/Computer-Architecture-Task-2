@@ -65,7 +65,7 @@ module id_ex(
 	     ex_wreg <= id_wreg;
 	     ex_link_address <= id_link_address;
 	  end // else: !if(rst == `RstEnable)
-
+	
      end // always @ (posedge clk)
    
 endmodule // id_ex
