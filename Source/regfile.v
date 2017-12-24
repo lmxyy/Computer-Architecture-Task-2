@@ -38,35 +38,6 @@ module regfile(
 	    end
      end
 
-   // always @ (*)
-   //   begin
-   // 	if (rst == `RstEnable)
-   // 	  rdata1 <= `ZeroWord;
-   // 	else if (raddr1 == `RegNumLog2'h0)
-   // 	  rdata1 <= `ZeroWord;
-   // 	else if ((raddr1 == waddr)&&(we == `WriteEnable)&&(re1 == `ReadEnable))
-   // 	  raddr1 <= wdata;
-   // 	else if (re1 == `ReadEnable)
-   // 	  rdata1 <= regs[raddr1];
-   // 	else rdata1 <= `ZeroWord;
-   //   end // always @ (*)
-
-   // always @ (*) 
-   //   begin
-   // 	if(rst == `RstEnable) 
-   // 	  rdata2 <= `ZeroWord;
-   // 	else if(raddr2 == `RegNumLog2'h0)
-   // 	  rdata2 <= `ZeroWord;
-   // 	else if((raddr2 == waddr) && (we == `WriteEnable) 
-   // 	  	&& (re2 == `ReadEnable))
-   // 	  rdata2 <= wdata;
-   // 	else if(re2 == `ReadEnable) 
-   // 	  rdata2 <= regs[raddr2];
-   // 	else 
-   // 	  rdata2 <= `ZeroWord;
-   
-   //   end // always @ (*)
-
  `define READ(re,raddr,rdata) \ 
    always @ (*) \ 
      begin \ 

@@ -402,7 +402,6 @@ module id(
 	     7'b1100111:
 	       begin		// JALR
 		  wreg_o <= `WriteEnable;
-		  aluop_o <= `EXE_JALR_OP;
 		  alusel_o <= `EXE_RES_JUMP_BRANCH;
 		  reg1_read_o <= 1'b0;
 		  reg2_read_o <= 1'b1;
@@ -412,11 +411,117 @@ module id(
 		  stallreq <= 1'b1;
 		  instvalid <= `InstValid;
 	       end // case: 7'b1100111	     
+
+	     7'b1100011:
+	       begin
+		  
+		  case (inst_i[14:12])
+		    
+		    3'b000:
+		      begin	// BEQ
+			 wreg_o <= `WriteDisable;
+			 			 alusel_o <= `EXE_RES_JUMP_BRANCH;
+			 reg1_read_o <= 1'b1;
+			 reg2_read_o <= 1'b1;
+			 instvalid <= `InstValid;
+			 if (reg1_o == reg2_o)
+			   begin
+			      branch_flag_o <= 1'b1;
+			      branch_target_address_o 
+				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+			      stallreq <= 1'b1;
+			   end
+		      end // case: 3'b000
+
+		    3'b001:
+		      begin	// BNE
+			 wreg_o <= `WriteDisable;
+			 alusel_o <= `EXE_RES_JUMP_BRANCH;
+			 reg1_read_o <= 1'b1;
+			 reg2_read_o <= 1'b1;
+			 instvalid <= `InstValid;
+			 if (reg1_o != reg2_o)
+			   begin
+			      branch_flag_o <= 1'b1;
+			      branch_target_address_o 
+				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+			      stallreq <= 1'b1;
+			   end
+		      end // case: 3'b000
+
+		    3'b100:
+		      begin	// BLT
+			 wreg_o <= `WriteDisable;
+			 alusel_o <= `EXE_RES_JUMP_BRANCH;
+			 reg1_read_o <= 1'b1;
+			 reg2_read_o <= 1'b1;
+			 instvalid <= `InstValid;
+			 if (reg1_o < reg2_o)
+			   begin
+			      branch_flag_o <= 1'b1;
+			      branch_target_address_o 
+				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+			      stallreq <= 1'b1;
+			   end			 
+		      end // case: 3'b100
+		    
+		    3'b101:
+		      begin	// BGE
+			 wreg_o <= `WriteDisable;
+			 alusel_o <= `EXE_RES_JUMP_BRANCH;
+			 reg1_read_o <= 1'b1;
+			 reg2_read_o <= 1'b1;
+			 instvalid <= `InstValid;
+			 if (reg1_o >= reg2_o)
+			   begin
+			      branch_flag_o <= 1'b1;
+			      branch_target_address_o 
+				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+			      stallreq <= 1'b1;
+			   end			 
+		      end // case: 3'b101
+
+		    3'b110:
+		      begin	// BLTU
+			 wreg_o <= `WriteDisable;
+			 alusel_o <= `EXE_RES_JUMP_BRANCH;
+			 reg1_read_o <= 1'b1;
+			 reg2_read_o <= 1'b1;
+			 instvalid <= `InstValid;
+			 if (reg1_o[30:0] < reg2_o[30:0])
+			   begin
+			      branch_flag_o <= 1'b1;
+			      branch_target_address_o 
+				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+			      stallreq <= 1'b1;
+			   end			 
+		      end // case: 3'b110
+		    
+		    3'b111:
+		      begin	// BGEU
+			 wreg_o <= `WriteDisable;
+			 alusel_o <= `EXE_RES_JUMP_BRANCH;
+			 reg1_read_o <= 1'b1;
+			 reg2_read_o <= 1'b1;
+			 instvalid <= `InstValid;
+			 if (reg1_o[30:0] >= reg2_o[30:0])
+			   begin
+			      branch_flag_o <= 1'b1;
+			      branch_target_address_o 
+				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+			      stallreq <= 1'b1;
+			   end
+		      end // case: 3'b111
+
+		    default: begin end
+		    
+		  endcase // case (inst_i[14:12])
+		  
+	       end // case: 7'b1100011	     	     
 	     
 	     7'b1101111:
 	       begin		// JAL
 		  wreg_o <= `WriteEnable;
-		  aluop_o <= `EXE_JAL_OP;
 		  alusel_o <= `EXE_RES_JUMP_BRANCH;
 		  reg1_read_o <= 1'b0;
 		  reg2_read_o <= 1'b0;
@@ -437,22 +542,26 @@ module id(
 
  `define GET_OPRAND(reg_o,reg_read_o,reg_data_i,reg_addr_o) \ 
    always @ (*) \ 
-     begin \ 
+     begin \
 	if (rst == `RstEnable) reg_o <= `ZeroWord; \ 
 	  else if (reg_read_o == 1'b1) \ 
 			       begin \ 
 				  if (reg_addr_o == 5'b0) reg_o <= `ZeroWord; \ 
-				    else if ((ex_wreg_i == 1'b1)&&(ex_wd_i == reg_addr_o)) reg_o <= ex_wdata_i; \ 
-				      else if ((mem_wreg_i == 1'b1)&&(mem_wd_i == reg_addr_o)) reg_o <= mem_wdata_i; \ 
-					else if (reg_read_o == 1'b1) reg_o <= reg_read_o; \ 
-					  else reg_o <= `ZeroWord; \ 
-							end \ 
-	  else reg_o <= imm; \ 
-			end // always @ (*)
+				    else if ((ex_wreg_i == 1'b1)&&(ex_wd_i == reg_addr_o)) \ 
+							 reg_o <= ex_wdata_i; \ 
+							   else if ((mem_wreg_i == 1'b1)&&(mem_wd_i == reg_addr_o)) \ 
+										 reg_o <= mem_wdata_i; \
+										   else if (reg_read_o == 1'b1) \ 
+													reg_o <= reg_data_i; \ 
+													  else reg_o <= `ZeroWord; \ 
+															end \ 
+	  else \ 
+	    reg_o <= imm; \ 
+		     end // always @ (*)
    
    `GET_OPRAND(reg1_o,reg1_read_o,reg1_data_i,reg1_addr_o)
    `GET_OPRAND(reg2_o,reg2_read_o,reg2_data_i,reg2_addr_o)
-   
+
 endmodule // id
 
 // --------------------------------------------------------------------------------

@@ -42,9 +42,6 @@
 `define EXE_ADD_OP 8'b00100000
 `define EXE_SUB_OP 8'b00100010
 
-`define EXE_JALR_OP  8'b00001001
-`define EXE_JAL_OP 8'b01010000
-
 `define EXE_NOP_OP 8'b00000000
 
 //AluSel

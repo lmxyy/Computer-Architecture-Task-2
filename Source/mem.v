@@ -5,6 +5,7 @@
  `include "defines.v"
 
 module mem(
+
 	   input wire 		    rst,
    
 	   //来自执行阶段的信息	
@@ -16,6 +17,7 @@ module mem(
 	   output reg [`RegAddrBus] wd_o,
 	   output reg 		    wreg_o,
 	   output reg [`RegBus]     wdata_o
+
 	   );
 
    always @ (*) 
