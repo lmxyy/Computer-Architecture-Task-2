@@ -3,17 +3,17 @@
 This is the second homework of Computer Architecture, and the author is Lmxyy
 * Aim
 Implement a *Risk-v* CPU using hardware description language(HDL).
-** Instructions [56%]
+** Instructions [71%]
 - [X] LUI
 - [ ] AUIPC
 - [X] JAL
 - [X] JALR
-- [ ] BEQ
-- [ ] BNE
-- [ ] BLT
-- [ ] BGE
-- [ ] BLTU
-- [ ] BGEU
+- [X] BEQ
+- [X] BNE
+- [X] BLT
+- [X] BGE
+- [X] BLTU
+- [X] BGEU
 - [X] ADDI
 - [X] SLTI
 - [X] SLTIU
@@ -97,7 +97,6 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 + [[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
 + [[https://github.com/riscv/riscv-gnu-toolchain][GNU toolchain for RISC-V, including GCC(Newlib)]]
 + [[https://github.com/sxtyzhangzk/cpu-judge][cpu-judge]]
-
 * How to Install and Use Riscv Toolchain
 ** Clone the toolchain locally.
 *** If you could climb over the wall:
@@ -157,7 +156,7 @@ Use the following command
   fi
 #+END_SRC
 which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembler source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.
-** Tried to transform a binary file to a text file.
+** Transform a binary file to a text file.
 The source code was [[file:Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
 
 #+BEGIN_SRC C++
