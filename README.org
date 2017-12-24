@@ -1,6 +1,6 @@
 #+TITLE: Computer Architecture Task 2
 * Authority
-This is the second homework of Computer Architecture, and the author is Lmxyy.
+This is the second homework of Computer Architecture, and the author is Lmxyy
 * Aim
 Implement a *Risk-v* CPU using hardware description language(HDL).
 ** Instructions [56%]
@@ -85,7 +85,7 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 |-------------+-------------------------------|
 | AND         | ~and rd, rs1, rs2~            |
 |-------------+-------------------------------|
-| JAL         | ~jal rt, offset(20bits)~      |
+| JAL         | ~jal rt, label~               |
 |-------------+-------------------------------|
 | JALR        | ~jalr rt, rs, offset(12bits)~ |
 |-------------+-------------------------------|
@@ -97,4 +97,124 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 + [[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
 + [[https://github.com/riscv/riscv-gnu-toolchain][GNU toolchain for RISC-V, including GCC(Newlib)]]
 + [[https://github.com/sxtyzhangzk/cpu-judge][cpu-judge]]
+
+* How to Install and Use Riscv Toolchain
+** Clone the toolchain locally.
+*** If you could climb over the wall:
+Run the following codes:
+#+BEGIN_SRC sh
+  $ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
+#+END_SRC
+or alternatively:
+#+BEGIN_SRC sh
+  $ git clone https://github.com/riscv/riscv-gnu-toolchain
+  $ cd riscv-gnu-toolchain
+  $ git submodule update --init --recursive
+#+END_SRC
+The source codes are somewhat large, please wait patiently.
+*** If you couldn't climb over the wall:
+Download the package at [[https://jbox.sjtu.edu.cn/link/view/8971e3226df74d35b2dcbe588397958f]](Provided by Zhanghao Wu). Remember to depackage with the command:
+#+BEGIN_SRC sh
+  tar -zxvf riscv-gnu-toolchain.tar.gz
+#+END_SRC
+If you use git directly, maybe you couldn't clone all source codes which may cause that your toolchain cannot work normally.
+** Make the source code.
+Run the following command to get riscv32.
+#+BEGIN_SRC sh
+  sudo ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d
+  sudo make
+#+END_SRC
+** Modify your path variable.
+First run the command
+#+BEGIN_SRC sh
+  sudo gedit /etc/profile
+#+END_SRC
+Then add
+#+BEGIN_SRC sh
+  export PATH="$PATH:/opt/riscv/bin"
+#+END_SRC
+Next, reboot or logout.
+** Tranform the assembler to riscv instructions.
+Use the following command
+
+#+BEGIN_SRC sh
+  if [ $# -eq 0 ]; then
+      riscv32-unknown-elf-as -o instr.o -march=rv32i instr.s 
+      riscv32-unknown-elf-ld instr.o -o instr.om
+      riscv32-unknown-elf-objcopy -O binary instr.om instr.bin
+      ../Tools/Bin_to_Text instr.bin > instr.data
+      cat instr.data
+      rm instr.o instr.om instr.bin    
+  elif [ $# -eq 1 ]; then
+      riscv32-unknown-elf-as -o $1.o -march=rv32i $1.s 
+      riscv32-unknown-elf-ld $1.o -o $1.om
+      riscv32-unknown-elf-objcopy -O binary $1.om $1.bin
+      ../Tools/Bin_to_Text $1.bin > instr.data
+      cat instr.data
+      rm $1.o $1.om $1.bin
+  else
+      echo "Please please less than 2 paraments!"
+  fi
+#+END_SRC
+which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembler source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.
+** Tried to transform a binary file to a text file.
+The source code was [[file:Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
+
+#+BEGIN_SRC C++
+  #include<cstring>
+  #include<iomanip>
+  #include<cstdio>
+  #include<cstdlib>
+  #include<algorithm>
+  #include<iostream>
+  #include<fstream>
+  using namespace std;
+
+  typedef long long ll;
+  const int NSIZE = 8;
+
+  inline ll convert(ll num)
+  {
+      ll a[4] = {0,0,0,0},ret = 0;
+      for (int i = 0;i < 4;++i,num >>= 8)
+          a[i] = num&((1<<8)-1);
+      for (int i = 0;i < 4;++i)
+          ret = (ret<<8)|a[i];
+      return ret;
+  }
+
+  int main(int argc,char *argv[])
+  {
+      if (argc == 1||argc > 2)
+      {
+          cerr << "Please input an binary file." << endl;
+          return 0;
+      }
+      ifstream ifile(argv[1],ios::in|ios::binary);
+      if (!ifile)
+      {
+          cerr << "Cannot open file." << endl;
+          return 0;
+      }
+      int head = ifile.tellg(),tail = (ifile.seekg(0,ios::end)).tellg();
+      ifile.seekg(0,ios::beg);
+      int N = (tail-head)/4;
+      while (N--)
+      {
+          ll num = 0; int now = 0;
+          for (int k = 0;k < 4;++k)
+          {
+              char c; ifile.read((char *)&c,sizeof(char));
+              for (int i = 0;i < NSIZE;++i,c >>= 1)
+                  num |= ((ll)(c&1))<<(now++);
+          }
+          cout.width(8); cout.fill('0');
+          cerr.width(8); cerr.fill('0');
+          cout << hex << convert(num) << endl;
+          cerr << hex << num << endl;
+      }
+      cerr << "Congratulations, convert successfully!." << endl;
+      return 0;
+  }
+#+END_SRC
 
