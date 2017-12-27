@@ -200,3 +200,5 @@ Implemented the arithmetic instructions, but still had some bugs.
 ** Tried to implement branch prediction.
 * <2017-12-25 Mon>
 ** Found that I didn't use sign-extension. I just use unsigned-extension.
+* <2017-12-26 Tue>
+Knew how to implement cache.
