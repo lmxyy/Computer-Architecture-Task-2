@@ -97,7 +97,7 @@ module id(
 			 alusel_o <= `EXE_RES_ARITHMETIC;
 			 reg1_read_o <= 1'b1;
 			 reg2_read_o <= 1'b0;
-			 imm <= {20'h0,inst_i[31:20]};
+			 imm <= {{20{inst_i[31]}},inst_i[31:20]};
 			 instvalid <= `InstValid;
 		      end // case: 3'b000
 		    
@@ -128,7 +128,7 @@ module id(
 			 alusel_o <= `EXE_RES_ARITHMETIC;
 			 reg1_read_o <= 1'b1;
 			 reg2_read_o <= 1'b0;
-			 imm <= {20'h0,inst_i[31:20]};
+			 imm <= {{20{inst_i[31]}},inst_i[31:20]};
 			 instvalid <= `InstValid;
 		      end // case: 3'b010
 
@@ -139,7 +139,7 @@ module id(
 			 alusel_o <= `EXE_RES_ARITHMETIC;
 			 reg1_read_o <= 1'b1;
 			 reg2_read_o <= 1'b0;
-			 imm <= {20'h0,inst_i[31:20]};
+			 imm <= {{20{inst_i[31]}},inst_i[31:20]};
 			 instvalid <= `InstValid;
 		      end // case: 3'b011
 		    
@@ -150,7 +150,7 @@ module id(
 			 alusel_o <= `EXE_RES_LOGIC; 
 			 reg1_read_o <= 1'b1;	
 			 reg2_read_o <= 1'b0;	  	
-			 imm <= {20'h0,inst_i[31:20]};		
+			 imm <= {{20{inst_i[31]}},inst_i[31:20]};		
 			 instvalid <= `InstValid;
 		      end // case: 3'b100
 		    
@@ -192,7 +192,7 @@ module id(
 			 alusel_o <= `EXE_RES_LOGIC; 
 			 reg1_read_o <= 1'b1;	
 			 reg2_read_o <= 1'b0;	  	
-			 imm <= {20'h0,inst_i[31:20]};		
+			 imm <= {{20{inst_i[31]}},inst_i[31:20]};		
 			 instvalid <= `InstValid;
 		      end // case: 3'b110
 
@@ -203,7 +203,7 @@ module id(
 			 alusel_o <= `EXE_RES_LOGIC; 
 			 reg1_read_o <= 1'b1;	
 			 reg2_read_o <= 1'b0;	  	
-			 imm <= {20'h0,inst_i[31:20]};		
+			 imm <= {{20{inst_i[31]}},inst_i[31:20]};		
 			 instvalid <= `InstValid;
 		      end // case: 3'b111
 		    
@@ -395,7 +395,7 @@ module id(
 		  alusel_o <= `EXE_RES_LOGIC;
 		  reg1_read_o <= 1'b1;
 		  reg2_read_o <= 1'b0;
-		  imm <= {inst_i[31:12],12'h000};
+		  imm <= {inst_i[31:12],12'h0};
 		  instvalid <= `InstValid;
 	       end
 
@@ -406,7 +406,7 @@ module id(
 		  reg1_read_o <= 1'b0;
 		  reg2_read_o <= 1'b1;
 		  branch_flag_o <= 1'b1;
-		  branch_target_address_o <= reg2_o+{20'h0,inst_i[31:20]};
+		  branch_target_address_o <= reg2_o+{{20{inst_i[31]}},inst_i[31:20]};
 		  link_addr_o <= pc_i+4;
 		  stallreq <= 1'b1;
 		  instvalid <= `InstValid;
@@ -428,7 +428,7 @@ module id(
 			   begin
 			      branch_flag_o <= 1'b1;
 			      branch_target_address_o 
-				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				<= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 			      stallreq <= 1'b1;
 			   end
 		      end // case: 3'b000
@@ -444,7 +444,7 @@ module id(
 			   begin
 			      branch_flag_o <= 1'b1;
 			      branch_target_address_o 
-				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				<= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 			      stallreq <= 1'b1;
 			   end
 		      end // case: 3'b000
@@ -460,7 +460,7 @@ module id(
 			   begin
 			      branch_flag_o <= 1'b1;
 			      branch_target_address_o 
-				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				<= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 			      stallreq <= 1'b1;
 			   end			 
 		      end // case: 3'b100
@@ -476,7 +476,7 @@ module id(
 			   begin
 			      branch_flag_o <= 1'b1;
 			      branch_target_address_o 
-				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				<= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 			      stallreq <= 1'b1;
 			   end			 
 		      end // case: 3'b101
@@ -492,7 +492,7 @@ module id(
 			   begin
 			      branch_flag_o <= 1'b1;
 			      branch_target_address_o 
-				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				<= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 			      stallreq <= 1'b1;
 			   end			 
 		      end // case: 3'b110
@@ -508,7 +508,7 @@ module id(
 			   begin
 			      branch_flag_o <= 1'b1;
 			      branch_target_address_o 
-				<= pc_i+{18'b0,inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				<= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 			      stallreq <= 1'b1;
 			   end
 		      end // case: 3'b111
@@ -527,7 +527,7 @@ module id(
 		  reg2_read_o <= 1'b0;
 		  branch_flag_o <= 1'b1;
 		  branch_target_address_o 
-		    <= pc_i+{11'b0,inst_i[31],inst_i[19:12],inst_i[20],inst_i[30:21],1'b0};
+		    <= pc_i+{{11{inst_i[31]}},inst_i[31],inst_i[19:12],inst_i[20],inst_i[30:21],1'b0};
 		  link_addr_o <= pc_i+4;
 		  stallreq <= 1'b1;
 		  instvalid <= `InstValid;
