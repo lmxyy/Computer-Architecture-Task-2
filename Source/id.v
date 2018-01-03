@@ -157,7 +157,7 @@ module id
 
 		      3'b000:	// SB
 			begin
-			   wreg_o <= `WriteEnable;
+			   wreg_o <= `WriteDisable;
 			   aluop_o <= `EXE_SB_OP;
 			   alusel_o <= `EXE_RES_LOAD_STORE;
 			   reg1_read_o <= 1'b1;
@@ -167,7 +167,7 @@ module id
 
 		      3'b001:	// SH
 			begin
-			   wreg_o <= `WriteEnable;
+			   wreg_o <= `WriteDisable;
 			   aluop_o <= `EXE_SH_OP;
 			   alusel_o <= `EXE_RES_LOAD_STORE;
 			   reg1_read_o <= 1'b1;
@@ -177,7 +177,7 @@ module id
 
 		      3'b010:	// SW
 			begin
-			   wreg_o <= `WriteEnable;
+			   wreg_o <= `WriteDisable;
 			   aluop_o <= `EXE_SW_OP;
 			   alusel_o <= `EXE_RES_LOAD_STORE;
 			   reg1_read_o <= 1'b1;
@@ -323,13 +323,11 @@ module id
 	       7'b0010111:	// AUIPC
 		 begin
 		    wreg_o <= `WriteEnable;
-		    alusel_o <= `EXE_RES_JUMP_BRANCH;
+		    aluop_o <= `EXE_OR_OP;
+		    alusel_o <= `EXE_RES_LOGIC; 
 		    reg1_read_o <= 1'b0;
 		    reg2_read_o <= 1'b0;
-		    branch_flag_o <= 1'b1;
-		    branch_target_address_o <= pc_i+{inst_i[31:12],12'h0};
-		    link_addr_o <= pc_i+{inst_i[31:12],12'h0};
-		    stallreq <= 1'b1;
+		    imm <= pc_i+{inst_i[31:12],12'h0};
 		    instvalid <= `InstValid;
 		 end
 	       

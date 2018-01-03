@@ -66,13 +66,11 @@
 `define InstAddrBus 31:0
 `define InstBus 31:0
 `define InstMemNum 100
-`define InstMemNumLog2 17
 
 //数据存储器data_ram
 `define DataAddrBus 31:0
 `define DataBus 31:0
-`define DataMemNum 256
-`define DataMemNumLog2 17
+`define DataMemNum 1024
 `define ByteWidth 7:0
 
 //通用寄存器regfile

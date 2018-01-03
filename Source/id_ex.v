@@ -44,8 +44,9 @@ module id_ex
 	     ex_wd <= `NOPRegAddr;
 	     ex_wreg <= `WriteDisable;
 	     ex_link_address <= `ZeroWord;
-	  end
-
+	     ex_inst <= `ZeroWord;
+	  end // if (rst == `RstEnable)
+	
 	else if (stall[2] == 1'b1&&stall[2] == 1'b0)
 	  begin
 	     ex_aluop <= `EXE_NOP_OP;
@@ -55,8 +56,9 @@ module id_ex
 	     ex_wd <= `NOPRegAddr;
 	     ex_wreg <= `WriteDisable;
 	     ex_link_address <= `ZeroWord;
-	  end
-
+	     ex_inst <= `ZeroWord;
+	  end // if (stall[2] == 1'b1&&stall[2] == 1'b0)
+	
 	else if (stall[2] == 1'b0)
 	  begin		
 	     ex_aluop <= id_aluop;
@@ -67,7 +69,7 @@ module id_ex
 	     ex_wreg <= id_wreg;
 	     ex_link_address <= id_link_address;
 	     ex_inst <= id_inst;
-	  end // else: !if(rst == `RstEnable)
+	  end // if (stall[2] == 1'b0)
 	
      end // always @ (posedge clk)
    

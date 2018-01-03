@@ -36,7 +36,7 @@ module regfile
 	  if((we == `WriteEnable) && (waddr != `RegNumLog2'h0)) 
 	    begin
 	       regs[waddr] <= wdata;
-	       $display("writeback %d %h",waddr,wdata);
+	       $display("Write %h to x%d.",wdata,waddr);
 	    end
 
      end

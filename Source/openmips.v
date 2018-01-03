@@ -213,7 +213,8 @@ module openmips
       .ex_reg2(ex_reg2_i),
       .ex_wd(ex_wd_i),
       .ex_wreg(ex_wreg_i),
-      .ex_link_address(ex_link_address_i)
+      .ex_link_address(ex_link_address_i),
+      .ex_inst(ex_inst_i)
       );
    
    //EX模块
