@@ -204,3 +204,7 @@ Implemented the arithmetic instructions, but still had some bugs.
 Knew how to implement cache.
 * <2018-01-02 Tue>
 ** Just added sign-extension.
+* <2018-01-03 Wed>
+** Fixed my lui instruction.
+** Added the auipc instruction.
+** Added ~Load and Store~ instructions.
