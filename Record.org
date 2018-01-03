@@ -208,3 +208,4 @@ Knew how to implement cache.
 ** Fixed my lui instruction.
 ** Added the auipc instruction.
 ** Added ~Load and Store~ instructions.
+** Some bugs about ~Load and Store~.
