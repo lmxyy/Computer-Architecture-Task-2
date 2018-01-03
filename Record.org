@@ -105,7 +105,7 @@ Use the following command
       cat instr.data
       rm $1.o $1.om $1.bin
   else
-      echo "Please please less than 2 paraments!"
+      echo "Please input less than 2 paraments!"
   fi
 #+END_SRC
 which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembler source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.
@@ -202,3 +202,5 @@ Implemented the arithmetic instructions, but still had some bugs.
 ** Found that I didn't use sign-extension. I just use unsigned-extension.
 * <2017-12-26 Tue>
 Knew how to implement cache.
+* <2018-01-02 Tue>
+** Just added sign-extension.
