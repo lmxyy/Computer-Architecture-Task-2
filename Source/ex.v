@@ -4,26 +4,32 @@
 // --------------------------------------------------------------------------------
  `include "defines.v"
 
-module ex(
+module ex
+  (
+   input wire 		    rst,
+     
+   //送到执行阶段的信息
+   input wire [`AluOpBus]   aluop_i,
+   input wire [`AluSelBus]  alusel_i,
+   input wire [`RegBus]     reg1_i,
+   input wire [`RegBus]     reg2_i,
+   input wire [`RegAddrBus] wd_i,
+   input wire 		    wreg_i,
+   input wire [`RegBus]     inst_i, 
 
-	  input wire 		   rst,
-   
-	  //送到执行阶段的信息
-	  input wire [`AluOpBus]   aluop_i,
-	  input wire [`AluSelBus]  alusel_i,
-	  input wire [`RegBus] 	   reg1_i,
-	  input wire [`RegBus] 	   reg2_i,
-	  input wire [`RegAddrBus] wd_i,
-	  input wire 		   wreg_i,
-	  input wire [`RegBus] 	   link_address_i, 
-	  
-	  output reg [`RegAddrBus] wd_o,
-	  output reg 		   wreg_o,
-	  output reg [`RegBus] 	   wdata_o
-	  );
+   input wire [`RegBus]     link_address_i, 
+  
+   output reg [`RegAddrBus] wd_o,
+   output reg 		    wreg_o,
+   output reg [`RegBus]     wdata_o,
+
+   output wire [`AluOpBus]  aluop_o,
+   output wire [`RegBus]    mem_addr_o,
+   output wire [`RegBus]    reg2_o
+   );
    
    // --------------------------------------------------Logic--------------------------------------------------
-   reg [`RegBus] 		   logicout;
+   reg [`RegBus] 	    logicout;
 
    always @ (*)
      begin
@@ -66,8 +72,9 @@ module ex(
 
    assign reg2_i_mux = ((aluop_i == `EXE_SUB_OP)||(aluop_i == `EXE_SLT_OP))?(~reg2_i)+1:reg2_i;
    assign result_sum = reg1_i+reg2_i_mux;
-   assign reg1_lt_reg2 = (aluop_i == `EXE_SLT_OP)?((reg1_i[31]&&!reg2_i[31])||(!reg1_i[31]&&!reg2_i[31]&&result_sum[31])
-						   ||(reg1_i[31]&&reg2_i[31]&&result_sum[31])):(reg1_i < reg2_i);
+   assign reg1_lt_reg2 = (aluop_i == `EXE_SLT_OP)?
+			 ((reg1_i[31]&&!reg2_i[31])||(!reg1_i[31]&&!reg2_i[31]&&result_sum[31])
+			  ||(reg1_i[31]&&reg2_i[31]&&result_sum[31])):(reg1_i < reg2_i);
 
    always @ (*)
      begin
@@ -79,7 +86,14 @@ module ex(
 	    default: arithmeticres <= `ZeroWord;
 	  endcase // case (aluop_i)
      end // always @ (*)
-      
+
+   // --------------------------------------------------Load and Store--------------------------------------------------
+
+   assign aluop_o = aluop_i;
+   assign mem_addr_o = reg1_i+{{20{inst_i[31]}},inst_i[31:20]};
+   
+   assign reg2_o = reg2_i;
+
    // ####################################################################################################
    // ####################################################################################################
    

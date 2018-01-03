@@ -4,31 +4,33 @@
 // --------------------------------------------------------------------------------
  `include "defines.v"
 
-module id_ex(
+module id_ex
+  (
+   input wire 		    clk,
+   input wire 		    rst,
 
-	     input wire 	      clk,
-	     input wire 	      rst,
+   input wire [5:0] 	    stall,
 
-	     input wire [5:0] 	      stall,
-
-	     //从译码阶段传递的信息
-	     input wire [`AluOpBus]   id_aluop,
-	     input wire [`AluSelBus]  id_alusel,
-	     input wire [`RegBus]     id_reg1,
-	     input wire [`RegBus]     id_reg2,
-	     input wire [`RegAddrBus] id_wd,
-	     input wire 	      id_wreg,
-	     input wire [`RegBus]     id_link_address,
-
-	     //传递到执行阶段的信息
-	     output reg [`AluOpBus]   ex_aluop,
-	     output reg [`AluSelBus]  ex_alusel,
-	     output reg [`RegBus]     ex_reg1,
-	     output reg [`RegBus]     ex_reg2,
-	     output reg [`RegAddrBus] ex_wd,
-	     output reg 	      ex_wreg,
-	     output reg [`RegBus]     ex_link_address
-	     );
+   //从译码阶段传递的信息
+   input wire [`AluOpBus]   id_aluop,
+   input wire [`AluSelBus]  id_alusel,
+   input wire [`RegBus]     id_reg1,
+   input wire [`RegBus]     id_reg2,
+   input wire [`RegAddrBus] id_wd,
+   input wire 		    id_wreg,
+   input wire [`RegBus]     id_link_address,
+   input wire [`RegBus]     id_inst, 
+   
+   //传递到执行阶段的信息
+   output reg [`AluOpBus]   ex_aluop,
+   output reg [`AluSelBus]  ex_alusel,
+   output reg [`RegBus]     ex_reg1,
+   output reg [`RegBus]     ex_reg2,
+   output reg [`RegAddrBus] ex_wd,
+   output reg 		    ex_wreg,
+   output reg [`RegBus]     ex_link_address,
+   output reg [`RegBus]     ex_inst
+   );
 
    always @ (posedge clk) 
      begin
@@ -64,6 +66,7 @@ module id_ex(
 	     ex_wd <= id_wd;
 	     ex_wreg <= id_wreg;
 	     ex_link_address <= id_link_address;
+	     ex_inst <= id_inst;
 	  end // else: !if(rst == `RstEnable)
 	
      end // always @ (posedge clk)

@@ -2,14 +2,15 @@
 `else
  `define ctrl.v
 // ----------------------------------------------------------------------------------------------------
-`include "defines.v"
+ `include "defines.v"
 
-module ctrl(
-	    input wire 	     rst,
-	    input wire 	     stallreq_from_id,
+module ctrl
+  (
+   input wire 	    rst,
+   input wire 	    stallreq_from_id,
 
-	    output reg [5:0] stall       
-	    );
+   output reg [5:0] stall       
+   );
 
    always @ (*) 
      begin

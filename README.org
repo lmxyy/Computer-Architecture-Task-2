@@ -3,9 +3,9 @@
 This is the second homework of Computer Architecture, and the author is Lmxyy
 * Aim
 Implement a *Risk-v* CPU using hardware description language(HDL).
-** Instructions [71%]
+** Instructions [94%]
 - [X] LUI
-- [ ] AUIPC
+- [X] AUIPC
 - [X] JAL
 - [X] JALR
 - [X] BEQ
@@ -33,14 +33,14 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 - [X] SRA
 - [X] OR
 - [X] AND
-- [ ] LB
-- [ ] LH
-- [ ] LW
-- [ ] LBU
-- [ ] LHU
-- [ ] SB
-- [ ] SH
-- [ ] SW
+- [X] LB
+- [X] LH
+- [X] LW
+- [X] LBU
+- [X] LHU
+- [X] SB
+- [X] SH
+- [X] SW
 - [ ] FENCE
 - [ ] FENCE.I
 * Format of Riscv32 Assembler
@@ -152,7 +152,7 @@ Use the following command
       cat instr.data
       rm $1.o $1.om $1.bin
   else
-      echo "Please please less than 2 paraments!"
+      echo "Please input less than 2 paraments!"
   fi
 #+END_SRC
 which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembler source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.

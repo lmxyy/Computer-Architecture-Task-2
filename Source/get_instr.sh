@@ -13,5 +13,5 @@ elif [ $# -eq 1 ]; then
     cat instr.data
     rm $1.o $1.om $1.bin
 else
-    echo "Please please less than 2 paraments!"
+    echo "Please input less than 2 paraments!"
 fi

@@ -10,7 +10,7 @@
 module openmips_min_sopc_tb();
 
    reg CLOCK_50;
-   reg     rst;
+   reg rst;
 
    integer i;
    
@@ -27,10 +27,11 @@ module openmips_min_sopc_tb();
 	#1000 $finish;
      end
 
-   openmips_min_sopc openmips_min_sopc0(
-					.clk(CLOCK_50),
-					.rst(rst)
-					);
+   openmips_min_sopc openmips_min_sopc0
+     (
+      .clk(CLOCK_50),
+      .rst(rst)
+      );
    
 endmodule // openmips_min_sopc_tb
 

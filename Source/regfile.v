@@ -4,28 +4,30 @@
 // --------------------------------------------------------------------------------
  `include "defines.v"
 
-module regfile(
+module regfile
+  (
 
-	       input wire 		clk,
-	       input wire 		rst,
+   input wire 		    clk,
+   input wire 		    rst,
 
-	       //写端口
-	       input wire 		we,
-	       input wire [`RegAddrBus] waddr,
-	       input wire [`RegBus] 	wdata,
+   //写端口
+   input wire 		    we,
+   input wire [`RegAddrBus] waddr,
+   input wire [`RegBus]     wdata,
 
-	       //读端口1
-	       input wire 		re1,
-	       input wire [`RegAddrBus] raddr1,
-	       output reg [`RegBus] 	rdata1,
+   //读端口1
+   input wire 		    re1,
+   input wire [`RegAddrBus] raddr1,
+   output reg [`RegBus]     rdata1,
 
-	       //读端口2
-	       input wire 		re2,
-	       input wire [`RegAddrBus] raddr2,
-	       output reg [`RegBus] 	rdata2
+   //读端口2
+   input wire 		    re2,
+   input wire [`RegAddrBus] raddr2,
+   output reg [`RegBus]     rdata2
 
-	       );
-   reg [`RegBus] 			regs[0:`RegNum-1];
+   );
+
+   reg [`RegBus] 	    regs[0:`RegNum-1];
 
    always @ (posedge clk) 
      begin
@@ -36,6 +38,7 @@ module regfile(
 	       regs[waddr] <= wdata;
 	       $display("writeback %d %h",waddr,wdata);
 	    end
+
      end
 
  `define READ(re,raddr,rdata) \ 
