@@ -209,3 +209,5 @@ Knew how to implement cache.
 ** Added the auipc instruction.
 ** Added ~Load and Store~ instructions.
 ** Some bugs about ~Load and Store~.
+* <2018-01-04 Thu>
+** All instrucionts could execute normally.
