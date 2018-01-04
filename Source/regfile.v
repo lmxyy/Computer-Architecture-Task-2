@@ -56,7 +56,7 @@ module regfile
    								   else \ 
    								     rdata <= `ZeroWord; \ 
 									      end
-
+   
    `READ(re1,raddr1,rdata1)
    `READ(re2,raddr2,rdata2)
    

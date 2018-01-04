@@ -14,6 +14,7 @@ module id
    input wire 		     ex_wreg_i,
    input wire [`RegBus]      ex_wdata_i,
    input wire [`RegAddrBus]  ex_wd_i,
+   input wire 		     ex_is_load_i,
 
    //处于访存阶段的指令要写入的目的寄存器信息
    input wire 		     mem_wreg_i,
@@ -37,19 +38,20 @@ module id
    output reg [`RegAddrBus]  wd_o,
    output reg 		     wreg_o,
    output wire [`RegBus]     inst_o,
-   
+  
    output reg 		     branch_flag_o,
    output reg [`RegBus]      branch_target_address_o,
    output reg [`RegBus]      link_addr_o,
 
-   output reg 		     stallreq
+   output reg 		     stallreq1, // stall for jump and branch
+   output reg 		     stallreq2 // stall for load
    );
 
    reg [`RegBus] 	     imm;
    reg 			     instvalid;
 
    assign inst_o = inst_i;
-      
+   
    always @ (*) 
      begin
 	
@@ -67,7 +69,8 @@ module id
 	     branch_flag_o <= 1'b0;
 	     branch_target_address_o <= `ZeroWord;
 	     link_addr_o <= `ZeroWord;
-	     stallreq <= 1'b0;
+	     stallreq1 <= 1'b0;
+	     stallreq2 <= 1'b0;
 	     instvalid <= `InstInvalid;
 	  end // if (rst == `RstEnable)
 
@@ -86,7 +89,8 @@ module id
 	     branch_flag_o <= 1'b0;
 	     branch_target_address_o <= `ZeroWord;
 	     link_addr_o <= `ZeroWord;
-	     stallreq <= 1'b0;
+	     stallreq1 <= 1'b0;
+	     stallreq2 <= 1'b0;
 	     instvalid <= `InstInvalid;
 
 	     case (inst_i[6:0])
@@ -100,8 +104,8 @@ module id
 			   wreg_o <= `WriteEnable;
 			   aluop_o <= `EXE_LB_OP;
 			   alusel_o <= `EXE_RES_LOAD_STORE;
-			   reg1_o <= 1'b1;
-			   reg2_o <= 1'b0;
+			   reg1_read_o <= 1'b1;
+			   reg2_read_o <= 1'b0;
 			   instvalid <= `InstValid;
 			end
 		      
@@ -110,8 +114,8 @@ module id
 			   wreg_o <= `WriteEnable;
 			   aluop_o <= `EXE_LH_OP;
 			   alusel_o <= `EXE_RES_LOAD_STORE;
-			   reg1_o <= 1'b1;
-			   reg2_o <= 1'b0;
+			   reg1_read_o <= 1'b1;
+			   reg2_read_o <= 1'b0;
 			   instvalid <= `InstValid;
 			end
 
@@ -120,8 +124,8 @@ module id
 			   wreg_o <= `WriteEnable;
 			   aluop_o <= `EXE_LW_OP;
 			   alusel_o <= `EXE_RES_LOAD_STORE;
-			   reg1_o <= 1'b1;
-			   reg2_o <= 1'b0;
+			   reg1_read_o <= 1'b1;
+			   reg2_read_o <= 1'b0;
 			   instvalid <= `InstValid;
 			end
 
@@ -130,8 +134,8 @@ module id
 			   wreg_o <= `WriteEnable;
 			   aluop_o <= `EXE_LBU_OP;
 			   alusel_o <= `EXE_RES_LOAD_STORE;
-			   reg1_o <= 1'b1;
-			   reg2_o <= 1'b0;
+			   reg1_read_o <= 1'b1;
+			   reg2_read_o <= 1'b0;
 			   instvalid <= `InstValid;
 			end
 
@@ -140,8 +144,8 @@ module id
 			   wreg_o <= `WriteEnable;
 			   aluop_o <= `EXE_LHU_OP;
 			   alusel_o <= `EXE_RES_LOAD_STORE;
-			   reg1_o <= 1'b1;
-			   reg2_o <= 1'b0;
+			   reg1_read_o <= 1'b1;
+			   reg2_read_o <= 1'b0;
 			   instvalid <= `InstValid;
 			end
 		      
@@ -538,7 +542,7 @@ module id
 		    branch_flag_o <= 1'b1;
 		    branch_target_address_o <= reg2_o+{{20{inst_i[31]}},inst_i[31:20]};
 		    link_addr_o <= pc_i+4;
-		    stallreq <= 1'b1;
+		    stallreq1 <= 1'b1;
 		    instvalid <= `InstValid;
 		 end // case: 7'b1100111	     
 
@@ -559,7 +563,7 @@ module id
 				branch_flag_o <= 1'b1;
 				branch_target_address_o 
 				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq <= 1'b1;
+				stallreq1 <= 1'b1;
 			     end
 			end // case: 3'b000
 
@@ -575,7 +579,7 @@ module id
 				branch_flag_o <= 1'b1;
 				branch_target_address_o 
 				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq <= 1'b1;
+				stallreq1 <= 1'b1;
 			     end
 			end // case: 3'b000
 
@@ -591,7 +595,7 @@ module id
 				branch_flag_o <= 1'b1;
 				branch_target_address_o 
 				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq <= 1'b1;
+				stallreq1 <= 1'b1;
 			     end			 
 			end // case: 3'b100
 		      
@@ -607,7 +611,7 @@ module id
 				branch_flag_o <= 1'b1;
 				branch_target_address_o 
 				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq <= 1'b1;
+				stallreq1 <= 1'b1;
 			     end			 
 			end // case: 3'b101
 
@@ -623,7 +627,7 @@ module id
 				branch_flag_o <= 1'b1;
 				branch_target_address_o 
 				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq <= 1'b1;
+				stallreq1 <= 1'b1;
 			     end			 
 			end // case: 3'b110
 		      
@@ -639,7 +643,7 @@ module id
 				branch_flag_o <= 1'b1;
 				branch_target_address_o 
 				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq <= 1'b1;
+				stallreq1 <= 1'b1;
 			     end
 			end // case: 3'b111
 
@@ -659,7 +663,7 @@ module id
 		    branch_target_address_o 
 		      <= pc_i+{{11{inst_i[31]}},inst_i[31],inst_i[19:12],inst_i[20],inst_i[30:21],1'b0};
 		    link_addr_o <= pc_i+4;
-		    stallreq <= 1'b1;
+		    stallreq1 <= 1'b1;
 		    instvalid <= `InstValid;
 		 end // case: 7'b1101111
 	       
@@ -670,7 +674,7 @@ module id
 	  end // else: !if(rst == `RstEnable)
 
      end // always @ (*)
-
+   
  `define GET_OPRAND(reg_o,reg_read_o,reg_data_i,reg_addr_o) \ 
    always @ (*) \ 
      begin \
@@ -692,7 +696,23 @@ module id
    
    `GET_OPRAND(reg1_o,reg1_read_o,reg1_data_i,reg1_addr_o)
    `GET_OPRAND(reg2_o,reg2_read_o,reg2_data_i,reg2_addr_o)
-
+   
+   reg stallreq_for_reg1,stallreq_for_reg2;
+      
+ `define HAVE_TO_STOP(reg_read_o,reg_addr_o,stallreq_for_reg) \ 
+   always @ (*) \
+     begin \
+ 	stallreq_for_reg <= 1'b0; \ 
+ 	  if (rst == `RstEnable);\ 
+ 	else if ((reg_read_o == 1'b1&&reg_addr_o != `ZeroWord)&&ex_is_load_i == 1'b1&&(ex_wd_i == reg_addr_o)) \ 
+ 	  stallreq_for_reg <= 1'b1; \
+ 			      end // always @ (*)
+   
+   `HAVE_TO_STOP(reg1_read_o,reg1_addr_o,stallreq_for_reg1)
+   `HAVE_TO_STOP(reg2_read_o,reg2_addr_o,stallreq_for_reg2)
+   
+   always @ (*) stallreq2 <= stallreq_for_reg1|stallreq_for_reg2;
+   
 endmodule // id
 
 // --------------------------------------------------------------------------------

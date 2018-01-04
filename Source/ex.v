@@ -25,7 +25,9 @@ module ex
 
    output wire [`AluOpBus]  aluop_o,
    output wire [`RegBus]    mem_addr_o,
-   output wire [`RegBus]    reg2_o
+   output wire [`RegBus]    reg2_o,
+
+   output wire 		    is_load_o
    );
    
    // --------------------------------------------------Logic--------------------------------------------------
@@ -91,7 +93,7 @@ module ex
 
    assign aluop_o = aluop_i;
    assign mem_addr_o = reg1_i+((inst_i[6:0] == 7'b0000011)?{{20{inst_i[31]}},inst_i[31:20]}:{{20{inst_i[31]}},inst_i[31:25],inst_i[11:7]});
-   
+   assign is_load_o = (inst_i[6:0] == 7'b0000011)?1'b1:1'b0;
    assign reg2_o = reg2_i;
    
    // ####################################################################################################

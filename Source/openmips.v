@@ -60,6 +60,7 @@ module openmips
    wire 		 ex_wreg_o;
    wire [`RegAddrBus] 	 ex_wd_o;
    wire [`RegBus] 	 ex_wdata_o;
+   wire 		 ex_is_load_o;
    wire [`AluOpBus] 	 ex_aluop_o;
    wire [`RegBus] 	 ex_mem_addr_o;
    wire [`RegBus] 	 ex_reg2_o;	
@@ -94,7 +95,8 @@ module openmips
    wire [`RegBus] 	 branch_target_address;
 
    wire [5:0] 		 stall;
-   wire 		 stallreq_from_id;
+   wire 		 stallreq_from_id1;
+   wire 		 stallreq_from_id2;
    
    //pc_reg例化
    pc_reg pc_reg0
@@ -135,7 +137,8 @@ module openmips
       .ex_wreg_i(ex_wreg_o),
       .ex_wdata_i(ex_wdata_o),
       .ex_wd_i(ex_wd_o),
-
+      .ex_is_load_i(ex_is_load_o),
+      
       //处于访存阶段的指令要写入的目的寄存器信息
       .mem_wreg_i(mem_wreg_o),
       .mem_wdata_i(mem_wdata_o),
@@ -163,7 +166,8 @@ module openmips
       .branch_target_address_o(branch_target_address),
       .link_addr_o(id_link_address_o),
 
-      .stallreq(stallreq_from_id)
+      .stallreq1(stallreq_from_id1),
+      .stallreq2(stallreq_from_id2)
       );
 
    //通用寄存器Regfile例化
@@ -241,7 +245,9 @@ module openmips
       // About Memory
       .aluop_o(ex_aluop_o),
       .mem_addr_o(ex_mem_addr_o),
-      .reg2_o(ex_reg2_o)
+      .reg2_o(ex_reg2_o),
+
+      .is_load_o(ex_is_load_o)
       );
 
    //EX/MEM模块
@@ -322,7 +328,9 @@ module openmips
    ctrl ctrl0
      (
       .rst(rst),
-      .stallreq_from_id(stallreq_from_id),
+      .stallreq_from_id1(stallreq_from_id1),
+      .stallreq_from_id2(stallreq_from_id2),
+      
       .stall(stall)
       );
    

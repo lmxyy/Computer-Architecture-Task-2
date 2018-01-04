@@ -47,7 +47,7 @@ module id_ex
 	     ex_inst <= `ZeroWord;
 	  end // if (rst == `RstEnable)
 	
-	else if (stall[2] == 1'b1&&stall[2] == 1'b0)
+	else if (stall[2] == 1'b1&&stall[3] == 1'b0)
 	  begin
 	     ex_aluop <= `EXE_NOP_OP;
 	     ex_alusel <= `EXE_RES_NOP;
@@ -69,7 +69,7 @@ module id_ex
 	     ex_wreg <= id_wreg;
 	     ex_link_address <= id_link_address;
 	     ex_inst <= id_inst;
-	  end // if (stall[2] == 1'b0)
+	  end
 	
      end // always @ (posedge clk)
    

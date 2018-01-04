@@ -27,12 +27,10 @@ module pc_reg(
 	     if (branch_flag_i == 1'b1)
 	       begin
 		  pc <= {branch_target_address_i[31:1],1'b0};
-		  $display("Pc register jump to %d.",{2'b0,branch_target_address_i[31:2]});
+		  $display("Pc register jumps to %d.",{2'b0,branch_target_address_i[31:2]});
 	       end
 	     else pc <= pc+4'h4;
 	  end
-	// $display("pc: %d",pc);
-	
      end
 
    always @ (posedge clk)
