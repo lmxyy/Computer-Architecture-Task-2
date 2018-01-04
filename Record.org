@@ -211,3 +211,9 @@ Knew how to implement cache.
 ** Some bugs about ~Load and Store~.
 * <2018-01-04 Thu>
 ** All instrucionts could execute normally.
+** Learnt the UART-USB protocol, but still could figure it out totally.
+*** Knew the rules at [[https://www.cnblogs.com/huanzxj/p/4522274.html][UART通信协议]].
+*** Studied the codes from our assistant
++ [[https://github.com/sxtyzhangzk/mips-cpu/blob/master/src/cpu/uart_comm.v][uart_comm.v]]
++ [[https://github.com/sxtyzhangzk/mips-cpu/blob/master/src/cpu/fifo.v][fifo.v]]
+
