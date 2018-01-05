@@ -39,17 +39,16 @@ module pdt
    integer 		     i,j;	
    always @ (*)
      begin
-	
 	if (rst == `RstEnable)
 	  begin
 	     history <= 10'b0;
 	     for (i = 0;i < 1024;i = i+1)
 	       alloyed_branch_predictor[i] <= 2'b0;
 	     for (i = 0;i < 1024;i = i+1)
-	       global_branch_predictor[i] <= 2'b0;
+	       global_branch_predictor[i] <= 2'b00;
 	     for (i = 0;i < 1024;i = i+1)
 	       for (j = 0;j < 16;j = j+1)
-		 local_branch_predictor[i][j] <= 2'b0;
+		 local_branch_predictor[i][j] <= 2'b00;
 	     branch_or_not <= 1'b0;
 	     pdt_pc <= 1'b0;
 	     pdt_res <= 1'b0;
@@ -98,8 +97,9 @@ module pdt
 
    always @ (id_is_branch == 1'b1)
      begin
-	history <= (history<<1|id_pdt_true);
-	
+	history <= (history<<1|id_branch_res);
+	// $display("history: %b",history);
+	// $display("pdt_accurate: %b",id_pdt_true);
 	if (id_pdt_true == 1'b1)
 	  begin
 	     if (which_pdt_i == 1'b0)

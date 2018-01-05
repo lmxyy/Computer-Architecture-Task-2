@@ -655,7 +655,7 @@ module id
 			   reg2_read_o <= 1'b1;
 			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
-			   if (reg1_o < reg2_o)
+			   if ((reg1_o[31] == reg2_o[31]&&reg1_o[30:0] < reg2_o[30:0])||(reg1_o[31] > reg2_o[31]))
 			     begin
 				id_branch_res_o <= 1'b1;
 				if (pdt_res_i == 1'b1)
@@ -692,7 +692,7 @@ module id
 			   reg2_read_o <= 1'b1;
 			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
-			   if (reg1_o >= reg2_o)
+			   if ((reg1_o[31] == reg2_o[31]&&reg1_o[30:0] >= reg2_o[30:0])||(reg1_o[31] < reg2_o[31]))
 			     begin
 				id_branch_res_o <= 1'b1;
 				if (pdt_res_i == 1'b1)
@@ -729,7 +729,7 @@ module id
 			   reg2_read_o <= 1'b1;
 			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
-			   if (reg1_o[30:0] < reg2_o[30:0])
+			   if (reg1_o < reg2_o)
 			     begin
 				id_branch_res_o <= 1'b1;
 				if (pdt_res_i == 1'b1)
@@ -766,7 +766,7 @@ module id
 			   reg2_read_o <= 1'b1;
 			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
-			   if (reg1_o[30:0] >= reg2_o[30:0])
+			   if (reg1_o >= reg2_o)
 			     begin
 				id_branch_res_o <= 1'b1;
 				if (pdt_res_i == 1'b1)

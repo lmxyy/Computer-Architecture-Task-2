@@ -16,7 +16,7 @@ module if_id
 
    input wire 		     pdt_res_i,
    input wire		     which_pdt_i,
-   input wire [11:0] 	     history_i,
+   input wire [9:0] 	     history_i,
    
    output reg [`InstAddrBus] id_pc,
    output reg [`InstBus]     id_inst,

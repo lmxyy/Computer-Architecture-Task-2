@@ -100,11 +100,9 @@ module openmips
    wire 		 stallreq_from_id2;
 
    // About the predictor
-   wire [`InstAddrBus] 	 if_pc;
-   wire [`InstBus] 	 if_inst;
-   wire [`InstBus] 	 id_is_branch;
+   wire 		 id_is_branch;
+   wire 		 id_branch_res;
    wire 		 id_pdt_true;
-
    wire 		 which_pdt_i;
    wire [`InstAddrBus] 	 id_pc;
    wire [9:0] 		 id_history;
@@ -116,16 +114,24 @@ module openmips
    wire 		 which_pdt_o;
    wire [9:0] 		 history_o;
    
-
-   
+   wire 		 if_id_pdt_res_o;
+   wire 		 if_id_which_pdt_o;
+   wire [9:0] 		 if_id_history_o;
+      
    //pc_reg例化
    pc_reg pc_reg0
      (
       .clk(clk),
       .rst(rst),
+
       .stall(stall),
+
       .branch_flag_i(id_branch_flag_o),
       .branch_target_address_i(branch_target_address),
+
+      .branch_or_not(branch_or_not),
+      .pdt_pc(pdt_pc),
+
       .pc(pc),
       .ce(rom_ce_o)	      
       );
@@ -142,8 +148,17 @@ module openmips
       
       .if_pc(pc),
       .if_inst(rom_data_i),
+
+      .pdt_res_i(pdt_res),
+      .which_pdt_i(which_pdt_o),
+      .history_i(history_o),
+      
       .id_pc(id_pc_i),
-      .id_inst(id_inst_i)      	
+      .id_inst(id_inst_i),
+
+      .pdt_res_o(if_id_pdt_res_o),
+      .which_pdt_o(if_id_which_pdt_o),
+      .history_o(if_id_history_o)
       );
    
    //译码阶段ID模块
@@ -153,6 +168,10 @@ module openmips
       .pc_i(id_pc_i),
       .inst_i(id_inst_i),
       
+      .pdt_res_i(if_id_pdt_res_o),
+      .which_pdt_i(if_id_which_pdt_o),
+      .history_i(if_id_history_o),
+
       //处于执行阶段的指令要写入的目的寄存器信息
       .ex_wreg_i(ex_wreg_o),
       .ex_wdata_i(ex_wdata_o),
@@ -185,6 +204,13 @@ module openmips
       .branch_flag_o(id_branch_flag_o),
       .branch_target_address_o(branch_target_address),
       .link_addr_o(id_link_address_o),
+
+      .id_is_branch_o(id_is_branch),
+      .id_branch_res_o(id_branch_res),
+      .id_pdt_true_o(id_pdt_true),
+      .which_pdt_o(which_pdt_i),
+      .pc_o(id_pc),
+      .history_o(id_history),
 
       .stallreq1(stallreq_from_id1),
       .stallreq2(stallreq_from_id2)
@@ -352,6 +378,28 @@ module openmips
       .stallreq_from_id2(stallreq_from_id2),
       
       .stall(stall)
+      );
+
+   pdt pdt0
+     (
+      .rst(rst),
+
+      .if_pc(pc),
+      .if_inst(rom_data_i),
+
+      .id_is_branch(id_is_branch),
+      .id_branch_res(id_branch_res),
+      .id_pdt_true(id_pdt_true),
+      .which_pdt_i(which_pdt_i),
+      .id_pc(id_pc),
+      .id_history(id_history),
+
+      .branch_or_not(branch_or_not),
+      .pdt_pc(pdt_pc),
+
+      .pdt_res(pdt_res),
+      .which_pdt_o(which_pdt_o),
+      .history_o(history_o)
       );
    
 endmodule // openmips
