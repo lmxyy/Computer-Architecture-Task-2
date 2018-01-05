@@ -258,3 +258,16 @@ The source code was [[file:Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
   }
 #+END_SRC
 
+** Install C++ Serial Communication Library and Boost.
++ [[https://github.com/wjwwood/serial][Serial Communication Library]]
++ [[http://www.boost.org/][Boost]] or you could run the following command in Ubuntu
+  #+BEGIN_SRC sh
+    sudo apt install libboost-program-options-dev 
+  #+END_SRC
++ To compile the cpp, you need to run the following command in the correspondent directory:
+  #+BEGIN_SRC sh
+    g++ *.cpp -c -std=c++14 -I /tmp/usr/local/include/
+    g++ *.o -o cpu-judge -L /tmp/usr/local/lib/ -lboost_program_options -lserial
+  #+END_SRC
+
+
