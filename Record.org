@@ -216,4 +216,6 @@ Knew how to implement cache.
 *** Studied the codes from our assistant
 + [[https://github.com/sxtyzhangzk/mips-cpu/blob/master/src/cpu/uart_comm.v][uart_comm.v]]
 + [[https://github.com/sxtyzhangzk/mips-cpu/blob/master/src/cpu/fifo.v][fifo.v]]
-
+* <2018-01-05 Fri>
+** Finish the [[file:Source/adapter.hpp][adapter.hpp]].
+** Add the branch predictor.
