@@ -219,3 +219,4 @@ Knew how to implement cache.
 * <2018-01-05 Fri>
 ** Finish the [[file:Source/adapter.hpp][adapter.hpp]].
 ** Add the branch predictor.
+** Fixed the bugs in branch instructions.
