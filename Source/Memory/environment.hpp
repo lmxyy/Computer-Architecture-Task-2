@@ -1,8 +1,8 @@
 #ifndef CPU_JUDGE_ENVIRONMENT_H
 #define CPU_JUDGE_ENVIRONMENT_H
-
+// ----------------------------------------------------------------------------------------------------
 #include "env_iface.hpp"
-#include "adapter.h"
+#include "adapter.hpp"
 #include <chrono>
 #include <iostream>
 #include <sstream>
@@ -128,4 +128,5 @@ protected:
 	static const addr_t addrHighMem = 0x1000;
 };
 
+// ----------------------------------------------------------------------------------------------------
 #endif

@@ -1,4 +1,5 @@
-#include "adapter.h"
+#include "adapter.hpp"
+#include <vector>
 
 void Adapter::onRecv(std::uint8_t data)
 {
@@ -18,4 +19,65 @@ void Adapter::onRecv(std::uint8_t data)
 	// You can also send data to your CPU by using:
 	//    env->UARTSend(data)
 	// where <data> can be a string or vector of bytes (uint8_t)
+
+	// static int cnt = 0,mask = 0; 
+	// static std::addr_t addr = 0; static std::data_t datum;
+	// static bool read_or_write = false; // false-read,true-write
+
+	// ++cnt;
+	
+	// switch (cnt)
+	// {
+	
+	// case 1:
+	// 	addr = 0;
+	// 	read_or_write = ((data>>7)&1);
+	// 	for (int i = 6;i >= 0;--i)
+	// 		addr = addr<<1|((data>>i)&1);
+	// 	break;
+
+	// case 2:
+	// 	for (int i = 7;i >= 0;--i)
+	// 		addr = addr<<1|((data>>i)&1);
+	// 	break;
+
+	// case 3:
+	// 	for (int i = 7;i >= 0;--i)
+	// 		addr = addr<<1|((data>>i)&1);
+	// 	break;
+		
+	// case 4:
+	// 	for (int i = 7;i >= 0;--i)
+	// 		addr = addr<<1|((data>>i)&1);
+	// 	break;
+
+	// case 5:
+	// 	addr = addr<<1|((data>>7)&1);
+	// 	if (read_or_write == false) // read
+	// 	{
+	// 		addr = (addr>>2)<<2;
+	// 		datum = env->ReadMemory(addr);
+	// 		vector <std::uint8_t> vec;
+	// 		for (int i = 0;i < 4;++i)
+	// 			vec.push_back(datum&((1<<8)-1)),datum >>= 8;
+	// 		env->UARTSend(vec);
+	// 		cnt = 0;
+	// 	}
+	// 	else
+	// 	{
+	// 		mask = 0;
+	// 		for (int i = 6;i > 2;--i)
+	// 			mask = mask<<1|((data>>i)&1);
+	// 		datum = 0;
+	// 		for (int i = 2;i >= 0;--i)
+	// 			datum = datum<<1|((data>>i)&1);
+	// 	}
+	// 	break;
+
+	// case 6:
+	// 	for (int i = 7;i > 2;--i)
+	// 		datum = datum<<1|((data>>i)&1);
+	// 	env->WriteMemory(addr,datum,mask);
+	// 	cnt = 0; break;
+	// }
 }

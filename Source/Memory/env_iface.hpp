@@ -1,5 +1,5 @@
-#ifndef CPU_JUDGE_ENV_IFACE_H
-#define CPU_JUDGE_ENV_IFACE_H
+#ifndef CPU_JUDGE_ENV_IFACE_HPP
+#define CPU_JUDGE_ENV_IFACE_HPP
 
 #include <cstdint>
 #include <string>

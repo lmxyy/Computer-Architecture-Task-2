@@ -1,5 +1,5 @@
-#ifndef CPU_JUDGE_ADAPTER_H
-#define CPU_JUDGE_ADAPTER_H
+#ifndef CPU_JUDGE_ADAPTER_HPP
+#define CPU_JUDGE_ADAPTER_HPP
 
 #include "env_iface.hpp"
 

@@ -69,29 +69,10 @@ module mem
 		    mem_ce_o <= `ChipEnable;
 		    case (mem_addr_i[1:0])
 
-		      2'b11:
-			begin
-			   wdata_o <= {{24{mem_data_i[31]}},mem_data_i[31:24]};
-			   mem_sel_o <= 4'b1000;
-			end
-
-		      2'b10:
-			begin
-			   wdata_o <= {{24{mem_data_i[23]}},mem_data_i[23:16]};
-			   mem_sel_o <= 4'b0100;
-			end
-
-		      2'b01:
-			begin
-			   wdata_o <= {{24{mem_data_i[15]}},mem_data_i[15:8]};
-			   mem_sel_o <= 4'b0010;
-			end
-
-		      2'b00:
-			begin
-			   wdata_o <= {{24{mem_data_i[7]}},mem_data_i[7:0]};
-			   mem_sel_o <= 4'b0001;
-			end
+		      2'b11: wdata_o <= {{24{mem_data_i[31]}},mem_data_i[31:24]};
+		      2'b10: wdata_o <= {{24{mem_data_i[23]}},mem_data_i[23:16]};
+		      2'b01: wdata_o <= {{24{mem_data_i[15]}},mem_data_i[15:8]};
+		      2'b00: wdata_o <= {{24{mem_data_i[7]}},mem_data_i[7:0]};
 		      
 		      default: wdata_o <= `ZeroWord;
 		      
@@ -105,17 +86,8 @@ module mem
 		    mem_ce_o <= `ChipEnable;
 		    case (mem_addr_i[1:0])
 		      
-		      2'b10:	
-			begin
-			   wdata_o <= {{16{mem_data_i[31]}},mem_data_i[31:16]};
-			   mem_sel_o <= 4'b1100;
-			end
-
-		      2'b00:	
-			begin
-			   wdata_o <= {{16{mem_data_i[15]}},mem_data_i[15:0]};
-			   mem_sel_o <= 4'b0011;
-			end
+		      2'b10: wdata_o <= {{16{mem_data_i[31]}},mem_data_i[31:16]};
+		      2'b00: wdata_o <= {{16{mem_data_i[15]}},mem_data_i[15:0]};
 		      
 		      default: wdata_o <= `ZeroWord;
 
@@ -127,7 +99,9 @@ module mem
 		 begin
 		    mem_addr_o <= mem_addr_i;
 		    mem_we_o <= `WriteDisable;
-		    wdata_o <= mem_data_i;
+		    if (mem_addr_i[1:0] != 2'b00)
+			  wdata_o <= `ZeroWord;
+			else wdata_o <= mem_data_i;
 		    mem_sel_o <= 4'b1111;
 		    mem_ce_o <= `ChipEnable;
 		 end // case: `EXE_LW_OP
@@ -139,29 +113,10 @@ module mem
 		    mem_ce_o <= `ChipEnable;
 		    case (mem_addr_i[1:0])
 
-		      2'b11:
-			begin
-			   wdata_o <= {24'b0,mem_data_i[31:24]};
-			   mem_sel_o <= 4'b1000;
-			end
-
-		      2'b10:
-			begin
-			   wdata_o <= {24'b0,mem_data_i[23:16]};
-			   mem_sel_o <= 4'b0100;
-			end
-
-		      2'b01:
-			begin
-			   wdata_o <= {24'b0,mem_data_i[15:8]};
-			   mem_sel_o <= 4'b0010;
-			end
-
-		      2'b00:
-			begin
-			   wdata_o <= {24'b0,mem_data_i[7:0]};
-			   mem_sel_o <= 4'b0001;
-			end
+		      2'b11: wdata_o <= {24'b0,mem_data_i[31:24]};
+		      2'b10: wdata_o <= {24'b0,mem_data_i[23:16]};
+		      2'b01: wdata_o <= {24'b0,mem_data_i[15:8]};
+		      2'b00: wdata_o <= {24'b0,mem_data_i[7:0]};
 		      
 		      default: wdata_o <= `ZeroWord;
 		      
@@ -175,17 +130,8 @@ module mem
 		    mem_ce_o <= `ChipEnable;
 		    case (mem_addr_i[1:0])
 		      
-		      2'b10:	
-			begin
-			   wdata_o <= {16'b0,mem_data_i[31:16]};
-			   mem_sel_o <= 4'b1100;
-			end
-
-		      2'b01:	
-			begin
-			   wdata_o <= {16'b0,mem_data_i[15:0]};
-			   mem_sel_o <= 4'b0011;
-			end
+		      2'b10: wdata_o <= {16'b0,mem_data_i[31:16]};
+		      2'b01: wdata_o <= {16'b0,mem_data_i[15:0]};
 		      
 		      default: wdata_o <= `ZeroWord;
 
