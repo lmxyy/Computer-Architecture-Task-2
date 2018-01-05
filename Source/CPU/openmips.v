@@ -13,6 +13,7 @@
  `include "pc_reg.v"
  `include "regfile.v"
  `include "ctrl.v"
+ `include "pdt.v"
 
 module openmips
   (
@@ -97,6 +98,25 @@ module openmips
    wire [5:0] 		 stall;
    wire 		 stallreq_from_id1;
    wire 		 stallreq_from_id2;
+
+   // About the predictor
+   wire [`InstAddrBus] 	 if_pc;
+   wire [`InstBus] 	 if_inst;
+   wire [`InstBus] 	 id_is_branch;
+   wire 		 id_pdt_true;
+
+   wire 		 which_pdt_i;
+   wire [`InstAddrBus] 	 id_pc;
+   wire [9:0] 		 id_history;
+
+   wire 		 branch_or_not;
+   wire [`InstAddrBus] 	 pdt_pc;
+
+   wire 		 pdt_res;
+   wire 		 which_pdt_o;
+   wire [9:0] 		 history_o;
+   
+
    
    //pc_reg例化
    pc_reg pc_reg0

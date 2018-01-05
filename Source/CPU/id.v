@@ -6,51 +6,68 @@
 
 module id
   (
-   input wire 		     rst,
-   input wire [`InstAddrBus] pc_i,
-   input wire [`InstBus]     inst_i,
+   input wire 		      rst,
+   input wire [`InstAddrBus]  pc_i,
+   input wire [`InstBus]      inst_i,
 
+   // From predictor
+   input wire 		      pdt_res_i,
+   input wire 		      which_pdt_i,
+   input wire [9:0] 	      history_i, 
+   
    //处于执行阶段的指令要写入的目的寄存器信息
-   input wire 		     ex_wreg_i,
-   input wire [`RegBus]      ex_wdata_i,
-   input wire [`RegAddrBus]  ex_wd_i,
-   input wire 		     ex_is_load_i,
+   input wire 		      ex_wreg_i,
+   input wire [`RegBus]       ex_wdata_i,
+   input wire [`RegAddrBus]   ex_wd_i,
+   input wire 		      ex_is_load_i,
 
    //处于访存阶段的指令要写入的目的寄存器信息
-   input wire 		     mem_wreg_i,
-   input wire [`RegBus]      mem_wdata_i,
-   input wire [`RegAddrBus]  mem_wd_i,
+   input wire 		      mem_wreg_i,
+   input wire [`RegBus]       mem_wdata_i,
+   input wire [`RegAddrBus]   mem_wd_i,
 
-   input wire [`RegBus]      reg1_data_i,
-   input wire [`RegBus]      reg2_data_i,
+   input wire [`RegBus]       reg1_data_i,
+   input wire [`RegBus]       reg2_data_i,
 
    //送到regfile的信息
-   output reg 		     reg1_read_o,
-   output reg 		     reg2_read_o, 
-   output reg [`RegAddrBus]  reg1_addr_o,
-   output reg [`RegAddrBus]  reg2_addr_o, 
+   output reg 		      reg1_read_o,
+   output reg 		      reg2_read_o, 
+   output reg [`RegAddrBus]   reg1_addr_o,
+   output reg [`RegAddrBus]   reg2_addr_o, 
 
    //送到执行阶段的信息
-   output reg [`AluOpBus]    aluop_o,
-   output reg [`AluSelBus]   alusel_o,
-   output reg [`RegBus]      reg1_o,
-   output reg [`RegBus]      reg2_o,
-   output reg [`RegAddrBus]  wd_o,
-   output reg 		     wreg_o,
-   output wire [`RegBus]     inst_o,
+   output reg [`AluOpBus]     aluop_o,
+   output reg [`AluSelBus]    alusel_o,
+   output reg [`RegBus]       reg1_o,
+   output reg [`RegBus]       reg2_o,
+   output reg [`RegAddrBus]   wd_o,
+   output reg 		      wreg_o,
+   output wire [`RegBus]      inst_o,
   
-   output reg 		     branch_flag_o,
-   output reg [`RegBus]      branch_target_address_o,
-   output reg [`RegBus]      link_addr_o,
+   output reg 		      branch_flag_o,
+   output reg [`RegBus]       branch_target_address_o,
+   output reg [`RegBus]       link_addr_o,
 
-   output reg 		     stallreq1, // stall for jump and branch
-   output reg 		     stallreq2 // stall for load
+   // To predictor
+   output reg 		      id_is_branch_o,
+   output reg 		      id_branch_res_o,
+   output reg 		      id_pdt_true_o,
+   output wire 		      which_pdt_o,
+   output wire [`InstAddrBus] pc_o,
+   output wire [9:0] 	      history_o, 
+   
+   output reg 		      stallreq1, // stall for jump and branch
+   output reg 		      stallreq2 // stall for load
    );
 
    reg [`RegBus] 	     imm;
    reg 			     instvalid;
 
    assign inst_o = inst_i;
+   
+   assign which_pdt_o = which_pdt_i;
+   assign pc_o = pc_i;
+   assign history_o = history_i;
    
    always @ (*) 
      begin
@@ -71,6 +88,9 @@ module id
 	     link_addr_o <= `ZeroWord;
 	     stallreq1 <= 1'b0;
 	     stallreq2 <= 1'b0;
+	     id_is_branch_o <= 1'b0;
+	     id_branch_res_o <= 1'b0;
+	     id_pdt_true_o = 1'b0;
 	     instvalid <= `InstInvalid;
 	  end // if (rst == `RstEnable)
 
@@ -91,6 +111,8 @@ module id
 	     link_addr_o <= `ZeroWord;
 	     stallreq1 <= 1'b0;
 	     stallreq2 <= 1'b0;
+	     id_is_branch_o <= 1'b0;
+	     id_branch_res_o <= 1'b0;
 	     instvalid <= `InstInvalid;
 
 	     case (inst_i[6:0])
@@ -557,13 +579,34 @@ module id
 			   alusel_o <= `EXE_RES_JUMP_BRANCH;
 			   reg1_read_o <= 1'b1;
 			   reg2_read_o <= 1'b1;
+			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
 			   if (reg1_o == reg2_o)
 			     begin
-				branch_flag_o <= 1'b1;
-				branch_target_address_o 
-				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq1 <= 1'b1;
+				id_branch_res_o <= 1'b1;
+				if (pdt_res_i == 1'b1)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o 
+				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				     stallreq1 <= 1'b1;
+				  end
+			     end
+			   else
+			     begin
+				id_branch_res_o <= 1'b0;
+				if (pdt_res_i == 1'b0)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o <= pc_i+4;
+				     stallreq1 <= 1'b1;
+				  end
 			     end
 			end // case: 3'b000
 
@@ -573,13 +616,34 @@ module id
 			   alusel_o <= `EXE_RES_JUMP_BRANCH;
 			   reg1_read_o <= 1'b1;
 			   reg2_read_o <= 1'b1;
+			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
 			   if (reg1_o != reg2_o)
 			     begin
-				branch_flag_o <= 1'b1;
-				branch_target_address_o 
-				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq1 <= 1'b1;
+				id_branch_res_o <= 1'b1;
+				if (pdt_res_i == 1'b1)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o 
+				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				     stallreq1 <= 1'b1;
+				  end
+			     end
+			   else
+			     begin
+				id_branch_res_o <= 1'b0;
+				if (pdt_res_i == 1'b0)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o <= pc_i+4;
+				     stallreq1 <= 1'b1;
+				  end
 			     end
 			end // case: 3'b000
 
@@ -589,14 +653,35 @@ module id
 			   alusel_o <= `EXE_RES_JUMP_BRANCH;
 			   reg1_read_o <= 1'b1;
 			   reg2_read_o <= 1'b1;
+			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
 			   if (reg1_o < reg2_o)
 			     begin
-				branch_flag_o <= 1'b1;
-				branch_target_address_o 
-				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq1 <= 1'b1;
-			     end			 
+				id_branch_res_o <= 1'b1;
+				if (pdt_res_i == 1'b1)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o 
+				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				     stallreq1 <= 1'b1;
+				  end
+			     end
+			   else
+			     begin
+				id_branch_res_o <= 1'b0;
+				if (pdt_res_i == 1'b0)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o <= pc_i+4;
+				     stallreq1 <= 1'b1;
+				  end
+			     end
 			end // case: 3'b100
 		      
 		      3'b101:
@@ -605,14 +690,35 @@ module id
 			   alusel_o <= `EXE_RES_JUMP_BRANCH;
 			   reg1_read_o <= 1'b1;
 			   reg2_read_o <= 1'b1;
+			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
 			   if (reg1_o >= reg2_o)
 			     begin
-				branch_flag_o <= 1'b1;
-				branch_target_address_o 
-				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq1 <= 1'b1;
-			     end			 
+				id_branch_res_o <= 1'b1;
+				if (pdt_res_i == 1'b1)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o 
+				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				     stallreq1 <= 1'b1;
+				  end
+			     end
+			   else
+			     begin
+				id_branch_res_o <= 1'b0;
+				if (pdt_res_i == 1'b0)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o <= pc_i+4;
+				     stallreq1 <= 1'b1;
+				  end
+			     end
 			end // case: 3'b101
 
 		      3'b110:
@@ -621,14 +727,35 @@ module id
 			   alusel_o <= `EXE_RES_JUMP_BRANCH;
 			   reg1_read_o <= 1'b1;
 			   reg2_read_o <= 1'b1;
+			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
 			   if (reg1_o[30:0] < reg2_o[30:0])
 			     begin
-				branch_flag_o <= 1'b1;
-				branch_target_address_o 
-				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq1 <= 1'b1;
-			     end			 
+				id_branch_res_o <= 1'b1;
+				if (pdt_res_i == 1'b1)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o 
+				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				     stallreq1 <= 1'b1;
+				  end
+			     end
+			   else
+			     begin
+				id_branch_res_o <= 1'b0;
+				if (pdt_res_i == 1'b0)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o <= pc_i+4;
+				     stallreq1 <= 1'b1;
+				  end
+			     end
 			end // case: 3'b110
 		      
 		      3'b111:
@@ -637,13 +764,34 @@ module id
 			   alusel_o <= `EXE_RES_JUMP_BRANCH;
 			   reg1_read_o <= 1'b1;
 			   reg2_read_o <= 1'b1;
+			   id_is_branch_o <= 1'b1;
 			   instvalid <= `InstValid;
 			   if (reg1_o[30:0] >= reg2_o[30:0])
 			     begin
-				branch_flag_o <= 1'b1;
-				branch_target_address_o 
-				  <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
-				stallreq1 <= 1'b1;
+				id_branch_res_o <= 1'b1;
+				if (pdt_res_i == 1'b1)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o 
+				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				     stallreq1 <= 1'b1;
+				  end
+			     end
+			   else
+			     begin
+				id_branch_res_o <= 1'b0;
+				if (pdt_res_i == 1'b0)
+				     id_pdt_true_o <= 1'b1;
+				else
+				  begin
+				     id_pdt_true_o <= 1'b0;
+				     branch_flag_o <= 1'b1;
+				     branch_target_address_o <= pc_i+4;
+				     stallreq1 <= 1'b1;
+				  end
 			     end
 			end // case: 3'b111
 
@@ -712,6 +860,7 @@ module id
    `HAVE_TO_STOP(reg2_read_o,reg2_addr_o,stallreq_for_reg2)
    
    always @ (*) stallreq2 <= stallreq_for_reg1|stallreq_for_reg2;
+   always @ (stallreq2 == 1) id_is_branch_o <= 1'b0;
    
 endmodule // id
 

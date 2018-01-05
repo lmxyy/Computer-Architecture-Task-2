@@ -14,7 +14,11 @@ module pc_reg(
 	      // From id
 	      input wire 		branch_flag_i,
 	      input wire [`RegBus] 	branch_target_address_i,
-
+	      
+	      // From pdt
+	      input wire 		branch_or_not,
+	      input wire [`InstAddrBus] pdt_pc, 
+	      
 	      output reg [`InstAddrBus] pc,
 	      output reg 		ce
 	      );
@@ -27,6 +31,11 @@ module pc_reg(
 	     if (branch_flag_i == 1'b1)
 	       begin
 		  pc <= {branch_target_address_i[31:1],1'b0};
+		  $display("Pc register jumps to %d.",{2'b0,branch_target_address_i[31:2]});
+	       end
+	     else if (branch_or_not == 1'b1)
+	       begin
+		  pc <= {pdt_pc[31:1],1'b0};
 		  $display("Pc register jumps to %d.",{2'b0,branch_target_address_i[31:2]});
 	       end
 	     else pc <= pc+4'h4;
