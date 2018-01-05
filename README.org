@@ -1,9 +1,12 @@
 #+TITLE: Computer Architecture Task 2
+#+AUTHOR: Lmxyy
+#+OPTIONS: toc:t
 * Authority
-This is the second homework of Computer Architecture, and the author is Lmxyy
+This is the second homework of Computer Architecture, and the author is Lmxyy.
 * Aim
-Implement a *Risk-v* CPU using hardware description language(HDL).
-** Instructions [100%]
++ Implement a *Risk-v* CPU using hardware description language(HDL), and then download the CPU on FPGA.
++ Using C++ to simulate the memory via the USB-UART protocol.
+** DONE Instructions [100%]
 - [X] LUI
 - [X] AUIPC
 - [X] JAL
@@ -41,7 +44,27 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 - [X] SB
 - [X] SH
 - [X] SW
-* Format of Riscv32 Assembler
+** TODO Memory [50%]
+- [X] UART-USB Protocol
+  - [X] buf_que module
+  - [X] uart_com module
+- [ ] FPGA Communication
+  - [ ] adapter.cpp
+  - [ ] adapter.hpp
+  - [ ] env_iface.hpp
+  - [ ] environment.hpp
+  - [ ] main.cpp
+* Feature
++ The instruction set arthitecture(ISA) is RV32I Base Integer Instruction Set, Version 2.0.
++ The implementation technology is FPGA.
++ The HDL is Verilog HDL.
++ The communication protocol is UART-USB.
+* Reference
++ [[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
++ [[https://github.com/riscv/riscv-gnu-toolchain][GNU toolchain for RISC-V, including GCC(Newlib)]]
++ [[https://github.com/sxtyzhangzk/cpu-judge][cpu-judge]]
+* Appendix
+** Format of Riscv32 Assembler
 |-------------+--------------------------------------|
 | Instruction | Format                               |
 |-------------+--------------------------------------|
@@ -115,17 +138,9 @@ Implement a *Risk-v* CPU using hardware description language(HDL).
 |-------------+--------------------------------------|
 | SW          | ~sw rs, (signed)12-bit-offset(rs)~   |
 |-------------+--------------------------------------|
-* Feature
-+ The instruction set arthitecture(ISA) is RV32I Base Integer Instruction Set, Version 2.0.
-+ The implementation technology is FPGA.
-+ The HDL is Verilog HDL.
-* Reference
-+ [[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
-+ [[https://github.com/riscv/riscv-gnu-toolchain][GNU toolchain for RISC-V, including GCC(Newlib)]]
-+ [[https://github.com/sxtyzhangzk/cpu-judge][cpu-judge]]
-* How to Install and Use Riscv Toolchain
-** Clone the toolchain locally.
-*** If you could climb over the wall:
+** How to Install and Use Riscv Toolchain
+*** Clone the toolchain locally.
+**** If you could climb over the wall:
 Run the following codes:
 #+BEGIN_SRC sh
   $ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
@@ -137,19 +152,19 @@ or alternatively:
   $ git submodule update --init --recursive
 #+END_SRC
 The source codes are somewhat large, please wait patiently.
-*** If you couldn't climb over the wall:
+**** If you couldn't climb over the wall:
 Download the package at [[https://jbox.sjtu.edu.cn/link/view/8971e3226df74d35b2dcbe588397958f]](Provided by Zhanghao Wu). Remember to depackage with the command:
 #+BEGIN_SRC sh
   tar -zxvf riscv-gnu-toolchain.tar.gz
 #+END_SRC
 If you use git directly, maybe you couldn't clone all source codes which may cause that your toolchain cannot work normally.
-** Make the source code.
+*** Make the source code.
 Run the following command to get riscv32.
 #+BEGIN_SRC sh
   sudo ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d
   sudo make
 #+END_SRC
-** Modify your path variable.
+*** Modify your path variable.
 First run the command
 #+BEGIN_SRC sh
   sudo gedit /etc/profile
@@ -159,7 +174,7 @@ Then add
   export PATH="$PATH:/opt/riscv/bin"
 #+END_SRC
 Next, reboot or logout.
-** Tranform the assembler to riscv instructions.
+*** Tranform the assembler to riscv instructions.
 Use the following command
 
 #+BEGIN_SRC sh
@@ -182,7 +197,7 @@ Use the following command
   fi
 #+END_SRC
 which was included in [[file:Tools/get_instr.sh][get_instr.sh]]. You need run the bash with exactly one parament which shows that your assembler source code's name is "$1.s". And you will get an file named instr.data which contains your hexadecimal riscv32 instructions. Attention: Please modify the path of ~Bin_to_Text~ according to your current directory.
-** Transform a binary file to a text file.
+*** Transform a binary file to a text file.
 The source code was [[file:Tools/Bin_to_Text.cpp][Bin_to_Text.cpp]].
 
 #+BEGIN_SRC C++
