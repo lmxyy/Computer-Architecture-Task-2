@@ -1,8 +1,8 @@
-`ifdef regfile.v
-`else
- `define regfile.v
-// --------------------------------------------------------------------------------
- `include "defines.v"
+// `ifdef regfile.v
+// `else
+//  `define regfile.v
+// // --------------------------------------------------------------------------------
+//  `include "defines.v"
 
 module regfile
   (
@@ -41,26 +41,12 @@ module regfile
 
      end
 
- `define READ(re,raddr,rdata) \ 
-   always @ (*) \ 
-     begin \ 
-   	if(rst == `RstEnable) \ 
-   		rdata <= `ZeroWord; \ 
-   		  else if(raddr == `RegNumLog2'h0) \ 
-   				 rdata <= `ZeroWord; \ 
-   				   else if((raddr == waddr) && (we == `WriteEnable) \ 
-   	  				   && (re == `ReadEnable)) \ 
-   						   rdata <= wdata; \ 
-   						     else if(re == `ReadEnable) \
-   								 rdata <= regs[raddr]; \
-   								   else \ 
-   								     rdata <= `ZeroWord; \ 
-									      end
+ `define READ(re,raddr,rdata) always @ (*) begin if(rst == `RstEnable) rdata <= `ZeroWord; else if(raddr == `RegNumLog2'h0) rdata <= `ZeroWord; else if((raddr == waddr) && (we == `WriteEnable) && (re == `ReadEnable)) rdata <= wdata; else if(re == `ReadEnable) rdata <= regs[raddr]; else rdata <= `ZeroWord; end
    
    `READ(re1,raddr1,rdata1)
    `READ(re2,raddr2,rdata2)
    
 endmodule // regfile
 
-// --------------------------------------------------------------------------------
-`endif
+// // --------------------------------------------------------------------------------
+// `endif

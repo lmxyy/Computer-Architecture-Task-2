@@ -1,0 +1,24 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../Source/CPU" \
+"../../../../../Source/CPU/ctrl.v" \
+"../../../../../Source/CPU/data_ram.v" \
+"../../../../../Source/CPU/ex.v" \
+"../../../../../Source/CPU/ex_mem.v" \
+"../../../../../Source/CPU/id.v" \
+"../../../../../Source/CPU/id_ex.v" \
+"../../../../../Source/CPU/if_id.v" \
+"../../../../../Source/CPU/inst_rom.v" \
+"../../../../../Source/CPU/mem.v" \
+"../../../../../Source/CPU/mem_wb.v" \
+"../../../../../Source/CPU/openmips.v" \
+"../../../../../Source/CPU/openmips_min_sopc.v" \
+"../../../../../Source/CPU/pc_reg.v" \
+"../../../../../Source/CPU/pdt.v" \
+"../../../../../Source/CPU/regfile.v" \
+"../../../../../Source/CPU/openmips_min_sopc_tb.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

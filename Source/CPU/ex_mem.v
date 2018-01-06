@@ -1,8 +1,8 @@
-`ifdef ex_mem.v
-`else
- `define ex_mem.v
+//`ifdef ex_mem.v
+//`else
+// `define ex_mem.v
 // --------------------------------------------------------------------------------
- `include "defines.v"
+// `include "defines.v"
 
 module ex_mem
   (
@@ -68,4 +68,4 @@ module ex_mem
 endmodule // ex_mem
 
 // --------------------------------------------------------------------------------
-`endif
+//`endif

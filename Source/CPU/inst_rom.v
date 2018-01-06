@@ -1,8 +1,8 @@
-`ifdef inst_rom.v
-`else
- `define inst_rom.v
-// --------------------------------------------------------------------------------
- `include "defines.v"
+// `ifdef inst_rom.v
+// `else
+//  `define inst_rom.v
+// // --------------------------------------------------------------------------------
+//  `include "defines.v"
 
 module inst_rom(
 		input wire 		   ce,
@@ -19,7 +19,7 @@ module inst_rom(
    
    reg[`InstBus]  inst_mem[0:`InstMemNum];
    
-   initial $readmemh ("instr.data",inst_mem);
+   initial $readmemh ("/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/instr.data",inst_mem);
 
    always @ (*)
      begin
@@ -35,5 +35,5 @@ module inst_rom(
 
 endmodule // inst_rom
 
-// --------------------------------------------------------------------------------
-`endif
+// // --------------------------------------------------------------------------------
+// `endif

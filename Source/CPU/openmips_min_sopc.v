@@ -1,11 +1,11 @@
-`ifdef openmips_min_sopc.v
-`else
- `define openmips_min_sopc.v
+//`ifdef openmips_min_sopc.v
+//`else
+// `define openmips_min_sopc.v
 // --------------------------------------------------------------------------------
- `include "defines.v"
- `include "openmips.v"
- `include "inst_rom.v"
- `include "data_ram.v"
+// `include "defines.v"
+// `include "openmips.v"
+// `include "inst_rom.v"
+// `include "data_ram.v"
 
 module openmips_min_sopc
   (
@@ -63,4 +63,4 @@ module openmips_min_sopc
 endmodule // openmips_min_sopc
 
 // --------------------------------------------------------------------------------
-`endif
+//`endif

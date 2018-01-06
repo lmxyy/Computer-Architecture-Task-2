@@ -1,8 +1,8 @@
-`ifdef id_ex.v
-`else
- `define id_ex.v
+//`ifdef id_ex.v
+//`else
+// `define id_ex.v
 // --------------------------------------------------------------------------------
- `include "defines.v"
+// `include "defines.v"
 
 module id_ex
   (
@@ -76,4 +76,4 @@ module id_ex
 endmodule // id_ex
 
 // --------------------------------------------------------------------------------
-`endif
+//`endif

@@ -1,8 +1,8 @@
-`ifdef mem.v
-`else
- `define mem.v
+//`ifdef mem.v
+//`else
+// `define mem.v
 // --------------------------------------------------------------------------------
- `include "defines.v"
+`include "defines.h"
 
 module mem
   (
@@ -187,4 +187,4 @@ module mem
 endmodule // mem
 
 // --------------------------------------------------------------------------------
-`endif
+//`endif

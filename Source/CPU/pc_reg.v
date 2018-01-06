@@ -1,8 +1,8 @@
-`ifdef pc_reg.v
-`else
- `define pc_reg.v
-// --------------------------------------------------------------------------------
- `include "defines.v"
+// `ifdef pc_reg.v
+// `else
+//  `define pc_reg.v
+// // --------------------------------------------------------------------------------
+//  `include "defines.v"
 
 module pc_reg(
 	      input wire 		clk,
@@ -51,4 +51,4 @@ module pc_reg(
 endmodule // pc_reg
 
 // --------------------------------------------------------------------------------
-`endif
+// `endif

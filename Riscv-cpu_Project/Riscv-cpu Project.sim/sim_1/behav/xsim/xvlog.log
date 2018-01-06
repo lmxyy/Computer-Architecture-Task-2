@@ -1,0 +1,32 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ctrl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ctrl
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/data_ram.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module data_ram
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ex
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex_mem.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ex_mem
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/id.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module id
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/id_ex.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module id_ex
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/if_id.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module if_id
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/inst_rom.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module inst_rom
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/mem.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mem
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/mem_wb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mem_wb
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/openmips.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module openmips
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/openmips_min_sopc.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module openmips_min_sopc
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/pc_reg.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module pc_reg
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/pdt.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module pdt
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/regfile.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module regfile
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/openmips_min_sopc_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module openmips_min_sopc_tb

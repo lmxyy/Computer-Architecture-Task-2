@@ -1,8 +1,8 @@
-`ifdef ex.v
-`else
- `define ex.v
+//`ifdef ex.v
+//`else
+// `define ex.v
 // --------------------------------------------------------------------------------
- `include "defines.v"
+// `include "defines.v"
 
 module ex
   (
@@ -50,19 +50,20 @@ module ex
    // --------------------------------------------------Shift--------------------------------------------------
    reg [`RegBus] 		   shiftres;
 
-   always @ (*) begin
-      if(rst == `RstEnable) shiftres <= `ZeroWord;
-      else 
-	begin
-	   case (aluop_i)
-	     `EXE_SLL_OP: shiftres <= reg1_i << reg2_i[4:0];
-	     `EXE_SRL_OP: shiftres <= reg1_i >> reg2_i[4:0];
-	     `EXE_SRA_OP:
-	       shiftres <= ({32{reg1_i[31]}} << (6'd32-{1'b0, reg2_i[4:0]}))| reg1_i >> reg2_i[4:0];
-	     default: shiftres <= `ZeroWord;	     
-	   endcase // case (aluop_i)
-	end // else: !if(rst == `RstEnable)
-   end // always @ (*)
+   always @ (*) 
+     begin
+	if(rst == `RstEnable) shiftres <= `ZeroWord;
+	else 
+	  begin
+	     case (aluop_i)
+	       `EXE_SLL_OP: shiftres <= reg1_i << reg2_i[4:0];
+	       `EXE_SRL_OP: shiftres <= reg1_i >> reg2_i[4:0];
+	       `EXE_SRA_OP:
+		 shiftres <= ({32{reg1_i[31]}} << (6'd32-{1'b0, reg2_i[4:0]}))| reg1_i >> reg2_i[4:0];
+	       default: shiftres <= `ZeroWord;	     
+	     endcase // case (aluop_i)
+	  end // else: !if(rst == `RstEnable)
+     end // always @ (*)
    
    // --------------------------------------------------Arithmetic--------------------------------------------------
    wire reg1_eq_reg2;
@@ -115,4 +116,4 @@ module ex
 endmodule // ex
 
 // --------------------------------------------------------------------------------
-`endif
+//`endif

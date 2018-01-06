@@ -1,0 +1,42 @@
+Vivado Simulator 2017.3
+Copyright 1986-1999, 2001-2016 Xilinx, Inc. All Rights Reserved.
+Running: /opt/Xilinx/Vivado/2017.3/bin/unwrapped/lnx64.o/xelab -wto f6dc597a0d1c44a2b527dc557a7ac92b --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot openmips_min_sopc_tb_behav xil_defaultlib.openmips_min_sopc_tb xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/openmips_min_sopc.v" Line 10. Module openmips_min_sopc doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/openmips.v" Line 18. Module openmips doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/pc_reg.v" Line 7. Module pc_reg doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/if_id.v" Line 7. Module if_id doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/id.v" Line 7. Module id doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/regfile.v" Line 7. Module regfile doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/id_ex.v" Line 7. Module id_ex doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex.v" Line 7. Module ex doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex_mem.v" Line 7. Module ex_mem doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/mem.v" Line 7. Module mem doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/mem_wb.v" Line 7. Module mem_wb doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ctrl.v" Line 7. Module ctrl doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/pdt.v" Line 7. Module pdt doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/inst_rom.v" Line 7. Module inst_rom doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/data_ram.v" Line 7. Module data_ram doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.pc_reg
+Compiling module xil_defaultlib.if_id
+Compiling module xil_defaultlib.id
+Compiling module xil_defaultlib.regfile
+Compiling module xil_defaultlib.id_ex
+Compiling module xil_defaultlib.ex
+Compiling module xil_defaultlib.ex_mem
+Compiling module xil_defaultlib.mem
+Compiling module xil_defaultlib.mem_wb
+Compiling module xil_defaultlib.ctrl
+Compiling module xil_defaultlib.pdt
+Compiling module xil_defaultlib.openmips
+Compiling module xil_defaultlib.inst_rom
+Compiling module xil_defaultlib.data_ram
+Compiling module xil_defaultlib.openmips_min_sopc
+Compiling module xil_defaultlib.openmips_min_sopc_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot openmips_min_sopc_tb_behav
