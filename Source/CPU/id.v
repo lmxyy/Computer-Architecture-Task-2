@@ -591,7 +591,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -628,7 +628,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -665,7 +665,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -702,7 +702,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -739,7 +739,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -776,7 +776,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
