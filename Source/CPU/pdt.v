@@ -70,7 +70,7 @@ module pdt
 		  else
 		    begin
 		       pdt_res <= 1'b1;
-		       pdt_pc <= if_pc+{{18{if_inst[31]}},if_inst[31],if_inst[7],if_inst[30:25],if_inst[11:8],1'b0};
+		       pdt_pc <= if_pc+{{19{if_inst[31]}},if_inst[31],if_inst[7],if_inst[30:25],if_inst[11:8],1'b0};
 		    end
 	       end // if (alloyed_branch_predictor[if_pc[11:2]][1] == 0)
 	     
@@ -85,7 +85,7 @@ module pdt
 		  else
 		    begin
 		       pdt_res <= 1'b1;
-		       pdt_pc <= if_pc+{{18{if_inst[31]}},if_inst[31],if_inst[7],if_inst[30:25],if_inst[11:8],1'b0};
+		       pdt_pc <= if_pc+{{19{if_inst[31]}},if_inst[31],if_inst[7],if_inst[30:25],if_inst[11:8],1'b0};
 		    end
 	       end // else: !if(alloyed_branch_predictor[if_pc[11:2]][1] == 0)
 	     

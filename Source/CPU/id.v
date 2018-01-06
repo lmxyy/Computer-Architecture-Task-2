@@ -1,8 +1,8 @@
-//`ifdef id.v
-//`else
-// `define id.v
-// --------------------------------------------------------------------------------
-// `include "defines.v"
+// `ifdef id.v
+// `else
+//  `define id.v
+// // --------------------------------------------------------------------------------
+//  `include "defines.v"
 
 module id
   (
@@ -591,7 +591,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -628,7 +628,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -665,7 +665,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -702,7 +702,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -739,7 +739,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -776,7 +776,7 @@ module id
 				     id_pdt_true_o <= 1'b0;
 				     branch_flag_o <= 1'b1;
 				     branch_target_address_o 
-				       <= pc_i+{{18{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
+				       <= pc_i+{{19{inst_i[31]}},inst_i[31],inst_i[7],inst_i[30:25],inst_i[11:8],1'b0};
 				     stallreq1 <= 1'b1;
 				  end
 			     end
@@ -823,14 +823,38 @@ module id
 
      end // always @ (*)
    
- `define GET_OPRAND(reg_o,reg_read_o,reg_data_i,reg_addr_o) always @ (*) begin if (rst == `RstEnable) reg_o <= `ZeroWord; else if (reg_read_o == 1'b1)  begin if (reg_addr_o == 5'b0) reg_o <= `ZeroWord; else if ((ex_wreg_i == 1'b1)&&(ex_wd_i == reg_addr_o)) reg_o <= ex_wdata_i; else if ((mem_wreg_i == 1'b1)&&(mem_wd_i == reg_addr_o)) reg_o <= mem_wdata_i; else if (reg_read_o == 1'b1) reg_o <= reg_data_i; else reg_o <= `ZeroWord;	end else reg_o <= imm; end // always @ (*)
+ `define GET_OPRAND(reg_o,reg_read_o,reg_data_i,reg_addr_o) \ 
+   always @ (*) \ 
+     begin \
+	if (rst == `RstEnable) reg_o <= `ZeroWord; \ 
+	  else if (reg_read_o == 1'b1) \ 
+			       begin \ 
+				  if (reg_addr_o == 5'b0) reg_o <= `ZeroWord; \ 
+				    else if ((ex_wreg_i == 1'b1)&&(ex_wd_i == reg_addr_o)) \ 
+							 reg_o <= ex_wdata_i; \ 
+							   else if ((mem_wreg_i == 1'b1)&&(mem_wd_i == reg_addr_o)) \ 
+										 reg_o <= mem_wdata_i; \
+										   else if (reg_read_o == 1'b1) \ 
+													reg_o <= reg_data_i; \ 
+													  else reg_o <= `ZeroWord; \ 
+															end \ 
+	  else \ 
+	    reg_o <= imm; \ 
+		     end // always @ (*)
    
    `GET_OPRAND(reg1_o,reg1_read_o,reg1_data_i,reg1_addr_o)
    `GET_OPRAND(reg2_o,reg2_read_o,reg2_data_i,reg2_addr_o)
    
    reg stallreq_for_reg1,stallreq_for_reg2;
       
- `define HAVE_TO_STOP(reg_read_o,reg_addr_o,stallreq_for_reg) always @ (*) begin stallreq_for_reg <= 1'b0; if (rst == `RstEnable); else if ((reg_read_o == 1'b1&&reg_addr_o != `ZeroWord)&&ex_is_load_i == 1'b1&&(ex_wd_i == reg_addr_o)) stallreq_for_reg <= 1'b1; end // always @ (*)
+ `define HAVE_TO_STOP(reg_read_o,reg_addr_o,stallreq_for_reg) \ 
+   always @ (*) \
+     begin \
+ 	stallreq_for_reg <= 1'b0; \ 
+ 	  if (rst == `RstEnable);\ 
+ 	else if ((reg_read_o == 1'b1&&reg_addr_o != `ZeroWord)&&ex_is_load_i == 1'b1&&(ex_wd_i == reg_addr_o)) \ 
+ 	  stallreq_for_reg <= 1'b1; \
+ 			      end // always @ (*)
    
    `HAVE_TO_STOP(reg1_read_o,reg1_addr_o,stallreq_for_reg1)
    `HAVE_TO_STOP(reg2_read_o,reg2_addr_o,stallreq_for_reg2)
@@ -841,4 +865,4 @@ module id
 endmodule // id
 
 // --------------------------------------------------------------------------------
-//`endif
+// `endif
