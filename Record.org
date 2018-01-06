@@ -218,5 +218,9 @@ Knew how to implement cache.
 + [[https://github.com/sxtyzhangzk/mips-cpu/blob/master/src/cpu/fifo.v][fifo.v]]
 * <2018-01-05 Fri>
 ** Finish the [[file:Source/adapter.hpp][adapter.hpp]].
+*** My data transferring rules(Reducing the transferring bit):
+
 ** Add the branch predictor.
 ** Fixed the bugs in branch instructions.
+* <2018-01-06 Sat>
+** Found that my CPU can hardly finish.

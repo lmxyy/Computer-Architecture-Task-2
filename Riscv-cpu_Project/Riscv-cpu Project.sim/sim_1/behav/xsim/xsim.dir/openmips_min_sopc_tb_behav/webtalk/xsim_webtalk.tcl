@@ -1,6 +1,6 @@
 webtalk_init -webtalk_dir /home/limuyang1999/Desktop/Computer Architecture Task 2/Riscv-cpu_Project/Riscv-cpu Project.sim/sim_1/behav/xsim/xsim.dir/openmips_min_sopc_tb_behav/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Sat Jan  6 14:29:38 2018" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Sat Jan  6 15:51:34 2018" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2017.3 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "2018833" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "LIN64" -context "software_version_and_target_device"
@@ -14,7 +14,7 @@ webtalk_add_data -client project -key target_package -value "not_applicable" -co
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "345e1a4c-b0a6-49c3-9491-94eb85fa699d" -context "software_version_and_target_device"
 webtalk_add_data -client project -key project_id -value "f6dc597a0d1c44a2b527dc557a7ac92b" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "10" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "16" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "Ubuntu" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "Ubuntu Bionic Beaver (development branch)" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "Intel(R) Core(TM) i7-5500U CPU @ 2.40GHz" -context "user_environment"
@@ -26,7 +26,7 @@ webtalk_add_data -client xsim -key Command -value "xsim" -context "xsim\\command
 webtalk_add_data -client xsim -key trace_waveform -value "true" -context "xsim\\usage"
 webtalk_add_data -client xsim -key runtime -value "1019 ns" -context "xsim\\usage"
 webtalk_add_data -client xsim -key iteration -value "0" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Time -value "0.02_sec" -context "xsim\\usage"
+webtalk_add_data -client xsim -key Simulation_Time -value "0.05_sec" -context "xsim\\usage"
 webtalk_add_data -client xsim -key Simulation_Memory -value "133992_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 3769327018 -regid "" -xml /home/limuyang1999/Desktop/Computer Architecture Task 2/Riscv-cpu_Project/Riscv-cpu Project.sim/sim_1/behav/xsim/xsim.dir/openmips_min_sopc_tb_behav/webtalk/usage_statistics_ext_xsim.xml -html /home/limuyang1999/Desktop/Computer Architecture Task 2/Riscv-cpu_Project/Riscv-cpu Project.sim/sim_1/behav/xsim/xsim.dir/openmips_min_sopc_tb_behav/webtalk/usage_statistics_ext_xsim.html -wdm /home/limuyang1999/Desktop/Computer Architecture Task 2/Riscv-cpu_Project/Riscv-cpu Project.sim/sim_1/behav/xsim/xsim.dir/openmips_min_sopc_tb_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_transmit -clientid 20864033 -regid "" -xml /home/limuyang1999/Desktop/Computer Architecture Task 2/Riscv-cpu_Project/Riscv-cpu Project.sim/sim_1/behav/xsim/xsim.dir/openmips_min_sopc_tb_behav/webtalk/usage_statistics_ext_xsim.xml -html /home/limuyang1999/Desktop/Computer Architecture Task 2/Riscv-cpu_Project/Riscv-cpu Project.sim/sim_1/behav/xsim/xsim.dir/openmips_min_sopc_tb_behav/webtalk/usage_statistics_ext_xsim.html -wdm /home/limuyang1999/Desktop/Computer Architecture Task 2/Riscv-cpu_Project/Riscv-cpu Project.sim/sim_1/behav/xsim/xsim.dir/openmips_min_sopc_tb_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate

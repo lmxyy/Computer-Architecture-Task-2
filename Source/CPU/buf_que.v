@@ -2,7 +2,7 @@
 `else
  `define buf_que.v
 // ----------------------------------------------------------------------------------------------------
- `include "defines.v"
+ `include "defines.h"
 
 module buf_que
   #(

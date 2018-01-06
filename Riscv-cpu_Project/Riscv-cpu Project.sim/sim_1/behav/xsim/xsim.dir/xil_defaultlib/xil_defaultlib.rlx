@@ -2,11 +2,11 @@
 2017.3
 Oct  4 2017
 20:01:51
-/home/limuyang1999/Desktop/Computer Architecture Task 2/Riscv-cpu_Project/Riscv-cpu Project.sim/sim_1/behav/xsim/glbl.v,1507081072,verilog,,,,glbl,,,,,,,,
-/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ctrl.v,1515218188,verilog,,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/data_ram.v,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/defines.h,ctrl,,,../../../../../Source/CPU,,,,,
-/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/data_ram.v,1515217675,verilog,,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex.v,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/defines.v,data_ram,,,../../../../../Source/CPU,,,,,
-/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/defines.h,1515152519,verilog,,,,,,,,,,,,
-/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex.v,1515218390,verilog,,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex_mem.v,,ex,,,../../../../../Source/CPU,,,,,
+/home/limuyang1999/Desktop/Computer Architecture Task 2/Riscv-cpu_Project/Riscv-cpu Project.sim/sim_1/behav/xsim/glbl.v,1515222612,verilog,,,,glbl,,,,,,,,
+/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ctrl.v,1515222612,verilog,,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/data_ram.v,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/defines.h,ctrl,,,../../../../../Source/CPU,,,,,
+/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/data_ram.v,1515222612,verilog,,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex.v,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/defines.v,data_ram,,,../../../../../Source/CPU,,,,,
+/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/defines.h,1515222612,verilog,,,,,,,,,,,,
+/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex.v,1515222612,verilog,,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex_mem.v,,ex,,,../../../../../Source/CPU,,,,,
 /home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/ex_mem.v,1515217523,verilog,,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/id.v,,ex_mem,,,../../../../../Source/CPU,,,,,
 /home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/id.v,1515217548,verilog,,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/id_ex.v,,id,,,../../../../../Source/CPU,,,,,
 /home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/id_ex.v,1515217604,verilog,,/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/if_id.v,,id_ex,,,../../../../../Source/CPU,,,,,

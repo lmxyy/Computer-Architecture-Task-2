@@ -3,9 +3,9 @@
  `define uart_com.v
 // ----------------------------------------------------------------------------------------------------
  `include "buf_que.v"
- `include "defines.v"
+ `include "defines.h"
 
-module uart_com
+module uart_comm
   #(
     parameter BAUDRATE = 9600,
     parameter CLOCKRATE = 100000000

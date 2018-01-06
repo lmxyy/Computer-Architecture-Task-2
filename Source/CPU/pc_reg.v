@@ -36,7 +36,7 @@ module pc_reg(
 	     else if (branch_or_not == 1'b1)
 	       begin
 		  pc <= {pdt_pc[31:1],1'b0};
-		  $display("Pc register jumps to %d.",{2'b0,branch_target_address_i[31:2]});
+		  $display("Pc register jumps to %d.",{2'b0,pdt_pc[31:2]});
 	       end
 	     else pc <= pc+4'h4;
 	  end

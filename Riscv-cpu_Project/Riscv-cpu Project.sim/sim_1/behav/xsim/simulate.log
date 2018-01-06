@@ -1,40 +1,49 @@
 Vivado Simulator 2017.3
 Time resolution is 1 ps
-Write 00000210 to x 1.
-Write 00000231 to x 2.
-Write 00000462 to x 3.
-Write 00000460 to x 4.
-Write 0000068a to x 5.
-Write 00000016 to x 7.
-Write a2800000 to x 5.
-Write 00000014 to x 7.
-Write fffffa28 to x 6.
-Write 00000723 to x 5.
-Write 00000343 to x 5.
-Write 000007a3 to x 6.
-Write 00000001 to x 7.
-Write 00000000 to x 8.
-Write 00000000 to x 8.
-Pc register jumps to          0.
-Write 00000001 to x 8.
-Pc register jumps to         25.
-Write 00000460 to x 9.
-Write 45b27000 to x10.
-Write 21c43048 to x11.
-Write 000005ef to x12.
-Write 00000123 to x13.
-Store 48484848 in 00000125
-Load xxxx48xx at 00000125.
-Write 00000048 to x14.
-Store efefefef in 00000124
-Load xxxx48ef at 00000124.
-Write 000048ef to x14.
-Write 000048ef to x15.
-Store 03430343 in 00000126
-Load 034348ef at 00000124.
-Write 034348ef to x15.
-Write 034348f0 to x17.
-Store 21c43048 in 00000128
-Load 21c43048 at 00000128.
-Write 21c43048 to x16.
+Pc register jumps to          5.
+Write 80000000 to x 3.
+Write 00000001 to x 1.
+Pc register jumps to         12.
+Write 00000002 to x 1.
+Pc register jumps to         15.
+Write 0000001c to x 5.
+Pc register jumps to         30.
+Write 00000003 to x 1.
+Pc register jumps to         32.
+Write 0000001c to x 2.
+Pc register jumps to         17.
+Pc register jumps to         19.
+Write 00000004 to x 1.
+Pc register jumps to         21.
+Pc register jumps to         28.
+Write 00000005 to x 1.
+Pc register jumps to         30.
+Write 00000006 to x 1.
+Pc register jumps to         24.
+Pc register jumps to         26.
+Write 00000007 to x 1.
+Pc register jumps to         28.
+Pc register jumps to         22.
+Write 00000008 to x 1.
+Pc register jumps to         24.
+Write 00000009 to x 1.
+Pc register jumps to         32.
+Pc register jumps to         34.
+Write 00000010 to x 1.
+Write 00000011 to x 1.
+Pc register jumps to         38.
+Pc register jumps to         36.
+Write 00000012 to x 1.
+Write 00000014 to x 3.
+Pc register jumps to         38.
+Write 00000013 to x 1.
+Pc register jumps to         41.
+Write 00000014 to x 1.
+Pc register jumps to         39.
+Write 0000000a to x 3.
+Pc register jumps to         41.
+Write 0000000a to x 1.
+Pc register jumps to         39.
+Pc register jumps to         41.
+Write 00000000 to x 1.
 $finish called at time : 1019 ns : File "/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/openmips_min_sopc_tb.v" Line 27

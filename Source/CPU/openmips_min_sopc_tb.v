@@ -4,7 +4,7 @@
 // // --------------------------------------------------------------------------------
  `timescale 1ns/1ps
 
- // `include "defines.v"
+ // `include "defines.h"
  // `include "openmips_min_sopc.v"
 
 module openmips_min_sopc_tb();
