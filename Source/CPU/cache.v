@@ -1,6 +1,6 @@
-`ifdef cacheram.v
+`ifdef cache.v
 `else
- `define cacheram.v
+ `define cache.v
 // ----------------------------------------------------------------------------------------------------
 
  `include "defines.h"
@@ -84,7 +84,7 @@ module cache
    localparam SET_SELECT_BIT = `CLOG2(NASSOC);
    localparam NBLOCK = 1<<INDEX_BIT;
    localparam NWORD = 1<<WORD_SELECT_BIT;
-   localparam BLOCK_SIZE = (1<<WORD_SELECT_BIT)*4*8; // 一块里面2^WORD_SELECT_BIT个数据，4路主关联，每个地址存放一个字节
+   localparam BLOCK_SIZE = (1<<WORD_SELECT_BIT)*4*8; // 一块里面2^WORD_SELECT_BIT*4个数据，每个地址存放一个字节
 
    reg [1:0] 	      pending_rw_flag;
    reg [31:0] 	      pending_addr;
@@ -96,16 +96,16 @@ module cache
    wire [31:0] 	      write_data_in = busy?pending_write_data:write_data_;
    wire [3:0] 	      write_mask_in = busy?pending_write_mask:write_mask_;
 
-   wire [TAG_BIT-1:0] addr_tag = addr[31:31-TAG_BIT+1];
-   wire [INDEX_BIT-1:0] addr_index = addr[BYTE_SELECT_BIT+INDEX_BIT-1:BYTE_SELECT_BIT];
-   wire [WORD_SELECT_BIT-1:0] addr_ws = addr[WORD_SELECT_BIT+2-1:2];
+   wire [TAG_BIT-1:0] addr_tag = addr[31:31-TAG_BIT+1]; // TAG
+   wire [INDEX_BIT-1:0] addr_index = addr[BYTE_SELECT_BIT+INDEX_BIT-1:BYTE_SELECT_BIT]; // index
+   wire [WORD_SELECT_BIT-1:0] addr_ws = addr[WORD_SELECT_BIT+2-1:2]; // 偏移量
    
-   wire [TAG_BIT-1:0] 	      addr_flush_tag = flush_addr[31:31-TAG_BIT+1];
-   wire [INDEX_BIT-1:0]       addr_flush_index = flush_addr[BYTE_SELECT_BIT+INDEX_BIT-1:BYTE_SELECT_BIT];
+   wire [TAG_BIT-1:0] 	      addr_flush_tag = flush_addr[31:31-TAG_BIT+1]; // flush的TAG
+   wire [INDEX_BIT-1:0]       addr_flush_index = flush_addr[BYTE_SELECT_BIT+INDEX_BIT-1:BYTE_SELECT_BIT]; // flush的index
    
-   reg [TAG_BIT-1:0] 	      tag[NASSOC-1:0][NBLOCK-1:0];
+   reg [TAG_BIT-1:0] 	      tag[NASSOC-1:0][NBLOCK-1:0]; 
    reg 			      valid[NASSOC-1:0][NBLOCK-1:0];
-   reg [SET_SELECT_BIT-1:0]   recuse[NASSOC-1:0][NBLOCK-1:0];
+   reg [SET_SELECT_BIT-1:0]   recuse[NASSOC-1:0][NBLOCK-1:0]; // 要求撤换
    
    reg [SET_SELECT_BIT-1:0]   recent_use_counter[NBLOCK-1:0];
    
@@ -246,10 +246,10 @@ module cache
 	if(rst) 
 	  begin
 	     busy <= 0;
-	     pending_rw_flag		<= 0;
-	     pending_addr		<= 0;
+	     pending_rw_flag <= 0;
+	     pending_addr <= 0;
 	     pending_write_data	<= 0;
-	     pending_write_mask 	<= 0;
+	     pending_write_mask <= 0;
 	  end 
 
 	else if(!busy) 
@@ -269,7 +269,7 @@ module cache
      end
 
    integer j, k;
-   always @(posedge clk) 
+   always @ (posedge clk) 
      begin
 	if (rst) 
 	  begin
@@ -293,19 +293,19 @@ module cache
 	  end // if (rst)
 	else
 	  begin
-	     if(!read_cache[SET_SELECT_BIT]) 
+	     if (!read_cache[SET_SELECT_BIT]) 
 	       begin
 		  if(read_block != addr_index)
 		    $display("Assertion Failed: read_block == addr_index");
 		  RAM_read_select <= read_cache[SET_SELECT_BIT-1:0];
 		  use_cache(read_cache);
 	       end
-	     if(valid_flag) 
+	     if (valid_flag) 
 	       begin
 		  valid[valid_cache][valid_block] <= 1;
 		  tag[valid_cache][valid_block] <= valid_tag;
 	       end
-	     if(flush_flag)
+	     if (flush_flag)
 	       valid[one_hot_lookup[found_in_cache_flush]][addr_flush_index] <= 0;
 	     state <= next_state;
 	     done <= next_done;

@@ -1,8 +1,8 @@
-// `ifdef inst_rom.v
-// `else
-//  `define inst_rom.v
-// // --------------------------------------------------------------------------------
-//  `include "defines.v"
+`ifdef inst_rom.v
+`else
+ `define inst_rom.v
+// --------------------------------------------------------------------------------
+ `include "defines.h"
 
 module inst_rom(
 		input wire 		   ce,
@@ -12,19 +12,15 @@ module inst_rom(
 
 		// to pdt
 		output wire [`InstAddrBus] pdt_pc,
-		output reg [`InstBus] 	   pdt_inst,
+		output reg [`InstBus] 	   pdt_inst
 
-		// to uart
 	      );
 
    assign pdt_pc = addr;
-
-   reg [`InstBus] 			   inst_from_mam;
-			   
    
-   // reg[`InstBus]  inst_mem[0:`InstMemNum];
+   reg[`InstBus]  inst_mem[0:`InstMemNum];
    
-   // initial $readmemh ("/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/instr.data",inst_mem);
+   initial $readmemh ("/home/limuyang1999/Desktop/Computer Architecture Task 2/Source/CPU/instr.data",inst_mem);
 
    always @ (*)
      begin
@@ -40,5 +36,5 @@ module inst_rom(
 
 endmodule // inst_rom
 
-// // --------------------------------------------------------------------------------
-// `endif
+// --------------------------------------------------------------------------------
+`endif

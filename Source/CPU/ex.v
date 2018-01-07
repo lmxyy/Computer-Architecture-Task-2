@@ -1,8 +1,8 @@
-//`ifdef ex.v
-//`else
-// `define ex.v
+`ifdef ex.v
+`else
+`define ex.v
 // --------------------------------------------------------------------------------
-// `include "defines.v"
+`include "defines.h"
 
 module ex
   (
@@ -116,4 +116,4 @@ module ex
 endmodule // ex
 
 // --------------------------------------------------------------------------------
-//`endif
+`endif

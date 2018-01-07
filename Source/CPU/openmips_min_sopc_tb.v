@@ -1,11 +1,11 @@
-// `ifdef openmips_min_sopc_tb.v
-// `else
-//  `define openmips_min_sopc_tb.v
-// // --------------------------------------------------------------------------------
+`ifdef openmips_min_sopc_tb.v
+`else
+ `define openmips_min_sopc_tb.v
+// --------------------------------------------------------------------------------
  `timescale 1ns/1ps
 
- // `include "defines.h"
- // `include "openmips_min_sopc.v"
+ `include "defines.h"
+ `include "openmips_min_sopc.v"
 
 module openmips_min_sopc_tb();
 
@@ -35,5 +35,5 @@ module openmips_min_sopc_tb();
    
 endmodule // openmips_min_sopc_tb
 
-// // --------------------------------------------------------------------------------
-// `endif
+// --------------------------------------------------------------------------------
+`endif

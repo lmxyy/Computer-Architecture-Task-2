@@ -2,18 +2,18 @@
 `else
  `define openmips.v
 // --------------------------------------------------------------------------------
-// `include "defines.v"
-// `include "ex.v"
-// `include "ex_mem.v"
-// `include "id.v"
-// `include "id_ex.v"
-// `include "if_id.v"
-// `include "mem.v"
-// `include "mem_wb.v"
-// `include "pc_reg.v"
-// `include "regfile.v"
-// `include "ctrl.v"
-// `include "pdt.v"
+`include "defines.h"
+`include "ex.v"
+`include "ex_mem.v"
+`include "id.v"
+`include "id_ex.v"
+`include "if_id.v"
+`include "mem.v"
+`include "mem_wb.v"
+`include "pc_reg.v"
+`include "regfile.v"
+`include "ctrl.v"
+`include "pdt.v"
 
 module openmips
   (
