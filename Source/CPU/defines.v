@@ -54,7 +54,7 @@
 //Ö¸Áî´æ´¢Æ÷inst_rom
 `define InstAddrBus 31:0
 `define InstBus 31:0
-`define InstMemNum 100
+`define InstMemNum 2048
 
 //Êý¾Ý´æ´¢Æ÷data_ram
 `define DataAddrBus 31:0
