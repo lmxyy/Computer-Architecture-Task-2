@@ -51,6 +51,8 @@
 
 `define EXE_RES_NOP 3'b000
 
+`define MemNumber 8192
+
 //Ö¸Áî´æ´¢Æ÷inst_rom
 `define InstAddrBus 31:0
 `define InstBus 31:0
