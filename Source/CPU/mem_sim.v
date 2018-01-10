@@ -25,6 +25,7 @@ module mem_sim
    
    initial $readmemh("instr.data",mem_data);
 
+   // --------------------------------------------------Fetch Instructions--------------------------------------------------
    always @ (*)
      begin
 	if (rom_ce == `ChipDisable) inst <= `ZeroWord;
@@ -35,7 +36,7 @@ module mem_sim
 	  end
      end
 
-   // Store
+   // --------------------------------------------------Store--------------------------------------------------
    always @ (posedge clk) 
      begin
 
@@ -69,7 +70,7 @@ module mem_sim
 	
      end
 
-   // Load
+   // --------------------------------------------------Load--------------------------------------------------
    always @ (*) 
      begin
 	if (mem_ce == `ChipDisable) data_o <= `ZeroWord;
