@@ -52,8 +52,6 @@ module cache
    reg 			      cvalid[NASSOC-1:0][NBLOCK-1:0];
    reg [7:0] 		      cdata[NASSOC-1:0][NBLOCK-1:0][1<<WORD_SELECT_BIT:0];
       
-   reg 			      hit;
-
    reg 			      crep[NBLOCK-1:0];
    
    integer 		      i,j,k;
@@ -70,7 +68,6 @@ module cache
 		      cdata[i][j][k] <= 0;
 		 end
 	     for (i = 0;i < NBLOCK;i = i+1) crep[i] = 0;
-	     hit <= 0;
 	     read_data <= 0;
 	     cache_req_o <= 0;
 	     cache_addr_o <= 0;
@@ -80,145 +77,146 @@ module cache
      end
    
    // --------------------------------------------------Read--------------------------------------------------
-   always @ (read_flag == 1'b1)
+
+   always @ (clk)
      begin
-	hit <= 0;
-	read_data <= 0;
-	cache_req_o <= 0;
-	cache_addr_o <= 0;
-	cache_write_o <= 0;
-	stallreq <= 0;
-   	if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
-   	  begin
-   	     hit <= 1'b1;
-   	     crep[addr_index] <= 1;
-   	     if (addr[2] == 0)
-   	       read_data <= {cdata[0][addr_index][0],cdata[0][addr_index][1],
-   			     cdata[0][addr_index][2],cdata[0][addr_index][3]};
-   	     if (addr[2] == 1)
-   	       read_data <= {cdata[0][addr_index][4],cdata[0][addr_index][5],
-   			     cdata[0][addr_index][6],cdata[0][addr_index][7]};
-   	  end // if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
-	
-   	if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
-   	  begin
-   	     hit <= 1'b1;
-   	     crep[addr_index] <= 0;
-   	     if (addr[2] == 0)
-   	       read_data <= {cdata[1][addr_index][0],cdata[1][addr_index][1],
-   			     cdata[1][addr_index][2],cdata[1][addr_index][3]};
-   	     if (addr[2] == 1)
-   	       read_data <= {cdata[1][addr_index][4],cdata[1][addr_index][5],
-   			     cdata[1][addr_index][6],cdata[1][addr_index][7]};
-   	  end // if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
-	
-   	if (hit == 1'b0)
-   	  begin
-   	     stallreq <= 1'b1;
-   	     cache_addr_o <= addr;
-   	     cache_req_o <= 1'b1;
-   	  end	
-     end // always @ (read_flag == 1'b1)
+	if (read_flag == 1)
+	  begin
+	     read_data <= 0;
+	     cache_req_o <= 0;
+	     cache_addr_o <= 0;
+	     cache_write_o <= 0;
+	     stallreq <= 0;	
+   	     if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
+   	       begin
+      		  crep[addr_index] <= 1;
+   		  if (addr[2] == 0)
+   		    read_data <= {cdata[0][addr_index][0],cdata[0][addr_index][1],
+   				  cdata[0][addr_index][2],cdata[0][addr_index][3]};
+   		  if (addr[2] == 1)
+   		    read_data <= {cdata[0][addr_index][4],cdata[0][addr_index][5],
+   				  cdata[0][addr_index][6],cdata[0][addr_index][7]};
+   	       end // if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
+	     
+   	     if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
+   	       begin
+      		  crep[addr_index] <= 0;
+   		  if (addr[2] == 0)
+   		    read_data <= {cdata[1][addr_index][0],cdata[1][addr_index][1],
+   				  cdata[1][addr_index][2],cdata[1][addr_index][3]};
+   		  if (addr[2] == 1)
+   		    read_data <= {cdata[1][addr_index][4],cdata[1][addr_index][5],
+   				  cdata[1][addr_index][6],cdata[1][addr_index][7]};
+   	       end // if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
+	     if (!(ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)&&!(ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1))
+   	       begin
+   		  stallreq <= 1'b1;
+   		  cache_addr_o <= addr;
+   		  cache_req_o <= 1'b1;
+    	       end	
+	  end // if (read_flag == 1)
+     end // always @ (read_flag or addr)
    
-   always @ (cache_rep_i == 1'b1)   
+   always @ (cache_rep_i)   
      begin
-
-	if (crep[addr_index] == 1'b0)
+	if (cache_rep_i == 1)
 	  begin
-	     cvalid[0][addr_index] <= 1'b1;
-	     ctag[0][addr_index] <= addr_tag;
-	     cdata[0][addr_index][0] <= cache_rep_data_i[7:0];
-	     cdata[0][addr_index][1] <= cache_rep_data_i[15:8];
-	     cdata[0][addr_index][2] <= cache_rep_data_i[23:16];
-	     cdata[0][addr_index][3] <= cache_rep_data_i[31:24];
-	     cdata[0][addr_index][4] <= cache_rep_data_i[39:32];
-	     cdata[0][addr_index][5] <= cache_rep_data_i[47:40];
-	     cdata[0][addr_index][6] <= cache_rep_data_i[55:48];
-	     cdata[0][addr_index][7] <= cache_rep_data_i[63:56];
-	  end
+	     if (crep[addr_index] == 1'b0)
+	       begin
+		  cvalid[0][addr_index] <= 1'b1;
+		  ctag[0][addr_index] <= addr_tag;
+		  cdata[0][addr_index][0] <= cache_rep_data_i[7:0];
+		  cdata[0][addr_index][1] <= cache_rep_data_i[15:8];
+		  cdata[0][addr_index][2] <= cache_rep_data_i[23:16];
+		  cdata[0][addr_index][3] <= cache_rep_data_i[31:24];
+		  cdata[0][addr_index][4] <= cache_rep_data_i[39:32];
+		  cdata[0][addr_index][5] <= cache_rep_data_i[47:40];
+		  cdata[0][addr_index][6] <= cache_rep_data_i[55:48];
+		  cdata[0][addr_index][7] <= cache_rep_data_i[63:56];
+	       end
 
-	if (crep[addr_index] == 1'b1)
-	  begin
-	     cvalid[1][addr_index] <= 1'b1;
-	     ctag[1][addr_index] <= addr_tag;
-	     cdata[1][addr_index][0] <= cache_rep_data_i[7:0];
-	     cdata[1][addr_index][1] <= cache_rep_data_i[15:8];
-	     cdata[1][addr_index][2] <= cache_rep_data_i[23:16];
-	     cdata[1][addr_index][3] <= cache_rep_data_i[31:24];
-	     cdata[1][addr_index][4] <= cache_rep_data_i[39:32];
-	     cdata[1][addr_index][5] <= cache_rep_data_i[47:40];
-	     cdata[1][addr_index][6] <= cache_rep_data_i[55:48];
-	     cdata[1][addr_index][7] <= cache_rep_data_i[63:56];
-	  end
-	
-     end // always @ (cache_rep_i == 1'b1)
+	     if (crep[addr_index] == 1'b1)
+	       begin
+		  cvalid[1][addr_index] <= 1'b1;
+		  ctag[1][addr_index] <= addr_tag;
+		  cdata[1][addr_index][0] <= cache_rep_data_i[7:0];
+		  cdata[1][addr_index][1] <= cache_rep_data_i[15:8];
+		  cdata[1][addr_index][2] <= cache_rep_data_i[23:16];
+		  cdata[1][addr_index][3] <= cache_rep_data_i[31:24];
+		  cdata[1][addr_index][4] <= cache_rep_data_i[39:32];
+		  cdata[1][addr_index][5] <= cache_rep_data_i[47:40];
+		  cdata[1][addr_index][6] <= cache_rep_data_i[55:48];
+		  cdata[1][addr_index][7] <= cache_rep_data_i[63:56];
+	       end
+	  end // if (cache_rep_i == 1)
+     end // always @ (cache_rep_i or addr)
    
    // --------------------------------------------------Write--------------------------------------------------
-   always @ (write_flag == 1'b1)
+
+   always @ (addr or write_flag or write_data or write_mask)
      begin
-	hit <= 0;
-	read_data <= 0;
-	cache_req_o <= 0;
-	cache_addr_o <= addr;
-	cache_write_o <= 1;
-	stallreq <= 0;
-   	if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
-   	  begin
-   	     hit <= 1'b1;
-   	     crep[addr_index] <= 1;
-   	     if (addr[2] == 0)
-	       begin
-		  if (write_mask[0] == 1'b1)
-		    cdata[0][addr_index][3] <= write_data[7:0];
-		  if (write_mask[1] == 1'b1)
-		    cdata[0][addr_index][2] <= write_data[15:8];
-		  if (write_mask[2] == 1'b1)
-		    cdata[0][addr_index][1] <= write_data[23:16];
-		  if (write_mask[3] == 1'b1)
-		    cdata[0][addr_index][0] <= write_data[31:24];
-	       end
-   	     if (addr[2] == 1)
-	       begin
-		  if (write_mask[0] == 1'b1)
-		    cdata[0][addr_index][7] <= write_data[7:0];
-		  if (write_mask[1] == 1'b1)
-		    cdata[0][addr_index][6] <= write_data[15:8];
-		  if (write_mask[2] == 1'b1)
-		    cdata[0][addr_index][5] <= write_data[23:16];
-		  if (write_mask[3] == 1'b1)
-		    cdata[0][addr_index][4] <= write_data[31:24];
-	       end
-   	  end
+	if (write_flag == 1)
+	  begin
+	     read_data <= 0;
+	     cache_req_o <= 0;
+	     cache_addr_o <= addr;
+	     cache_write_o <= 1;
+	     stallreq <= 0;
+   	     if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
+   	       begin
+   		  crep[addr_index] <= 1;
+   		  if (addr[2] == 0)
+		    begin
+		       if (write_mask[0] == 1'b1)
+			 cdata[0][addr_index][3] <= write_data[7:0];
+		       if (write_mask[1] == 1'b1)
+			 cdata[0][addr_index][2] <= write_data[15:8];
+		       if (write_mask[2] == 1'b1)
+			 cdata[0][addr_index][1] <= write_data[23:16];
+		       if (write_mask[3] == 1'b1)
+			 cdata[0][addr_index][0] <= write_data[31:24];
+		    end
+   		  if (addr[2] == 1)
+		    begin
+		       if (write_mask[0] == 1'b1)
+			 cdata[0][addr_index][7] <= write_data[7:0];
+		       if (write_mask[1] == 1'b1)
+			 cdata[0][addr_index][6] <= write_data[15:8];
+		       if (write_mask[2] == 1'b1)
+			 cdata[0][addr_index][5] <= write_data[23:16];
+		       if (write_mask[3] == 1'b1)
+			 cdata[0][addr_index][4] <= write_data[31:24];
+		    end
+   	       end
 
-   	if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
-   	  begin
-   	     hit <= 1'b1;
-   	     crep[addr_index] <= 0;
-   	     if (addr[2] == 0)
-	       begin
-		  if (write_mask[0] == 1'b1)
-		    cdata[1][addr_index][3] <= write_data[7:0];
-		  if (write_mask[1] == 1'b1)
-		    cdata[1][addr_index][2] <= write_data[15:8];
-		  if (write_mask[2] == 1'b1)
-		    cdata[1][addr_index][1] <= write_data[23:16];
-		  if (write_mask[3] == 1'b1)
-		    cdata[1][addr_index][0] <= write_data[31:24];
-	       end
-   	     if (addr[2] == 1)
-	       begin
-		  if (write_mask[0] == 1'b1)
-		    cdata[1][addr_index][7] <= write_data[7:0];
-		  if (write_mask[1] == 1'b1)
-		    cdata[1][addr_index][6] <= write_data[15:8];
-		  if (write_mask[2] == 1'b1)
-		    cdata[1][addr_index][5] <= write_data[23:16];
-		  if (write_mask[3] == 1'b1)
-		    cdata[1][addr_index][4] <= write_data[31:24];
-	       end
-   	  end
-
-     end // always @ (write_flag == 1'b1)
+   	     if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
+   	       begin
+   		  crep[addr_index] <= 0;
+   		  if (addr[2] == 0)
+		    begin
+		       if (write_mask[0] == 1'b1)
+			 cdata[1][addr_index][3] <= write_data[7:0];
+		       if (write_mask[1] == 1'b1)
+			 cdata[1][addr_index][2] <= write_data[15:8];
+		       if (write_mask[2] == 1'b1)
+			 cdata[1][addr_index][1] <= write_data[23:16];
+		       if (write_mask[3] == 1'b1)
+			 cdata[1][addr_index][0] <= write_data[31:24];
+		    end
+   		  if (addr[2] == 1)
+		    begin
+		       if (write_mask[0] == 1'b1)
+			 cdata[1][addr_index][7] <= write_data[7:0];
+		       if (write_mask[1] == 1'b1)
+			 cdata[1][addr_index][6] <= write_data[15:8];
+		       if (write_mask[2] == 1'b1)
+			 cdata[1][addr_index][5] <= write_data[23:16];
+		       if (write_mask[3] == 1'b1)
+			 cdata[1][addr_index][4] <= write_data[31:24];
+		    end
+   	       end
+	  end // if (write_flag == 1)
+     end // always @ (write_flag or addr)
    
 endmodule // cache
 

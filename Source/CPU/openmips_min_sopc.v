@@ -33,8 +33,8 @@ module openmips_min_sopc
       .clk(clk),
       .rst(rst),
       
-      .rom_addr_o(inst_addr),
       .rom_data_i(inst),
+      .rom_addr_o(inst_addr),
       .rom_ce_o(rom_ce),      
 
       .ram_data_i(mem_data_o),
@@ -52,7 +52,7 @@ module openmips_min_sopc
    wire [31:0]	       if_cache_addr_o;
    wire 	       if_cache_rep_i;
    wire [63:0] 	       if_cache_rep_data_i;
-      
+   
    cache if_cache
      (
       .clk(clk),

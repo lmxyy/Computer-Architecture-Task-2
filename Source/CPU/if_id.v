@@ -28,7 +28,7 @@ module if_id
 
    always @ (posedge clk)
      begin
-	
+
 	if (rst == `RstEnable) 
 	  begin
 	     id_pc <= `ZeroWord;

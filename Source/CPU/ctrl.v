@@ -19,7 +19,7 @@ module ctrl
      begin
 	if(rst == `RstEnable) stall <= 6'b000000;
 	else if (stallreq_from_mem_cache == 1'b1) stall <= 6'b011111;
-	else if (stallreq_from_if_cache == 1'b1) stall <= 6'b000011;
+	else if (stallreq_from_if_cache == 1'b1)  stall <= 6'b000011;
 	else if (stallreq_from_id2 == 1'b1) stall <= 6'b000111;
 	else if (stallreq_from_id1 == 1'b1) stall <= 6'b000010;
 	else stall <= 6'b000000;
