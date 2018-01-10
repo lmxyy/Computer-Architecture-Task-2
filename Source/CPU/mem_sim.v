@@ -43,27 +43,27 @@ module mem_sim
 	
 	else if(we == `WriteEnable)
 	  begin     
-	     if (sel[3] == 1'b1) 
+	     if (sel[0] == 1'b1) 
 	       begin 
-		  mem_data[addr>>2][31:24] <= data_i[31:24];
-		  $display("Store %h in %h.",data_i[31:24],((addr>>2)<<2)+3);
-	       end
-	     if (sel[2] == 1'b1) 
-	       begin
-		  mem_data[addr>>2][23:16] <= data_i[23:16];
-	     	  $display("Store %h in %h.",data_i[23:16],((addr>>2)<<2)+2);
+		  mem_data[addr>>2][31:24] <= data_i[7:0];
+		  // $display("Store %h in %h.",data_i[31:24],((addr>>2)<<2)+3);
+		  if ((addr>>2) == (32'h00000104>>2))
+		    $display("Print (%c)",data_i[7:0]);
 	       end
 	     if (sel[1] == 1'b1) 
 	       begin
-		  mem_data[addr>>2][15:8] <= data_i[15:8];
-		  $display("Store %h in %h.",data_i[15:8],((addr>>2)<<2)+1);
+		  mem_data[addr>>2][23:16] <= data_i[15:8];
+	     	  // $display("Store %h in %h.",data_i[23:16],((addr>>2)<<2)+2);
 	       end
-	     if (sel[0] == 1'b1) 
+	     if (sel[2] == 1'b1) 
 	       begin
-		  mem_data[addr>>2][7:0] <= data_i[7:0];
-		  $display("Store %h in %h.",data_i[7:0],((addr>>2)<<2));
-		  if ((addr>>2) == (32'h00000104>>2))
-		    $display("Print (%c)",data_i[7:0]);
+		  mem_data[addr>>2][15:8] <= data_i[24:8];
+		  // $display("Store %h in %h.",data_i[15:8],((addr>>2)<<2)+1);
+	       end
+	     if (sel[3] == 1'b1) 
+	       begin
+		  mem_data[addr>>2][7:0] <= data_i[32:25];
+		  // $display("Store %h in %h.",data_i[7:0],((addr>>2)<<2));
 	       end
 	  end
 	
@@ -75,8 +75,10 @@ module mem_sim
 	if (mem_ce == `ChipDisable) data_o <= `ZeroWord;
 	else if(we == `WriteDisable)
 	  begin
-	     data_o <= mem_data[addr>>2];
-	     $display("Load %h at %h.",mem_data[addr>>2],{addr[31:2],2'b00});
+	     data_o <= {mem_data[addr>>2][7:0],mem_data[addr>>2][15:8],
+		      mem_data[addr>>2][23:16],mem_data[addr>>2][31:24]};
+	     // $display("Load %h at %h.",{mem_data[addr>>2][7:0],mem_data[addr>>2][15:8],
+					// mem_data[addr>>2][23:16],mem_data[addr>>2][31:24]},{addr[31:2],2'b00});
 	  end
 	else data_o <= `ZeroWord;
      end		
