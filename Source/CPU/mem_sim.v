@@ -6,86 +6,64 @@
 
 module mem_sim
   (
-   input wire 		     clk,
-   input wire 		     rom_ce,
-   input wire 		     mem_ce,
+   input wire 	     clk,
    
-   input wire [`InstAddrBus] pc_addr,
-   output reg [`InstBus]     inst,
+   input wire 	     if_ms_req_i,
+   input wire [31:0] if_addr,
 
-   // About memory
-   input wire 		     we,
-   input wire [`DataAddrBus] addr,
-   input wire [3:0] 	     sel,
-   input wire [`DataBus]     data_i,
-   output reg [`DataBus]     data_o
+   input wire 	     mem_ms_req_i,
+   input wire [31:0] mem_addr,
+   
+   input wire 	     ms_write_i,
+   input wire [31:0] ms_write_data_i,
+   input wire [3:0]  ms_write_mask_i,
+
+   output reg 	     if_ms_rep_o,
+   output reg [63:0] if_ms_rep_data_o,
+
+   output reg 	     mem_ms_rep_o,
+   output reg [63:0] mem_ms_rep_data_o
    );
 
    reg[`InstBus]  mem_data[0:`MemNumber];
    
    initial $readmemh("instr.data",mem_data);
 
-   // --------------------------------------------------Fetch Instructions--------------------------------------------------
-   always @ (*)
+   always @ (clk)
      begin
-	if (rom_ce == `ChipDisable) inst <= `ZeroWord;
-	else
+	if_ms_rep_o <= 0;
+	if_ms_rep_data_o <= 0;
+
+	if (if_ms_req_i == 1'b1)
 	  begin
-	     inst <= {mem_data[pc_addr>>2][7:0],mem_data[pc_addr>>2][15:8],
-		      mem_data[pc_addr>>2][23:16],mem_data[pc_addr>>2][31:24]};
-	  end
-     end
-
-   // --------------------------------------------------Store--------------------------------------------------
-   always @ (posedge clk) 
-     begin
-
-	if (mem_ce == `ChipDisable) data_o <= `ZeroWord;
-	
-	else if(we == `WriteEnable)
-	  begin     
-	     if (sel[0] == 1'b1) 
-	       begin 
-		  mem_data[addr>>2][31:24] <= data_i[7:0];
-		  // $display("Store %h in %h.",data_i[31:24],((addr>>2)<<2)+3);
-		  if ((addr>>2) == (32'h00000104>>2))
-		    $display("Print (%c)",data_i[7:0]);
-	       end
-	     if (sel[1] == 1'b1) 
-	       begin
-		  mem_data[addr>>2][23:16] <= data_i[15:8];
-	     	  // $display("Store %h in %h.",data_i[23:16],((addr>>2)<<2)+2);
-	       end
-	     if (sel[2] == 1'b1) 
-	       begin
-		  mem_data[addr>>2][15:8] <= data_i[23:16];
-		  // $display("Store %h in %h.",data_i[15:8],((addr>>2)<<2)+1);
-	       end
-	     if (sel[3] == 1'b1) 
-	       begin
-		  mem_data[addr>>2][7:0] <= data_i[31:24];
-		  // $display("Store %h in %h.",data_i[7:0],((addr>>2)<<2));
-	       end
+	     if_ms_rep_o <= 1;
+	     if_ms_rep_data_o <= {mem_data[((if_addr>>3)<<1)+1],mem_data[(if_addr>>3)<<1]};
 	  end
 	
-     end
+	mem_ms_rep_o <= 0;
+	mem_ms_rep_data_o <= 0;
 
-   // --------------------------------------------------Load--------------------------------------------------
-   always @ (*) 
-     begin
-	if (mem_ce == `ChipDisable) data_o <= `ZeroWord;
-	else if(we == `WriteDisable)
+	if (mem_ms_req_i == 1'b1)
 	  begin
-	     data_o <= {mem_data[addr>>2][7:0],mem_data[addr>>2][15:8],
-		      mem_data[addr>>2][23:16],mem_data[addr>>2][31:24]};
-	     // $display("Load %h at %h.",{mem_data[addr>>2][7:0],mem_data[addr>>2][15:8],
-					// mem_data[addr>>2][23:16],mem_data[addr>>2][31:24]},{addr[31:2],2'b00});
+	     mem_ms_rep_o <= 1;
+	     mem_ms_rep_data_o <= {mem_data[((mem_addr>>3)<<1)+1],mem_data[(mem_addr>>3)<<1]};
 	  end
-	else data_o <= `ZeroWord;
-     end		
 
+	if (ms_write_i == 1'b1)
+	  begin
+	     if (ms_write_mask_i[0] == 1)
+	       mem_data[mem_addr>>2][7:0] <= ms_write_data_i[31:24];
+	     if (ms_write_mask_i[1] == 1)
+	       mem_data[mem_addr>>2][15:8] <= ms_write_data_i[23:16];
+	     if (ms_write_mask_i[2] == 1)
+	       mem_data[mem_addr>>2][23:16] <= ms_write_data_i[15:8];
+	     if (ms_write_mask_i[3] == 1)
+	       mem_data[mem_addr>>2][31:24] <= ms_write_data_i[7:0];
+	  end
+
+     end
    
-endmodule // inst_rom
+endmodule // mem_sim
 
 // --------------------------------------------------------------------------------
 `endif

@@ -7,6 +7,7 @@
  // `include "inst_rom.v"
  // `include "data_ram.v"
  `include "mem_sim.v"
+ `include "cache.v"
 
 module openmips_min_sopc
   (
@@ -23,7 +24,10 @@ module openmips_min_sopc
    wire [`RegBus]      mem_data_i;
    wire [`RegBus]      mem_data_o;
    wire [3:0] 	       mem_sel_i;  
-
+   
+   wire 	       stallreq_from_if_cache;
+   wire 	       stallreq_from_mem_cache;
+   
    openmips openmips0
      (
       .clk(clk),
@@ -38,23 +42,94 @@ module openmips_min_sopc
       .ram_data_o(mem_data_i),
       .ram_we_o(mem_we_i),
       .ram_sel_o(mem_sel_i),
-      .ram_ce_o(mem_ce_i)		
+      .ram_ce_o(mem_ce_i),		
+
+      .stallreq_from_if_cache(stallreq_from_if_cache),
+      .stallreq_from_mem_cache(stallreq_from_mem_cache)
+      );
+
+   wire 	       if_cache_req_o;
+   wire [31:0]	       if_cache_addr_o;
+   wire 	       if_cache_rep_i;
+   wire [63:0] 	       if_cache_rep_data_i;
+      
+   cache if_cache
+     (
+      .clk(clk),
+      .rst(rst),
+
+      .addr(inst_addr),
+
+      .read_flag(1'b1),
+      .read_data(inst),
+
+      .write_data(`ZeroWord),
+      .write_mask(4'h0),
+      .write_flag(1'b0),
+
+      .cache_req_o(if_cache_req_o),
+      .cache_addr_o(if_cache_addr_o),
+      
+      .cache_rep_i(if_cache_rep_i),
+      .cache_rep_data_i(if_cache_rep_data_i),
+
+      .stallreq(stallreq_from_if_cache)
+      );
+
+   wire 	       mem_cache_req_o;
+   wire [31:0]	       mem_cache_addr_o;
+   wire 	       mem_cache_write_o;
+   wire [31:0]	       mem_cache_data_o;
+   wire [3:0] 	       mem_cache_mask_o;
+   wire 	       mem_cache_rep_i;
+   wire [63:0]	       mem_cache_rep_data_i;
+      
+   cache mem_cache
+     (
+      .clk(clk),
+      .rst(rst),
+
+      .addr(mem_addr_i),
+
+      .read_flag(1'b1),
+      .read_data(mem_data_o),
+
+      .write_data(mem_data_i),
+      .write_mask(mem_sel_i),
+      .write_flag(mem_we_i),
+
+      .cache_req_o(mem_cache_req_o),
+      .cache_addr_o(mem_cache_addr_o),
+
+      .cache_write_o(mem_cache_write_o),
+      .cache_write_data_o(mem_cache_data_o),
+      .cache_write_mask_o(mem_cache_mask_o),
+
+      .cache_rep_i(mem_cache_rep_i),
+      .cache_rep_data_i(mem_cache_rep_data_i),
+
+      .stallreq(stallreq_from_if_cache)
       );
 
    mem_sim mem_sim0
      (
       .clk(clk),
-      .rom_ce(rom_ce_i),
-      .mem_ce(mem_ce_i),
-      
-      .pc_addr(inst_addr),
-      .inst(inst),
 
-      .we(mem_we_i),
-      .addr(mem_addr_i),
-      .sel(mem_sel_i),
-      .data_i(mem_data_i),
-      .data_o(mem_data_o)
+      .if_ms_req_i(if_cache_req_o),
+      .if_addr(if_cache_addr_o),
+
+      .mem_ms_req_i(mem_cache_req_o),
+      .mem_addr(mem_cache_addr_o),
+
+      .ms_write_i(mem_cache_write_o),
+      .ms_write_data_i(mem_cache_data_o),
+      .ms_write_mask_i(mem_cache_mask_o),
+
+      .if_ms_rep_o(if_cache_rep_i),
+      .if_ms_rep_data_o(if_cache_rep_data_i),
+
+      .mem_ms_rep_o(mem_cache_rep_i),
+      .mem_ms_rep_data_o(mem_cache_rep_data_i)
       );
    
 endmodule // openmips_min_sopc

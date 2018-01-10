@@ -30,7 +30,10 @@ module openmips
    output wire [`RegBus] ram_data_o,
    output wire 		 ram_we_o,
    output wire [3:0] 	 ram_sel_o,
-   output wire 		 ram_ce_o
+   output wire 		 ram_ce_o,
+
+   input wire 		 stallreq_from_if_cache,
+   input wire 		 stallreq_from_mem_cache
    );
    
    wire [`InstAddrBus] 	 pc;
@@ -376,6 +379,8 @@ module openmips
       .rst(rst),
       .stallreq_from_id1(stallreq_from_id1),
       .stallreq_from_id2(stallreq_from_id2),
+      .stallreq_from_if_cache(stallreq_from_if_cache),
+      .stallreq_from_mem_cache(stallreq_from_mem_cache),
       
       .stall(stall)
       );

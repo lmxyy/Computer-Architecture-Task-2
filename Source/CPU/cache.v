@@ -11,34 +11,37 @@ module cache
     parameter NASSOC = 2
     )
    (
-    input 	      clk,
-    input 	      rst,
+    input 	       clk,
+    input 	       rst,
 
     // About CPU
-    input [31:0]      addr,
+    input [31:0]       addr,
 
-    input 	      read_flag,
-    output reg [31:0] read_data,
+    input 	       read_flag,
+    output reg [31:0]  read_data,
 
-    input [31:0]      write_data,
-    input [3:0]       write_mask,
-    input 	      write_flag,
+    input [31:0]       write_data,
+    input [3:0]        write_mask,
+    input 	       write_flag,
 
     // About memory
-    output reg 	      cache_req_o,
-    output reg [31:0] cache_addr_o,
+    output reg 	       cache_req_o,
+    output reg [31:0]  cache_addr_o,
 
-    output reg 	      cache_write_o,
-    output reg [63:0] cache_write_data_o,
-    output reg [8:0]  cache_write_mask_o,
+    output reg 	       cache_write_o,
+    output wire [31:0] cache_write_data_o,
+    output wire [3:0]  cache_write_mask_o,
     
-    input 	      cache_rep_i,
-    input [63:0]      cache_rep_data_i,
+    input 	       cache_rep_i,
+    input [63:0]       cache_rep_data_i,
 
     // About control
-    output reg 	      stallreq
+    output reg 	       stallreq
     );
 
+   assign cache_write_data_o = write_data;
+   assign cache_write_mask_o = write_mask;
+   
    parameter NBLOCK = 1<<INDEX_BIT;
    parameter TAG_BIT = 32-2-INDEX_BIT-WORD_SELECT_BIT;
    
@@ -72,8 +75,6 @@ module cache
 	     cache_req_o <= 0;
 	     cache_addr_o <= 0;
 	     cache_write_o <= 0;
-	     cache_write_data_o <= 0;
-	     cache_write_mask_o <= 0;
 	     stallreq <= 0;
    	  end
      end
@@ -86,8 +87,6 @@ module cache
 	cache_req_o <= 0;
 	cache_addr_o <= 0;
 	cache_write_o <= 0;
-	cache_write_data_o <= 0;
-	cache_write_mask_o <= 0;
 	stallreq <= 0;
    	if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
    	  begin
@@ -162,8 +161,6 @@ module cache
 	cache_req_o <= 0;
 	cache_addr_o <= addr;
 	cache_write_o <= 1;
-	cache_write_data_o <= 0;
-	cache_write_mask_o <= 0;
 	stallreq <= 0;
    	if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
    	  begin
@@ -179,11 +176,6 @@ module cache
 		    cdata[0][addr_index][1] <= write_data[23:16];
 		  if (write_mask[3] == 1'b1)
 		    cdata[0][addr_index][0] <= write_data[31:24];
-		  cache_write_data_o <= {cdata[0][addr_index][7],cdata[0][addr_index][6],
-					 cdata[0][addr_index][5],cdata[0][addr_index][4],
-					 write_data[7:0],write_data[15:8],
-					 write_data[23:16],write_data[31:24]};
-		  cache_write_mask_o <= {4'h0,write_mask};
 	       end
    	     if (addr[2] == 1)
 	       begin
@@ -195,10 +187,6 @@ module cache
 		    cdata[0][addr_index][5] <= write_data[23:16];
 		  if (write_mask[3] == 1'b1)
 		    cdata[0][addr_index][4] <= write_data[31:24];
-		  cache_write_data_o <= {write_data[7:0],write_data[15:8],write_data[23:16],write_data[31:24],
-					 cdata[0][addr_index][3],cdata[0][addr_index][2],
-					 cdata[0][addr_index][1],cdata[0][addr_index][0]};
-		  cache_write_mask_o <= {write_mask,4'h0};
 	       end
    	  end
 
@@ -216,10 +204,6 @@ module cache
 		    cdata[1][addr_index][1] <= write_data[23:16];
 		  if (write_mask[3] == 1'b1)
 		    cdata[1][addr_index][0] <= write_data[31:24];
-		  cache_write_data_o <= {cdata[1][addr_index][7],cdata[1][addr_index][6],
-					 cdata[1][addr_index][5],cdata[1][addr_index][4],
-					 write_data[7:0],write_data[15:8],write_data[23:16],write_data[31:24]};
-		  cache_write_mask_o <= {4'h0,write_mask};
 	       end
    	     if (addr[2] == 1)
 	       begin
@@ -231,22 +215,9 @@ module cache
 		    cdata[1][addr_index][5] <= write_data[23:16];
 		  if (write_mask[3] == 1'b1)
 		    cdata[1][addr_index][4] <= write_data[31:24];
-		  cache_write_data_o <= {write_data[7:0],write_data[15:8],write_data[23:16],write_data[31:24],
-					 cdata[1][addr_index][3],cdata[1][addr_index][2],
-					 cdata[1][addr_index][1],cdata[1][addr_index][0]};
-		  cache_write_mask_o <= {write_mask,4'h0};
 	       end
    	  end
 
-   	if (hit == 1'b0)
-   	  begin
-	     cache_write_data_o <= {write_data,write_data};
-	     if (addr[2] == 0)
-	       cache_write_mask_o <= {4'h0,write_mask};
-	     if (addr[2] == 1)
-	       cache_write_mask_o <= {write_mask,4'h0};
-   	  end
-	
      end // always @ (write_flag == 1'b1)
    
 endmodule // cache
