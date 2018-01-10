@@ -57,12 +57,12 @@ module mem_sim
 	       end
 	     if (sel[2] == 1'b1) 
 	       begin
-		  mem_data[addr>>2][15:8] <= data_i[24:8];
+		  mem_data[addr>>2][15:8] <= data_i[23:16];
 		  // $display("Store %h in %h.",data_i[15:8],((addr>>2)<<2)+1);
 	       end
 	     if (sel[3] == 1'b1) 
 	       begin
-		  mem_data[addr>>2][7:0] <= data_i[32:25];
+		  mem_data[addr>>2][7:0] <= data_i[31:24];
 		  // $display("Store %h in %h.",data_i[7:0],((addr>>2)<<2));
 	       end
 	  end

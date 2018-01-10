@@ -44,16 +44,16 @@ This is the second homework of Computer Architecture, and the author is Lmxyy.
 - [X] SB
 - [X] SH
 - [X] SW
-** TODO Memory [50%]
+** TODO Memory [100%]
 - [X] UART-USB Protocol
   - [X] buf_que module
   - [X] uart_com module
-- [ ] FPGA Communication
-  - [ ] adapter.cpp
-  - [ ] adapter.hpp
-  - [ ] env_iface.hpp
-  - [ ] environment.hpp
-  - [ ] main.cpp
+- [X] FPGA Communication
+  - [X] adapter.cpp
+  - [X] adapter.hpp
+  - [X] env_iface.hpp
+  - [X] environment.hpp
+  - [X] main.cpp
 * Feature
 + The instruction set arthitecture(ISA) is RV32I Base Integer Instruction Set, Version 2.0.
 + The implementation technology is FPGA.
