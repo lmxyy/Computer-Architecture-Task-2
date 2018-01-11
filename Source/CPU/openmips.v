@@ -120,7 +120,9 @@ module openmips
    wire 		 if_id_pdt_res_o;
    wire 		 if_id_which_pdt_o;
    wire [9:0] 		 if_id_history_o;
+
       
+
    //pc_reg例化
    pc_reg pc_reg0
      (
@@ -128,7 +130,7 @@ module openmips
       .rst(rst),
 
       .stall(stall),
-
+      
       .branch_flag_i(id_branch_flag_o),
       .branch_target_address_i(branch_target_address),
 

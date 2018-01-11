@@ -1,10 +1,10 @@
-`ifdef cache.v
+`ifdef dcache.v
 `else
- `define cache.v
+ `define dcache.v
 // ----------------------------------------------------------------------------------------------------
  `include "defines.v"
 
-module cache
+module dcache
   #(
     parameter WORD_SELECT_BIT = 3,
     parameter INDEX_BIT = 2,
@@ -13,7 +13,8 @@ module cache
    (
     input 	       clk,
     input 	       rst,
-
+    input 	       ce,
+   
     // About CPU
     input [31:0]       addr,
 
@@ -31,7 +32,7 @@ module cache
     output reg 	       cache_write_o,
     output wire [31:0] cache_write_data_o,
     output wire [3:0]  cache_write_mask_o,
-    
+   
     input 	       cache_rep_i,
     input [63:0]       cache_rep_data_i,
 
@@ -43,20 +44,27 @@ module cache
    assign cache_write_mask_o = write_mask;
    
    parameter NBLOCK = 1<<INDEX_BIT;
-   parameter TAG_BIT = 32-2-INDEX_BIT-WORD_SELECT_BIT;
+   parameter TAG_BIT = 32-INDEX_BIT-WORD_SELECT_BIT;
    
-   wire [TAG_BIT-1:0] addr_tag = addr[31:31-5+1]; // TAG
+   wire [TAG_BIT-1:0]  addr_tag = addr[31:31-TAG_BIT+1]; // TAG
    wire [INDEX_BIT-1:0] addr_index = addr[WORD_SELECT_BIT+INDEX_BIT-1:WORD_SELECT_BIT]; // index
 
-   reg [TAG_BIT-1:0] 	      ctag[NASSOC-1:0][NBLOCK-1:0];
-   reg 			      cvalid[NASSOC-1:0][NBLOCK-1:0];
-   reg [7:0] 		      cdata[NASSOC-1:0][NBLOCK-1:0][1<<WORD_SELECT_BIT:0];
-      
-   reg 			      crep[NBLOCK-1:0];
+   reg [TAG_BIT-1:0] 	ctag[NASSOC-1:0][NBLOCK-1:0];
+   reg 			cvalid[NASSOC-1:0][NBLOCK-1:0];
+   reg [7:0] 		cdata[NASSOC-1:0][NBLOCK-1:0][1<<WORD_SELECT_BIT:0];
    
-   integer 		      i,j,k;
-   always @ (*)
+   reg 			crep[NBLOCK-1:0];
+   
+   integer 		i,j,k;
+   
+   // --------------------------------------------------Read--------------------------------------------------
+
+   always @ (clk)
      begin
+
+	if (ctag[0][0] == 8)
+	  $display("valid %b %h",cvalid[0][0],addr);
+	
    	if (rst == `RstEnable)
    	  begin
 	     for (i = 0;i < NASSOC;i = i+1)
@@ -73,23 +81,29 @@ module cache
 	     cache_addr_o <= 0;
 	     cache_write_o <= 0;
 	     stallreq <= 0;
-   	  end
-     end
-   
-   // --------------------------------------------------Read--------------------------------------------------
-
-   always @ (clk)
-     begin
-	if (read_flag == 1)
+   	  end // if (rst == `RstEnable)
+	
+	else if (ce !== 1'b1)
 	  begin
 	     read_data <= 0;
 	     cache_req_o <= 0;
 	     cache_addr_o <= 0;
 	     cache_write_o <= 0;
 	     stallreq <= 0;	
+	  end
+	
+	else if (read_flag == 1)
+	  begin
+	     read_data <= 0;
+	     cache_req_o <= 0;
+	     cache_addr_o <= 0;
+	     cache_write_o <= 0;
    	     if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
    	       begin
       		  crep[addr_index] <= 1;
+		  stallreq <= 0;
+		  if (addr == 32'h00000104)
+		    $display("Hit1 %b %b",ctag[0][addr_index],cvalid[0][addr_index]);
    		  if (addr[2] == 0)
    		    read_data <= {cdata[0][addr_index][0],cdata[0][addr_index][1],
    				  cdata[0][addr_index][2],cdata[0][addr_index][3]};
@@ -100,26 +114,59 @@ module cache
 	     
    	     if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
    	       begin
+		  if (addr == 32'h00000104)
+		    $display("Hit2");
       		  crep[addr_index] <= 0;
-   		  if (addr[2] == 0)
+   		  stallreq <= 0;	
+		  if (addr[2] == 0)
    		    read_data <= {cdata[1][addr_index][0],cdata[1][addr_index][1],
    				  cdata[1][addr_index][2],cdata[1][addr_index][3]};
    		  if (addr[2] == 1)
    		    read_data <= {cdata[1][addr_index][4],cdata[1][addr_index][5],
    				  cdata[1][addr_index][6],cdata[1][addr_index][7]};
    	       end // if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
+
 	     if (!(ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)&&!(ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1))
    	       begin
-   		  stallreq <= 1'b1;
+		  stallreq <= 1'b1;
    		  cache_addr_o <= addr;
    		  cache_req_o <= 1'b1;
-    	       end	
+    	       end
 	  end // if (read_flag == 1)
+		
      end // always @ (read_flag or addr)
    
-   always @ (cache_rep_i)   
+   always @ (cache_req_o)
      begin
-	if (cache_rep_i == 1)
+
+	if (rst == `RstEnable)
+   	  begin
+	     for (i = 0;i < NASSOC;i = i+1)
+	       for (j = 0;j < NBLOCK;j = j+1)
+		 begin
+		    ctag[i][j] <= 0;
+		    cvalid[i][j] <= 0;
+		    for (k = 0;k < (1<<WORD_SELECT_BIT);k = k+1)
+		      cdata[i][j][k] <= 0;
+		 end
+	     for (i = 0;i < NBLOCK;i = i+1) crep[i] = 0;
+	     read_data <= 0;
+	     cache_req_o <= 0;
+	     cache_addr_o <= 0;
+	     cache_write_o <= 0;
+	     stallreq <= 0;
+   	  end // if (rst == `RstEnable)
+	
+	else if (ce !== 1'b1)
+	  begin
+	     read_data <= 0;
+	     cache_req_o <= 0;
+	     cache_addr_o <= 0;
+	     cache_write_o <= 0;
+	     stallreq <= 0;	
+	  end
+	
+	else if (cache_rep_i == 1)
 	  begin
 	     if (crep[addr_index] == 1'b0)
 	       begin
@@ -153,9 +200,37 @@ module cache
    
    // --------------------------------------------------Write--------------------------------------------------
 
-   always @ (addr or write_flag or write_data or write_mask)
+   always @ (clk)
      begin
-	if (write_flag == 1)
+	
+	if (rst == `RstEnable)
+   	  begin
+	     for (i = 0;i < NASSOC;i = i+1)
+	       for (j = 0;j < NBLOCK;j = j+1)
+		 begin
+		    ctag[i][j] <= 0;
+		    cvalid[i][j] <= 0;
+		    for (k = 0;k < (1<<WORD_SELECT_BIT);k = k+1)
+		      cdata[i][j][k] <= 0;
+		 end
+	     for (i = 0;i < NBLOCK;i = i+1) crep[i] = 0;
+	     read_data <= 0;
+	     cache_req_o <= 0;
+	     cache_addr_o <= 0;
+	     cache_write_o <= 0;
+	     stallreq <= 0;
+   	  end   	     
+
+	else if (ce == `ChipDisable)
+	  begin
+	     read_data <= 0;
+	     cache_req_o <= 0;
+	     cache_addr_o <= 0;
+	     cache_write_o <= 0;
+	     stallreq <= 0;	
+	  end
+
+	else if (write_flag == 1)
 	  begin
 	     read_data <= 0;
 	     cache_req_o <= 0;
@@ -164,7 +239,6 @@ module cache
 	     stallreq <= 0;
    	     if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
    	       begin
-   		  crep[addr_index] <= 1;
    		  if (addr[2] == 0)
 		    begin
 		       if (write_mask[0] == 1'b1)
@@ -187,11 +261,10 @@ module cache
 		       if (write_mask[3] == 1'b1)
 			 cdata[0][addr_index][4] <= write_data[31:24];
 		    end
-   	       end
-
+   	       end // if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
+	     
    	     if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
    	       begin
-   		  crep[addr_index] <= 0;
    		  if (addr[2] == 0)
 		    begin
 		       if (write_mask[0] == 1'b1)
@@ -214,11 +287,12 @@ module cache
 		       if (write_mask[3] == 1'b1)
 			 cdata[1][addr_index][4] <= write_data[31:24];
 		    end
-   	       end
+   	       end // if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
+	     
 	  end // if (write_flag == 1)
      end // always @ (write_flag or addr)
    
-endmodule // cache
+endmodule // dcache
 
 // ----------------------------------------------------------------------------------------------------
 `endif

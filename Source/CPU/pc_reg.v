@@ -23,6 +23,9 @@ module pc_reg(
 	      output reg 		ce
 	      );
 
+   // always @ (stall)
+   //   $display("stall: %b, pc: %h",stall,pc);
+   
    always @ (posedge clk)
      begin
 	if (ce == `ChipDisable) pc <= 32'h0000000;
@@ -39,7 +42,7 @@ module pc_reg(
 		  // $display("Pc register jumps to %d.",{2'b0,branch_target_address_i[31:2]});
 	       end
 	     else pc <= pc+4'h4;
-	  end
+	  end // if (stall[0] == 1'b0)
      end
 
    always @ (posedge clk)

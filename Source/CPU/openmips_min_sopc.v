@@ -7,7 +7,8 @@
  // `include "inst_rom.v"
  // `include "data_ram.v"
  `include "mem_sim.v"
- `include "cache.v"
+ `include "dcache.v"
+ `include "icache.v"
 
 module openmips_min_sopc
   (
@@ -17,7 +18,8 @@ module openmips_min_sopc
 
    wire [`InstAddrBus] inst_addr;
    wire [`InstBus]     inst;
-   wire 	       ce;
+   wire 	       rom_ce;
+   wire 	       mem_ce;
 
    wire 	       mem_we_i;
    wire [`RegBus]      mem_addr_i;
@@ -51,21 +53,18 @@ module openmips_min_sopc
    wire 	       if_cache_req_o;
    wire [31:0]	       if_cache_addr_o;
    wire 	       if_cache_rep_i;
-   wire [63:0] 	       if_cache_rep_data_i;
+   wire [63:0] 	       if_cache_rep_data_i;   
    
-   cache if_cache
+   icache if_cache
      (
       .clk(clk),
       .rst(rst),
-
+      .ce(rom_ce),
+      
       .addr(inst_addr),
 
       .read_flag(1'b1),
       .read_data(inst),
-
-      .write_data(`ZeroWord),
-      .write_mask(4'h0),
-      .write_flag(1'b0),
 
       .cache_req_o(if_cache_req_o),
       .cache_addr_o(if_cache_addr_o),
@@ -84,14 +83,15 @@ module openmips_min_sopc
    wire 	       mem_cache_rep_i;
    wire [63:0]	       mem_cache_rep_data_i;
       
-   cache mem_cache
+   dcache mem_cache
      (
       .clk(clk),
       .rst(rst),
+      .ce(mem_ce),
 
       .addr(mem_addr_i),
 
-      .read_flag(1'b1),
+      .read_flag((mem_we_i==1'b1)?1'b0:1'b1),
       .read_data(mem_data_o),
 
       .write_data(mem_data_i),
@@ -108,7 +108,7 @@ module openmips_min_sopc
       .cache_rep_i(mem_cache_rep_i),
       .cache_rep_data_i(mem_cache_rep_data_i),
 
-      .stallreq(stallreq_from_if_cache)
+      .stallreq(stallreq_from_mem_cache)
       );
 
    mem_sim mem_sim0

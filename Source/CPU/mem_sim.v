@@ -29,7 +29,7 @@ module mem_sim
    
    initial $readmemh("instr.data",mem_data);
 
-   always @ (clk)
+   always @ (posedge clk)
      begin
 	if_ms_rep_o <= 0;
 	if_ms_rep_data_o <= 0;
