@@ -71,7 +71,11 @@ module mem_sim
 	     if (ms_write_mask_i[1] == 1)
 	       mem_data[mem_addr>>2][23:16] <= ms_write_data_i[15:8];
 	     if (ms_write_mask_i[0] == 1)
-	       mem_data[mem_addr>>2][31:24] <= ms_write_data_i[7:0];
+	       begin
+		  mem_data[mem_addr>>2][31:24] <= ms_write_data_i[7:0];
+		  if (mem_addr == 32'h00000104)
+		    $display("Print (%c)",ms_write_data_i[7:0]);
+	       end
 	  end
      end   
 
