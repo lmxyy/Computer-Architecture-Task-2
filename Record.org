@@ -218,5 +218,18 @@ Knew how to implement cache.
 + [[https://github.com/sxtyzhangzk/mips-cpu/blob/master/src/cpu/fifo.v][fifo.v]]
 * <2018-01-05 Fri>
 ** Finish the [[file:Source/adapter.hpp][adapter.hpp]].
+*** My data transferring rules(Reducing the transferring bit):
+**** Reading data
+I would need 5 bytes. The 7th bit in first is the reading flag 0. Then I need 32 bits to present the address. There would be 7 bits left which I would fill them with 0.
+**** Writing data
+I would need 9 bytes. The 7th bit in first is the writing flag 0. Then I need 32 bits to present the address. Then 4 bits to show the writing mask. Next, 32 bits to show the writing data. There would be 3 bits left which I would fill them with 0.
 ** Add the branch predictor.
 ** Fixed the bugs in branch instructions.
+* <2018-01-06 Sat>
+** Found that my CPU can hardly finish.
+*** Found some problem in communication between FPGA and computer.
++ I had to connect wire to [[file:Source/CPU/uart_comm.v][uart_comm.v]] using my own rules.
++ If I need to write data to memory, I had to transfer 9 bytes, but my buffer had only 8 bytes, which meaned I had to expand it.
++ If I didn't have a cache, I found that I couldn't handle instruction fetch and load and store at the same time, as I had only one uart_comm protocol, which is called Structual Hazard.
++ If I had implemented a cache, I had to improve my stall method, which seemed to contradict to each other if added cache.
+*** Copied a [[https://github.com/sxtyzhangzk/mips-cpu/blob/master/src/cpu/cache.v][cache]] from our assistant, but I found I could understand his code, which resulted in that I couldn't connect wires normally.
