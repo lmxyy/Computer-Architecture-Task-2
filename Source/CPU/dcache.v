@@ -96,7 +96,6 @@ module dcache
 	     cache_write_o <= 0;
    	     if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
    	       begin
-		  
 		  crep[addr_index] <= 1;
 		  stallreq <= 0;
 		  if (addr[2] == 0)
