@@ -29,6 +29,7 @@ module openmips
    output wire [`RegBus] ram_addr_o,
    output wire [`RegBus] ram_data_o,
    output wire 		 ram_we_o,
+   output wire 		 ram_re_o,
    output wire [3:0] 	 ram_sel_o,
    output wire 		 ram_ce_o,
 
@@ -352,6 +353,7 @@ module openmips
       //送到memory的信息
       .mem_addr_o(ram_addr_o),
       .mem_we_o(ram_we_o),
+      .mem_re_o(ram_re_o),
       .mem_sel_o(ram_sel_o),
       .mem_data_o(ram_data_o),
       .mem_ce_o(ram_ce_o)

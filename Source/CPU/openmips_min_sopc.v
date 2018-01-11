@@ -22,6 +22,8 @@ module openmips_min_sopc
    wire 	       mem_ce;
 
    wire 	       mem_we_i;
+   wire 	       mem_re_i;
+   
    wire [`RegBus]      mem_addr_i;
    wire [`RegBus]      mem_data_i;
    wire [`RegBus]      mem_data_o;
@@ -43,13 +45,14 @@ module openmips_min_sopc
       .ram_addr_o(mem_addr_i),
       .ram_data_o(mem_data_i),
       .ram_we_o(mem_we_i),
+      .ram_re_o(mem_re_i),
       .ram_sel_o(mem_sel_i),
       .ram_ce_o(mem_ce_i),		
 
       .stallreq_from_if_cache(stallreq_from_if_cache),
       .stallreq_from_mem_cache(stallreq_from_mem_cache)
       );
-
+   
    wire 	       if_cache_req_o;
    wire [31:0]	       if_cache_addr_o;
    wire 	       if_cache_rep_i;
@@ -91,7 +94,7 @@ module openmips_min_sopc
 
       .addr(mem_addr_i),
 
-      .read_flag((mem_we_i==1'b1)?1'b0:1'b1),
+      .read_flag(mem_re_i),
       .read_data(mem_data_o),
 
       .write_data(mem_data_i),
@@ -109,9 +112,9 @@ module openmips_min_sopc
       .cache_rep_data_i(mem_cache_rep_data_i),
 
       .stallreq(stallreq_from_mem_cache)
-      );
-
-   mem_sim mem_sim0
+      );   
+   
+    mem_sim mem_sim0
      (
       .clk(clk),
 

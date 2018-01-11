@@ -28,6 +28,7 @@ module mem
    // 送到memory的信息
    output reg [`RegBus]     mem_addr_o,
    output reg 		    mem_we_o,
+   output reg 		    mem_re_o,
    output reg [3:0] 	    mem_sel_o,
    output reg [`RegBus]     mem_data_o,
    output reg 		    mem_ce_o
@@ -44,6 +45,7 @@ module mem
 	     wdata_o <= `ZeroWord;
 	     mem_addr_o <= `ZeroWord;
 	     mem_we_o <= `WriteDisable;
+	     mem_re_o <= 0;
 	     mem_sel_o <= 4'b0000;
 	     mem_data_o <= `ZeroWord;
 	     mem_ce_o <= `ChipDisable;
@@ -56,6 +58,7 @@ module mem
 	     wdata_o <= wdata_i;
 	     mem_addr_o <= `ZeroWord;
 	     mem_we_o <= `WriteDisable;
+	     mem_re_o <= 0;
 	     mem_sel_o <= 4'b0000;
 	     mem_data_o <= `ZeroWord;
 	     mem_ce_o <= `ChipDisable;
@@ -66,6 +69,7 @@ module mem
 		 begin
 		    mem_addr_o <= mem_addr_i;
 		    mem_we_o <= `WriteDisable;
+		    mem_re_o <= 1;
 		    mem_ce_o <= `ChipEnable;
 		    case (mem_addr_i[1:0])
 
@@ -83,6 +87,7 @@ module mem
 		 begin
 		    mem_addr_o <= mem_addr_i;
 		    mem_we_o <= `WriteDisable;
+		    mem_re_o <= 1;
 		    mem_ce_o <= `ChipEnable;
 		    case (mem_addr_i[1:0])
 		      
@@ -99,6 +104,8 @@ module mem
 		 begin
 		    mem_addr_o <= mem_addr_i;
 		    mem_we_o <= `WriteDisable;
+		    mem_re_o <= 1;
+		    mem_ce_o <= `ChipEnable;
 		    if (mem_addr_i[1:0] != 2'b00)
 			  wdata_o <= `ZeroWord;
 			else wdata_o <= mem_data_i;
@@ -110,6 +117,7 @@ module mem
 		 begin
 		    mem_addr_o <= mem_addr_i;
 		    mem_we_o <= `WriteDisable;
+		    mem_re_o <= 1;
 		    mem_ce_o <= `ChipEnable;
 		    case (mem_addr_i[1:0])
 
@@ -127,6 +135,7 @@ module mem
 		 begin
 		    mem_addr_o <= mem_addr_i;
 		    mem_we_o <= `WriteDisable;
+		    mem_re_o <= 1;
 		    mem_ce_o <= `ChipEnable;
 		    case (mem_addr_i[1:0])
 		      

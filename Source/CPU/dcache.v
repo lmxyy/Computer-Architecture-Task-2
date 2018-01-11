@@ -61,10 +61,6 @@ module dcache
 
    always @ (clk)
      begin
-
-	if (ctag[0][0] == 8)
-	  $display("valid %b %h",cvalid[0][0],addr);
-	
    	if (rst == `RstEnable)
    	  begin
 	     for (i = 0;i < NASSOC;i = i+1)
@@ -83,7 +79,7 @@ module dcache
 	     stallreq <= 0;
    	  end // if (rst == `RstEnable)
 	
-	else if (ce !== 1'b1)
+	else if (ce == `ChipDisable)
 	  begin
 	     read_data <= 0;
 	     cache_req_o <= 0;
@@ -100,11 +96,10 @@ module dcache
 	     cache_write_o <= 0;
    	     if (ctag[0][addr_index] == addr_tag&&cvalid[0][addr_index] == 1'b1)
    	       begin
-      		  crep[addr_index] <= 1;
+		  
+		  crep[addr_index] <= 1;
 		  stallreq <= 0;
-		  if (addr == 32'h00000104)
-		    $display("Hit1 %b %b",ctag[0][addr_index],cvalid[0][addr_index]);
-   		  if (addr[2] == 0)
+		  if (addr[2] == 0)
    		    read_data <= {cdata[0][addr_index][0],cdata[0][addr_index][1],
    				  cdata[0][addr_index][2],cdata[0][addr_index][3]};
    		  if (addr[2] == 1)
@@ -114,9 +109,7 @@ module dcache
 	     
    	     if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
    	       begin
-		  if (addr == 32'h00000104)
-		    $display("Hit2");
-      		  crep[addr_index] <= 0;
+		  crep[addr_index] <= 0;
    		  stallreq <= 0;	
 		  if (addr[2] == 0)
    		    read_data <= {cdata[1][addr_index][0],cdata[1][addr_index][1],
@@ -138,7 +131,7 @@ module dcache
    
    always @ (cache_req_o)
      begin
-
+	
 	if (rst == `RstEnable)
    	  begin
 	     for (i = 0;i < NASSOC;i = i+1)
@@ -157,7 +150,7 @@ module dcache
 	     stallreq <= 0;
    	  end // if (rst == `RstEnable)
 	
-	else if (ce !== 1'b1)
+	else if (ce == `ChipDisable)
 	  begin
 	     read_data <= 0;
 	     cache_req_o <= 0;
@@ -290,7 +283,7 @@ module dcache
    	       end // if (ctag[1][addr_index] == addr_tag&&cvalid[1][addr_index] == 1'b1)
 	     
 	  end // if (write_flag == 1)
-     end // always @ (write_flag or addr)
+     end // always @ (clk)
    
 endmodule // dcache
 
