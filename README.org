@@ -4,7 +4,7 @@
 * Authority
 This is the second homework of Computer Architecture, and the author is Lmxyy.
 * Aim
-+ Implement a *Risk-v* CPU using hardware description language(HDL), and then download the CPU on FPGA.
++ Implement a *Risc-v* CPU using hardware description language(HDL), and then download the CPU on FPGA.
 + Using C++ to simulate the memory via the USB-UART protocol.
 ** DONE Instructions [100%]
 - [X] LUI
@@ -44,25 +44,54 @@ This is the second homework of Computer Architecture, and the author is Lmxyy.
 - [X] SB
 - [X] SH
 - [X] SW
-** TODO Memory [100%]
-- [X] UART-USB Protocol
+** TODO Memory [50%]
+- [-] UART-USB Protocol
   - [X] buf_que module
   - [X] uart_com module
+  - [ ] encoder module
+  - [ ] decoder module
 - [X] FPGA Communication
   - [X] adapter.cpp
   - [X] adapter.hpp
   - [X] env_iface.hpp
   - [X] environment.hpp
   - [X] main.cpp
+* Design Idea
+According to the book [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》]], implemented a riscv32 cpu which adopted Von Neumann Architecture. More details are following:
+#+CAPTION: Openmisp Overview
+#+ATTR_HTML: :width 50%  
+[[file:Picture/openmips.png]]
+#+CAPTION: Openmisp_min_sopc Overview
+#+ATTR_HTML: :width 50%  
+[[file:Picture/openmips_min_sopc.png]]
 * Feature
-+ The instruction set arthitecture(ISA) is RV32I Base Integer Instruction Set, Version 2.0.
-+ The implementation technology is FPGA.
-+ The HDL is Verilog HDL.
-+ The communication protocol is UART-USB.
+** General
+  + The instruction set arthitecture(ISA) is RV32I Base Integer Instruction Set, Version 2.0.
+  + The implementation technology is FPGA.
+  + The HDL is Verilog HDL.
+  + The communication protocol is UART-USB.
+** Branch Predictor
+pdt module is a branch predictor, which use tournament to predict the result:
++ According to the 2nd to 11th bits in pc address, choose an alloyed branch predictor, and the then by its saturating counter decide which predictor I would use.
++ If I decide the global one, I would choose a saturating counter according to the latest 10 branch results.
++ If I decide the local one, I would choose a saturating counter by both the 2nd to 11th bits in pc address and the latest 3 branch results(+I guessed this would be more accurate+).
+Prediction will be done in the if stage, and I will pass the predicting results to pc and id. After id knows the branch results, it would deliver the feedback the the predictor.
+** Cache
++ 2 way set-associative cache, 8 bytes in each block, and the length of index is adjustable;
++ Replace strategy: LRU;
++ Write strategy: write through;
++ If replacement is needed, the cache will stop the cpu till the replacement finishes and the requiring data are read out from the memory(icache only stalls if, while dcache stalls all stages except wb);
++ Because the memory is just a simulator, so I connect both icache and dcache to memories which make them able to read data simultaneously. 
+* Thanks
++ [[https://github.com/Evensgn][Evensgn]]'s data support.
++ [[https://github.com/kzoacn][kzoacn]]'s technology support.
 * Reference
++ [[file:Document/%E3%80%8A%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99CPU%E3%80%8BP1-300.pdf][《自己动手写CPU》]]
++ [[file:Document/project-v1.0.pdf][project-v1.0.pdf]]
++ [[https://en.wikipedia.org/wiki/Branch_predictor#Glob...][Branch Prediction Wikipedia]]
 + [[https://github.com/sxtyzhangzk/mips-cpu/][助教的MIPS CPU实现]]
-+ [[https://github.com/riscv/riscv-gnu-toolchain][GNU toolchain for RISC-V, including GCC(Newlib)]]
 + [[https://github.com/sxtyzhangzk/cpu-judge][cpu-judge]]
++ [[file:Document/Basys3-FPGA-%E5%BC%80%E5%8F%91%E6%9D%BF%E5%AE%9E%E9%AA%8C%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99.pdf][Basys3-FPGA-开发板实验参考资料]]
 * Appendix
 ** Format of Riscv32 Assembler
 |-------------+--------------------------------------|
